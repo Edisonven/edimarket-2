@@ -29,6 +29,7 @@ export function ProductProvider({ children }) {
   const [totalProducts, setTotalProducts] = useState(0);
   const [directBuy, setDirectBuy] = useState(initialStateProduct);
   const [questionsByProductId, setQuestionsByProductId] = useState([]);
+  const [productToRate, setProductToRate] = useState({});
   const [serverError, setServerError] = useState({
     myPostGetError: "",
   });
@@ -248,6 +249,8 @@ export function ProductProvider({ children }) {
         handleGetQuestionsByProductId,
         order_by,
         setOrder_by,
+        productToRate,
+        setProductToRate,
       }}
     >
       {children}
