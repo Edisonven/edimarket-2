@@ -1,13 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import "../myValorations/myValorations.css";
 import { UserContext } from "../../context/UserContext";
-import { FaStar } from "react-icons/fa6";
-import { CiStar } from "react-icons/ci";
+import { GoStar } from "react-icons/go";
+import { GoStarFill } from "react-icons/go";
+import { StarRating } from "./StarRating";
 
 export function MyValorations() {
   const { orders } = useContext(UserContext);
 
-  console.log(orders);
   return (
     <section className="myvalorations__container">
       <h1 className="text-2xl font-semibold mb-5">Mis valoraciones</h1>
@@ -16,18 +16,23 @@ export function MyValorations() {
           orders.map((order) => {
             return (
               <div
-                className="flex items-center border rounded-md p-3 gap-3"
+                className="border rounded-md p-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-[25px]"
                 key={order.id}
               >
-                <figure className="border rounded-md shadow">
-                  <img className="w-[80px]" src={order.imagen} alt="" />
-                </figure>
-                <div>
-                  <p className="font-medium">{order.nombre}</p>
+                <div className="flex items-center gap-3 ">
+                  <figure className="border rounded-md shadow">
+                    <img className="w-[80px]" src={order.imagen} alt="" />
+                  </figure>
+                  <div>
+                    <p className="font-medium">{order.nombre}</p>
+                  </div>
                 </div>
                 <div>
-                  <p>comprado el {order.fecha_venta}</p>
+                  <p className="text-sm text-gray-500">
+                    comprado el {order.fecha_venta}
+                  </p>
                 </div>
+                <StarRating />
               </div>
             );
           })
