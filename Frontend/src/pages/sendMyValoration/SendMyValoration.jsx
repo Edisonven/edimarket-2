@@ -7,12 +7,29 @@ export function SendMyValoration() {
   const { productToRate, setProductToRate, score } = useContext(ProductContext);
 
   useEffect(() => {
+    const storedProduct = JSON.parse(localStorage.getItem("product"));
+    if (storedProduct) {
+      setProductToRate(storedProduct);
+    }
+  }, [setProductToRate]);
+
+  useEffect(() => {
     setProductToRate({
       ...productToRate,
       score: score,
     });
   }, [score]);
 
+  useEffect(() => {
+    if (productToRate) {
+      localStorage.setItem(
+        "product",
+        JSON.stringify({ ...productToRate, score })
+      );
+    }
+  }, [productToRate, score]);
+
+  console.log(productToRate);
   return (
     <section className="sendmyvaloration__container">
       <div className="sendmyvaloration__body bg-white shadow-sm rounded-md p-3 h-[480px]">
@@ -23,11 +40,11 @@ export function SendMyValoration() {
           <figure>
             <img
               className="w-full max-w-[150px]"
-              src={productToRate.imagen}
+              src={productToRate?.imagen}
               alt=""
             />
           </figure>
-          <h3 className="mb-3">{productToRate.nombre}</h3>
+          <h3 className="mb-3">{productToRate?.nombre}</h3>
           <StarRating />
         </div>
       </div>

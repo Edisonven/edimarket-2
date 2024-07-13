@@ -6,6 +6,15 @@ export const ProductContext = createContext();
 const initialStateProduct = localStorage.getItem("directBuy")
   ? JSON.parse(localStorage.getItem("directBuy"))
   : null;
+const initialStateProductToRate = localStorage.getItem("product")
+  ? JSON.parse(localStorage.getItem("product"))
+  : null;
+
+const storedProduct = localStorage.getItem("product")
+  ? JSON.parse(localStorage.getItem("product"))
+  : null;
+
+const initialStateScore = storedProduct ? storedProduct.score : 0;
 
 export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
@@ -29,8 +38,8 @@ export function ProductProvider({ children }) {
   const [totalProducts, setTotalProducts] = useState(0);
   const [directBuy, setDirectBuy] = useState(initialStateProduct);
   const [questionsByProductId, setQuestionsByProductId] = useState([]);
-  const [productToRate, setProductToRate] = useState({});
-  const [score, setScore] = useState(0);
+  const [productToRate, setProductToRate] = useState(initialStateProductToRate);
+  const [score, setScore] = useState(initialStateScore);
   const [serverError, setServerError] = useState({
     myPostGetError: "",
   });

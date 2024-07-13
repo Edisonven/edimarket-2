@@ -40,7 +40,7 @@ export function MyValorations() {
                         comprado el {order?.fecha_venta}
                       </p>
                     </div>
-                    <StarRating order={order} />
+                    <StarRating order={order} orderId={order?.id} />
                   </div>
                 );
               })

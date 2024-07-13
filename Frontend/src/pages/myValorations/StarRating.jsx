@@ -1,16 +1,19 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GoStar } from "react-icons/go";
 import { GoStarFill } from "react-icons/go";
 import { ProductContext } from "../../context/ProductContext";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export function StarRating({ order }) {
-  const { setProductToRate, score, setScore } = useContext(ProductContext);
+  const { setProductToRate, productToRate, setScore, score } =
+    useContext(ProductContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const [currentScore, setCurrentScore] = useState(0);
 
   const handleChooseValoration = (index) => {
     const newScore = index + 1;
+    setCurrentScore(newScore);
     setScore(newScore);
 
     if (order) {
@@ -20,7 +23,7 @@ export function StarRating({ order }) {
       });
     }
     setTimeout(() => {
-      if (location.pathname !== "send-my-valoration") {
+      if (location.pathname !== "/send-my-valoration") {
         navigate("/send-my-valoration");
       }
       return;
@@ -30,7 +33,10 @@ export function StarRating({ order }) {
   return (
     <div className="flex items-center gap-6 mt-3 sm:mt-0">
       {[...new Array(5)].map((_, index) => {
-        return index >= score ? (
+        const displayScore =
+          location.pathname !== "/send-my-valoration" ? currentScore : score;
+
+        return index >= displayScore ? (
           <GoStar
             onClick={() => handleChooseValoration(index)}
             key={index}
