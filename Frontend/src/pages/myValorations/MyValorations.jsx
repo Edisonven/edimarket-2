@@ -9,8 +9,8 @@ export function MyValorations() {
   return (
     <section className="myvalorations__container">
       <h1 className="text-2xl font-semibold mb-5">Mis valoraciones</h1>
-      <div className="myvalorations__body bg-white shadow-sm rounded-md p-3 h-[480px]">
-        <p className="mb-5">
+      <div className="myvalorations__body bg-white shadow-sm rounded-md p-3 h-[480px] flex flex-col gap-5">
+        <p className="mb-1">
           Valora los productos y ayuda a las demás personas
         </p>
         {orders.length > 0 ? (

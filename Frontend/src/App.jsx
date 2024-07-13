@@ -36,6 +36,7 @@ import { NoPaymentMethodsAdded } from "./components/noPaymentMethodsAdded/NoPaym
 import { MyQuestions } from "./pages/myQuestions/MyQuestions.jsx";
 import { AllProducts } from "./pages/allProducts/AllProducts.jsx";
 import { MyValorations } from "./pages/myValorations/MyValorations.jsx";
+import { SendMyValoration } from "./pages/sendMyValoration/SendMyValoration.jsx";
 
 function App() {
   const { userToken } = useContext(UserContext);
@@ -171,6 +172,12 @@ function App() {
           <Route
             path="/my-valorations"
             element={userToken ? <MyValorations /> : <Navigate to="/sign-in" />}
+          />
+          <Route
+            path="/send-my-valoration"
+            element={
+              userToken ? <SendMyValoration /> : <Navigate to="/sign-in" />
+            }
           />
           <Route path="/not-found" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
