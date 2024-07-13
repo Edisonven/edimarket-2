@@ -27,11 +27,11 @@ export function Favorites() {
                     <ProductCard
                       onClick={() => handleProductDetail(product?.producto_id)}
                       key={product.id}
-                      className="max-w-[800px] mx-auto"
+                      className="max-w-[800px] mx-auto w-full"
                     >
                       <div className="favorites__card__body">
                         <img
-                          className="favorites__card__img shadow-md"
+                          className="favorites__card__img shadow-md w-full"
                           src={product.imagen}
                           alt=""
                         />
