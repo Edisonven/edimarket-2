@@ -118,39 +118,39 @@ export function UserProvider({ children }) {
     });
   }, [navigate]);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        if (userToken) {
-          const response = await fetch(
-            `http://localhost:3000/usuarios/usuario/ventas/?idUsuario=${user.id}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${userToken}`,
-              },
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error("Error fetching orders");
+  const fetchOrders = async () => {
+    try {
+      if (userToken) {
+        const response = await fetch(
+          `http://localhost:3000/usuarios/usuario/ventas/?idUsuario=${user.id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
           }
-          const data = await response.json();
+        );
 
-          setOrders(data.ventas);
-
-          return data;
-        } else {
-          return;
+        if (!response.ok) {
+          throw new Error("Error fetching orders");
         }
-      } catch (error) {
-        console.error("Error:", error);
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    };
+        const data = await response.json();
 
+        setOrders(data.ventas);
+
+        return data;
+      } else {
+        return;
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchOrders();
   }, []);
 
@@ -524,6 +524,7 @@ export function UserProvider({ children }) {
         questionsByUser,
         orders,
         setOrders,
+        fetchOrders,
       }}
     >
       {children}

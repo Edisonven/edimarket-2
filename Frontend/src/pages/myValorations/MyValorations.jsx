@@ -1,8 +1,6 @@
 import { useContext, useState } from "react";
 import "../myValorations/myValorations.css";
 import { UserContext } from "../../context/UserContext";
-import { GoStar } from "react-icons/go";
-import { GoStarFill } from "react-icons/go";
 import { StarRating } from "./StarRating";
 
 export function MyValorations() {
@@ -12,6 +10,9 @@ export function MyValorations() {
     <section className="myvalorations__container">
       <h1 className="text-2xl font-semibold mb-5">Mis valoraciones</h1>
       <div className="myvalorations__body bg-white shadow-sm rounded-md p-3 h-[480px]">
+        <p className="mb-5">
+          Valora los productos y ayuda a las demás personas
+        </p>
         {orders.length > 0 ? (
           orders.map((order) => {
             return (

@@ -13,7 +13,7 @@ import { NoPaymentMethodsAdded } from "../../components/noPaymentMethodsAdded/No
 import { ProductContext } from "../../context/ProductContext";
 
 export function Billing() {
-  const { userToken, userCreditCards, handleAddedToCart } =
+  const { userToken, userCreditCards, handleAddedToCart, fetchOrders } =
     useContext(UserContext);
   const { selectedPaymentMethod, isLoading, setIsLoading, navigate } =
     useContext(CheckoutContext);
@@ -84,7 +84,7 @@ export function Billing() {
       if (directBuy !== null) {
         await sendProduct(directBuy);
       }
-
+      fetchOrders();
       setDirectBuy(null);
       handleDeleteUserProducts();
       handleAddedToCart();
