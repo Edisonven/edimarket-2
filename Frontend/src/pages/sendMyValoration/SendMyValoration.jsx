@@ -7,6 +7,10 @@ import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
 export function SendMyValoration() {
   const { productToRate, setProductToRate, score } = useContext(ProductContext);
 
+  const handleSendValoration = (e) => {
+    e.preventDefault();
+  };
+
   useEffect(() => {
     const storedProduct = JSON.parse(localStorage.getItem("product"));
     if (storedProduct) {
@@ -49,17 +53,23 @@ export function SendMyValoration() {
         </div>
         <div className="border mt-10 w-full max-w-[430px] flex flex-col items-center rounded-md mx-auto shadow-sm  p-4 sm:p-6">
           <h3 className="my-4 font-medium">
-            Cuéntanos qué tal te pareció tu producto
+            Cuéntanos cómo te fue con tu producto
           </h3>
           <span className="mb-3 text-sm text-gray-500">(Opcional)</span>
-          <form className="w-full h-full flex flex-col items-center">
+          <form
+            onSubmit={handleSendValoration}
+            className="w-full h-full flex flex-col items-center"
+          >
             <textarea
               rows="4"
               className="border w-full h-full rounded-md resize-none focus:border-none outline-teal-500 p-3"
               name=""
               id=""
             />
-            <GeneralBtn className="mt-5 h-[45px] flex items-center" type="secondary">
+            <GeneralBtn
+              className="mt-5 h-[45px] flex items-center"
+              type="secondary"
+            >
               Enviar
             </GeneralBtn>
           </form>
