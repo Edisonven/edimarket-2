@@ -25,22 +25,22 @@ export function MyValorations() {
                 return (
                   <div
                     className="border rounded-md p-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-[25px]"
-                    key={order.id}
+                    key={order?.id}
                   >
                     <div className="flex items-center gap-3 ">
                       <figure className="border rounded-md shadow">
-                        <img className="w-[80px]" src={order.imagen} alt="" />
+                        <img className="w-[80px]" src={order?.imagen} alt="" />
                       </figure>
                       <div>
-                        <p className="font-medium">{order.nombre}</p>
+                        <p className="font-medium">{order?.nombre}</p>
                       </div>
                     </div>
                     <div>
                       <p className="text-sm text-gray-500">
-                        comprado el {order.fecha_venta}
+                        comprado el {order?.fecha_venta}
                       </p>
                     </div>
-                    <StarRating />
+                    <StarRating order={order} />
                   </div>
                 );
               })

@@ -2,11 +2,20 @@ import { useState } from "react";
 import { GoStar } from "react-icons/go";
 import { GoStarFill } from "react-icons/go";
 
-export function StarRating() {
+export function StarRating({ order }) {
   const [score, setScore] = useState(0);
+  const [productToRate, setProductToRate] = useState({});
 
   const handleChooseValoration = (index) => {
-    setScore(index + 1);
+    const newScore = index + 1;
+    setScore(newScore);
+
+    if (order) {
+      setProductToRate({
+        ...order,
+        score: newScore,
+      });
+    }
   };
 
   return (
