@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import "../myValorations/starRating.css";
+import { useContext, useState } from "react";
 import { GoStar } from "react-icons/go";
 import { GoStarFill } from "react-icons/go";
 import { ProductContext } from "../../context/ProductContext";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export function StarRating({ order }) {
-  const { setProductToRate, productToRate, setScore, score } =
-    useContext(ProductContext);
+  const { setProductToRate, setScore, score } = useContext(ProductContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [currentScore, setCurrentScore] = useState(0);
@@ -40,13 +40,13 @@ export function StarRating({ order }) {
           <GoStar
             onClick={() => handleChooseValoration(index)}
             key={index}
-            className="scale-[2.5] cursor-pointer select-none text-gray-400 hover:bg-slate-100 p-[2px] rounded-full"
+            className="star-icon scale-[2.5] cursor-pointer select-none text-gray-400 hover:bg-slate-100 p-[2px] rounded-full"
           />
         ) : (
           <GoStarFill
             onClick={() => handleChooseValoration(index)}
             key={index}
-            className="scale-[2.5] cursor-pointer select-none text-teal-700 hover:bg-slate-100 p-[2px] rounded-full"
+            className="star-icon scale-[2.5] cursor-pointer select-none text-teal-700 hover:bg-slate-100 p-[2px] rounded-full"
           />
         );
       })}

@@ -29,7 +29,6 @@ export function SendMyValoration() {
     }
   }, [productToRate, score]);
 
-  console.log(productToRate);
   return (
     <section className="sendmyvaloration__container">
       <div className="sendmyvaloration__body bg-white shadow-sm rounded-md p-3 h-[480px]">
