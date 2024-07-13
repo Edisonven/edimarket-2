@@ -1,11 +1,10 @@
-import "../myValorations/starRating.css";
 import { useContext, useState } from "react";
 import { GoStar } from "react-icons/go";
 import { GoStarFill } from "react-icons/go";
 import { ProductContext } from "../../context/ProductContext";
 import { useNavigate, useLocation } from "react-router-dom";
 
-export function StarRating({ order }) {
+export function StarRating({ order, className }) {
   const { setProductToRate, setScore, score } = useContext(ProductContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,7 +30,7 @@ export function StarRating({ order }) {
   };
 
   return (
-    <div className="flex items-center gap-6 mt-3 sm:mt-0">
+    <div className={`${className} flex items-center gap-6 mt-3 sm:mt-0`}>
       {[...new Array(5)].map((_, index) => {
         const displayScore =
           location.pathname !== "/send-my-valoration" ? currentScore : score;
