@@ -60,13 +60,21 @@ export function ProductProvider({ children }) {
     handleGetQuestionsByProductId();
   }, [productById]);
 
-  const handleDirectBuy = (cantidad) => {
+  const handleDirectBuy = (cantidad, cart) => {
     setDirectBuy((prevData) => ({
       ...prevData,
       ...productById,
       cantidad: cantidad,
     }));
-    navigate("/shipping");
+
+    const productInCart = cart.find(
+      (cart) => cart.producto_id === directBuy.producto_id
+    );
+    if (productInCart) {
+      navigate("/carro");
+    } else {
+      navigate("/shipping");
+    }
   };
 
   useEffect(() => {

@@ -375,7 +375,7 @@ export function ProductDetail() {
                   ) : (
                     <div className="flex flex-col gap-3">
                       <GeneralBtn
-                        onClick={() => handleDirectBuy(productQuantity)}
+                        onClick={() => handleDirectBuy(productQuantity, cart)}
                         style={{
                           pointerEvents: product?.stock === 0 ? "none" : "auto",
                           cursor:
