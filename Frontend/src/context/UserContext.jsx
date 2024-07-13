@@ -79,11 +79,17 @@ export function UserProvider({ children }) {
     success: "",
     error: "",
   });
-  const { setLoading, setAddedToFav, addedToFav, setProductAlert } =
-    useContext(ProductContext);
+  const {
+    setLoading,
+    setAddedToFav,
+    addedToFav,
+    setProductAlert,
+    setDirectBuy,
+    setServerError,
+    setProductToRate,
+    setScore,
+  } = useContext(ProductContext);
   const { setCart, cart } = useContext(CartContext);
-  const { setDirectBuy, setServerError, serverError } =
-    useContext(ProductContext);
 
   const inputRefs = {
     nombre: useRef(null),
@@ -468,6 +474,8 @@ export function UserProvider({ children }) {
     setUserToken(null);
     setDirectBuy(null);
     setUser(null);
+    setProductToRate(null);
+    setScore(null);
     navigate("/");
   };
 

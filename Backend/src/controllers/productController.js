@@ -273,6 +273,26 @@ const getProductOnQuestions = async (req, res) => {
   }
 };
 
+const sendProductValoration = async (req, res) => {
+  try {
+    const { idProducto, comentario, calificacion } = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, process.env.JWT_SECRET);
+    const { id } = jwt.decode(token);
+    const valoracion = await productModel.productValoration(
+      id,
+      idProducto,
+      comentario,
+      calificacion
+    );
+
+    res.status(200).json({ mensaje: "valoración realizada" });
+  } catch (error) {
+    res.status(500).json({ mensaje: error.message });
+  }
+};
+
 export const productController = {
   getProductos,
   getProductoById,
@@ -286,4 +306,5 @@ export const productController = {
   getAllProducts,
   getPreguntasByProductId,
   getProductOnQuestions,
+  sendProductValoration,
 };

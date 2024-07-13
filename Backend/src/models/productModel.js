@@ -1,3 +1,4 @@
+import { query } from "express";
 import db from "../config/database.js";
 import { object, string, number } from "zod";
 
@@ -150,6 +151,17 @@ const productOnQuestions = async (id) => {
   return producto;
 };
 
+const productValoration = async (id, idProducto, comentario, calificacion) => {
+  const values = [id, idProducto, comentario, calificacion];
+
+  const query =
+    "INSERT INTO valoraciones_producto(id, usuario_id, producto_id, comentario, calificacion, fecha) VALUES (DEFAULT, $1 , $2 , $3 , $4 , DEFAULT)";
+
+  const { rows: valoracion } = await db.query(query, values);
+
+  return valoracion;
+};
+
 export const productModel = {
   modificarProducto,
   venta,
@@ -161,4 +173,5 @@ export const productModel = {
   consultarFavoritos,
   preguntasByProductId,
   productOnQuestions,
+  productValoration,
 };
