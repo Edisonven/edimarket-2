@@ -2,12 +2,12 @@ import { useContext, useState } from "react";
 import { GoStar } from "react-icons/go";
 import { GoStarFill } from "react-icons/go";
 import { ProductContext } from "../../context/ProductContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export function StarRating({ order }) {
-  const [score, setScore] = useState(0);
-  const { setProductToRate } = useContext(ProductContext);
+  const { setProductToRate, score, setScore } = useContext(ProductContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleChooseValoration = (index) => {
     const newScore = index + 1;
@@ -20,7 +20,10 @@ export function StarRating({ order }) {
       });
     }
     setTimeout(() => {
-      navigate("/send-my-valoration");
+      if (location.pathname !== "send-my-valoration") {
+        navigate("/send-my-valoration");
+      }
+      return;
     }, 500);
   };
 
