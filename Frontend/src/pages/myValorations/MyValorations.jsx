@@ -14,7 +14,7 @@ export function MyValorations() {
       <h1 className="text-2xl font-semibold mb-5">Mis valoraciones</h1>
       <div className="myvalorations__body bg-white shadow-sm rounded-md p-3 h-[480px]">
         <p className="mb-5">
-          Valora los productos y ayuda a las demás personas
+          Valora tus productos y ayuda a las demás personas
         </p>
         {loading ? (
           <Loader />
@@ -31,8 +31,10 @@ export function MyValorations() {
                       <figure className="border rounded-md shadow">
                         <img className="w-[80px]" src={order?.imagen} alt="" />
                       </figure>
-                      <div>
-                        <p className="font-medium">{order?.nombre}</p>
+                      <div className="overflow-hidden w-full">
+                        <p className="w-full font-medium whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] md:max-w-[400px]">
+                          {order?.nombre}
+                        </p>
                       </div>
                     </div>
                     <div>
