@@ -3,6 +3,9 @@ import { StarRating } from "./StarRating";
 export function Pending({ orders }) {
   return (
     <div className="flex flex-col gap-5">
+      <p className="text-gray-400">
+        Valora tus productos y ayuda a las demás personas
+      </p>
       {orders?.length > 0 ? (
         orders.map((order) => {
           return (

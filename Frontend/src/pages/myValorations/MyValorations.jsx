@@ -19,22 +19,19 @@ export function MyValorations() {
         <NavLink
           to="pending"
           className={`${({ isActive }) =>
-            isActive ? "active" : ""} font-semibold text-lg`}
+            isActive ? "active" : ""} font-semibold text-lg relative`}
         >
           Pendientes
         </NavLink>
         <NavLink
           to="completed"
           className={`${({ isActive }) =>
-            isActive ? "active" : ""} font-semibold text-lg`}
+            isActive ? "active" : ""} font-semibold text-lg relative`}
         >
           Realizadas
         </NavLink>
       </div>
       <div className="myvalorations__body bg-white shadow-sm rounded-md p-3 h-[480px]">
-        <p className="mb-5 text-gray-400">
-          Valora tus productos y ayuda a las demás personas
-        </p>
         {loading ? (
           <Loader />
         ) : (
