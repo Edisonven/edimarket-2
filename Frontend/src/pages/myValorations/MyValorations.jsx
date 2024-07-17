@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 import "../myValorations/myValorations.css";
 import { UserContext } from "../../context/UserContext";
-import { StarRating } from "./StarRating";
 import { ProductContext } from "../../context/ProductContext";
 import { Loader } from "../../components/loader/Loader";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, Route, Routes } from "react-router-dom";
+import { Pending } from "./Pending.jsx";
 
 export function MyValorations() {
   const { orders } = useContext(UserContext);
@@ -16,6 +16,7 @@ export function MyValorations() {
 
       <div className="mb-4 flex items-center gap-4">
         <NavLink
+          to="pending"
           className={`${({ isActive }) =>
             isActive ? "active" : ""} font-semibold text-lg`}
         >
@@ -29,46 +30,16 @@ export function MyValorations() {
         </NavLink>
       </div>
       <div className="myvalorations__body bg-white shadow-sm rounded-md p-3 h-[480px]">
-        <p className="mb-5">
+        <p className="mb-5 text-gray-400">
           Valora tus productos y ayuda a las demás personas
         </p>
         {loading ? (
           <Loader />
         ) : (
-          <div className="flex flex-col gap-5">
-            {orders.length > 0 ? (
-              orders.map((order) => {
-                return (
-                  <div
-                    className="border rounded-md p-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-[25px]"
-                    key={order?.id}
-                  >
-                    <div className="flex items-center gap-3 ">
-                      <figure className="border rounded-md shadow">
-                        <img className="w-[80px]" src={order?.imagen} alt="" />
-                      </figure>
-                      <div className="overflow-hidden w-full">
-                        <p className="w-full font-medium whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] md:max-w-[400px]">
-                          {order?.nombre}
-                        </p>
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">
-                        comprado el {order?.fecha_venta}
-                      </p>
-                    </div>
-                    <StarRating order={order} orderId={order?.id} />
-                  </div>
-                );
-              })
-            ) : (
-              <div className="flex flex-col items-center justify-center h-full mt-6">
-                <h3>No has hecho preguntas aún.</h3>
-                <p>Cuando hagas preguntas aparecerán acá.</p>
-              </div>
-            )}
-          </div>
+          <Routes>
+            <Route path="/" element={<Navigate to="pending" />} />
+            <Route path="pending" element={<Pending orders={orders} />} />
+          </Routes>
         )}
       </div>
     </section>

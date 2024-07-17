@@ -170,7 +170,7 @@ function App() {
             element={userToken ? <MyQuestions /> : <Navigate to="/sign-in" />}
           />
           <Route
-            path="/my-valorations"
+            path="/my-valorations/*"
             element={userToken ? <MyValorations /> : <Navigate to="/sign-in" />}
           />
           <Route
