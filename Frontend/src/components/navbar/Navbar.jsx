@@ -2,7 +2,7 @@ import "../navbar/navbar.css";
 import { FiSearch } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useState, useRef, forwardRef, useContext } from "react";
-import { NavLink, useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NavBurger } from "../navBurger/NavBurger";
 import { Perfil } from "../perfil/Perfil.jsx";
 import { SearchBar } from "../searchBar/SearchBar.jsx";
@@ -204,41 +204,41 @@ export function Navbar({ navbarRef }) {
                       </span>
                     </div>
                     <hr className="w-full mb-3" />
-                    <NavLink
+                    <Link
                       to="miperfil"
                       className="navbar__menu__link navbar__menu__link__mobile"
                     >
                       <CiUser className="miperfil__icon" />
                       Mi perfil
-                    </NavLink>
-                    <NavLink
+                    </Link>
+                    <Link
                       to="/my-questions"
                       className="navbar__menu__link navbar__menu__link__mobile"
                     >
                       <CiSquareQuestion className="miperfil__icon" />
                       Preguntas
-                    </NavLink>
-                    <NavLink
+                    </Link>
+                    <Link
                       to="/my-valorations"
                       className="navbar__menu__link navbar__menu__link__mobile"
                     >
                       <CiStar className="miperfil__icon" />
                       Opiniones
-                    </NavLink>
-                    <NavLink
+                    </Link>
+                    <Link
                       to="/favorites"
                       className="navbar__menu__link navbar__menu__link__mobile"
                     >
                       <CiHeart className="miperfil__icon" />
                       Favoritos
-                    </NavLink>
-                    <NavLink
+                    </Link>
+                    <Link
                       onClick={logout}
                       to=""
                       className="navbar__menu__link navbar__menu__link__mobile text-teal-600 font-medium mt-5 text-md"
                     >
                       Cerrar sesión
-                    </NavLink>
+                    </Link>
                     <hr className="mt-2" />
                   </div>
                 ) : (
@@ -263,32 +263,32 @@ export function Navbar({ navbarRef }) {
                     </GeneralBtn>
                     <div className="flex items-center gap-1">
                       <p className="text-sm">¿No tienes cuenta?</p>
-                      <NavLink
+                      <Link
                         to="/sign-up"
                         className="navbar__menu__link text-sm :active text-teal-600"
                       >
                         Registrarse
-                      </NavLink>
+                      </Link>
                     </div>
 
                     <hr className="mt-2" />
                   </div>
                 )}
                 <div className="navbar__categories__container">
-                  <NavLink
+                  <Link
                     ref={categoriesBtnRef}
                     onClick={handleButtonClick}
                     className="navbar__menu__link navbar__menu__link__display"
                   >
                     Categorías
-                  </NavLink>
+                  </Link>
                   <Categories className="categories__display" />
                 </div>
                 <p className="categories__title font-medium text-lg">
                   Categorías
                 </p>
                 <BurgerCategories className="burger-categories" />
-                <NavLink
+                <Link
                   to="/carro"
                   className="navbar__menu__link navbar__menu__link__cart"
                 >
@@ -313,7 +313,7 @@ export function Navbar({ navbarRef }) {
                   ) : (
                     ""
                   )}
-                </NavLink>
+                </Link>
               </div>
             </div>
           </div>
@@ -332,35 +332,32 @@ export function Navbar({ navbarRef }) {
                     <span className="text-xs text-gray-600">{user.email}</span>
                   </div>
                   <hr className="w-full my-2" />
-                  <NavLink to="miperfil" className="navbar__user__menu__link">
+                  <Link to="miperfil" className="navbar__user__menu__link">
                     Mi perfil
-                  </NavLink>
-                  <NavLink
-                    to="/my-questions"
-                    className="navbar__user__menu__link"
-                  >
+                  </Link>
+                  <Link to="/my-questions" className="navbar__user__menu__link">
                     Preguntas
-                  </NavLink>
-                  <NavLink to="/my-valorations" className="navbar__user__menu__link">
-                    Opiniones
-                  </NavLink>
-                  <NavLink
-                    to="/createpost"
+                  </Link>
+                  <Link
+                    to="/my-valorations"
                     className="navbar__user__menu__link"
                   >
+                    Opiniones
+                  </Link>
+                  <Link to="/createpost" className="navbar__user__menu__link">
                     Publicar
-                  </NavLink>
-                  <NavLink to="/favorites" className="navbar__user__menu__link">
+                  </Link>
+                  <Link to="/favorites" className="navbar__user__menu__link">
                     Favoritos
-                  </NavLink>
+                  </Link>
                   <hr className="w-full my-2" />
-                  <NavLink
+                  <Link
                     onClick={logout}
                     to=""
                     className="navbar__user__menu__link"
                   >
                     Cerrar sesión
-                  </NavLink>
+                  </Link>
                 </div>
               </Perfil>
             ) : (
@@ -372,12 +369,12 @@ export function Navbar({ navbarRef }) {
                 perfilButtonRef={perfilButtonRef}
               >
                 <div className="navbar__user__menu bg-gray-50 shadow-md">
-                  <NavLink to="/sign-in" className="navbar__user__menu__link">
+                  <Link to="/sign-in" className="navbar__user__menu__link">
                     Iniciar sesión
-                  </NavLink>
-                  <NavLink to="/sign-up" className="navbar__user__menu__link">
+                  </Link>
+                  <Link to="/sign-up" className="navbar__user__menu__link">
                     Registrarse
-                  </NavLink>
+                  </Link>
                 </div>
               </Perfil>
             )}

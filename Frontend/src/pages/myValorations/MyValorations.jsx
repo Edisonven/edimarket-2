@@ -4,6 +4,7 @@ import { UserContext } from "../../context/UserContext";
 import { StarRating } from "./StarRating";
 import { ProductContext } from "../../context/ProductContext";
 import { Loader } from "../../components/loader/Loader";
+import { NavLink } from "react-router-dom";
 
 export function MyValorations() {
   const { orders } = useContext(UserContext);
@@ -12,6 +13,21 @@ export function MyValorations() {
   return (
     <section className="myvalorations__container">
       <h1 className="text-2xl font-semibold mb-5">Mis valoraciones</h1>
+
+      <div className="mb-4 flex items-center gap-4">
+        <NavLink
+          className={`${({ isActive }) =>
+            isActive ? "active" : ""} font-semibold text-lg`}
+        >
+          Pendientes
+        </NavLink>
+        <NavLink
+          className={`${({ isActive }) =>
+            isActive ? "active" : ""} font-semibold text-lg`}
+        >
+          Realizadas
+        </NavLink>
+      </div>
       <div className="myvalorations__body bg-white shadow-sm rounded-md p-3 h-[480px]">
         <p className="mb-5">
           Valora tus productos y ayuda a las demás personas

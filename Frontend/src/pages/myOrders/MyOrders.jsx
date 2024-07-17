@@ -57,7 +57,7 @@ export function MyOrders() {
                         Número de órden: #{`${order.producto_id * 2}`}
                       </h2>
                       <p className="text-sm mb-3">
-                        Fecha de compra: {formatDate(order.fecha_venta)}
+                        Fecha de compra: {order.fecha_venta}
                       </p>
                       <p className="font-semibold">
                         {formatearPrecio(order.valor_total)}
