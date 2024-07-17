@@ -5,6 +5,7 @@ import { ProductContext } from "../../context/ProductContext";
 import { Loader } from "../../components/loader/Loader";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
 import { Pending } from "./Pending.jsx";
+import { Completed } from "./Completed.jsx";
 
 export function MyValorations() {
   const { orders } = useContext(UserContext);
@@ -23,6 +24,7 @@ export function MyValorations() {
           Pendientes
         </NavLink>
         <NavLink
+          to="completed"
           className={`${({ isActive }) =>
             isActive ? "active" : ""} font-semibold text-lg`}
         >
@@ -39,6 +41,7 @@ export function MyValorations() {
           <Routes>
             <Route path="/" element={<Navigate to="pending" />} />
             <Route path="pending" element={<Pending orders={orders} />} />
+            <Route path="completed" element={<Completed orders={orders} />} />
           </Routes>
         )}
       </div>
