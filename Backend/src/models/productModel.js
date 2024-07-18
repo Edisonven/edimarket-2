@@ -56,6 +56,14 @@ const valorate = async (IdUsuario, IdProducto, cantidad) => {
   return console.log("Compra realizada");
 };
 
+const editValorate = async (id, orderId, valorado = true) => {
+  const values = [id, orderId, valorado];
+  const consulta =
+    "UPDATE orders_valorate SET valorado = $3 WHERE comprador_id = $1 AND id = $2";
+  await db.query(consulta, values);
+  return console.log("producto actualizado");
+};
+
 const idCategoria = async (categoria) => {
   const values = [categoria];
   const consulta = "SELECT id FROM categorias WHERE nombre_categoria = $1";
@@ -185,4 +193,5 @@ export const productModel = {
   productOnQuestions,
   productValoration,
   valorate,
+  editValorate,
 };
