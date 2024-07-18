@@ -10,11 +10,9 @@ const initialStateProductToRate = localStorage.getItem("product")
   ? JSON.parse(localStorage.getItem("product"))
   : null;
 
-const storedProduct = localStorage.getItem("product")
-  ? JSON.parse(localStorage.getItem("product"))
-  : null;
-
-const initialStateScore = storedProduct ? storedProduct.score : 0;
+const initialStateScore = initialStateProductToRate
+  ? initialStateProductToRate.score
+  : 0;
 
 export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);

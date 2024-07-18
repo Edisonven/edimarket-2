@@ -4,7 +4,6 @@ import { GoStarFill } from "react-icons/go";
 export function Completed({ orders }) {
   const valoradedProducts = orders.filter((order) => order.valorado === true);
 
-  console.log(valoradedProducts);
   return (
     <section className="">
       <p className="text-gray-400">¡Gracias por tu valoración!</p>

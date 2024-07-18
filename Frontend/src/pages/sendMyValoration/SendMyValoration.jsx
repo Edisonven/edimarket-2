@@ -58,14 +58,15 @@ export function SendMyValoration() {
         ...prevState,
         success: "¡Gracias por tu valoración!",
       }));
-      setValoration("");
       setTimeout(() => {
         setValorationSend((prevState) => ({
           ...prevState,
           success: "",
         }));
         navigate("/my-valorations");
+        setProductToRate(null);
       }, 1500);
+      setValoration("");
       return data;
     } catch (error) {
       console.error(error.message || "Error al actualizar valoración");
