@@ -16,7 +16,7 @@ export function Pending({ orders }) {
           return (
             <div
               className="border rounded-md p-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-[25px]"
-              key={order?.id}
+              key={order?.orderValorate_id}
             >
               <div className="flex items-center gap-3 ">
                 <figure className="border rounded-md shadow">

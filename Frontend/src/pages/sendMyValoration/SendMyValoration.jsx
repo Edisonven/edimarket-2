@@ -14,6 +14,24 @@ export function SendMyValoration() {
     setValoration(e.target.value);
   };
 
+  const handleUpdateProductValorated = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/venta/valorar", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({
+          orderId: "",
+        }),
+      });
+    } catch (error) {
+      console.error(error.message || "Error al actualizar valoración");
+      throw error;
+    }
+  };
+
   const handleSendValoration = async (e) => {
     e.preventDefault();
 

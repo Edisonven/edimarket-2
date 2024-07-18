@@ -339,7 +339,7 @@ const consultarVentasUsuario = async (idUsuario) => {
 const consultarVentasUsuarioParaValorar = async (idUsuario) => {
   const values = [idUsuario];
   const consulta =
-    "select * from orders_valorate inner join productos on orders_valorate.producto_id=productos.id inner join producto_categoria on productos.id=producto_categoria.producto_id inner join categorias on categorias.id=producto_categoria.categoria_id where orders_valorate.comprador_id=$1";
+    "SELECT orders_valorate.*, orders_valorate.id AS order_id, productos.*, producto_categoria.*, categorias.* FROM orders_valorate INNER JOIN productos ON orders_valorate.producto_id = productos.id INNER JOIN producto_categoria ON productos.id = producto_categoria.producto_id INNER JOIN categorias ON categorias.id = producto_categoria.categoria_id WHERE orders_valorate.comprador_id = $1";
   const { rows: ventas } = await db.query(consulta, values);
   console.log(ventas);
   return ventas;

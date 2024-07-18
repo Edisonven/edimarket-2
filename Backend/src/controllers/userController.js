@@ -410,7 +410,8 @@ const consultarVentasParaValorar = async (req, res) => {
     res.json({
       ventasParaValorar: ventas.map((venta) => {
         return {
-          id: venta.id,
+          orderValorate_id: venta.order_id,
+          venta_id: venta.id,
           comprador_id: venta.comprador_id,
           producto_id: venta.producto_id,
           nombre: venta.nombre,
