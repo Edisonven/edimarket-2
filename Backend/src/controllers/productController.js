@@ -193,15 +193,15 @@ const valorarProducto = async (req, res) => {
 
 const actualizarProductoValorado = async (req, res) => {
   try {
-    const { orderId } = req.body;
-    if (!orderId) {
-      throw new Error("id de la orden requerido");
+    const { orderId, score } = req.body;
+    if (!orderId || !score) {
+      throw new Error("id o calificación no proporcionados");
     }
     const Authorization = req.header("Authorization");
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET);
     const { id } = jwt.decode(token);
-    await productModel.editValorate(id, orderId);
+    await productModel.editValorate(id, orderId, score);
     res.status(200).json({ mensaje: "producto actualizado" });
   } catch (error) {
     res.status(500).json({ mensaje: error.message });
