@@ -51,7 +51,6 @@ export function Completed({ orders }) {
         ) : (
           <div className="flex flex-col items-center justify-center h-full mt-6">
             <h2 className="text-center">¡Estás al día con las valoraciones!</h2>
-
             <p className="text-center">
               Cuando hagas compras, podrás valorarlas acá.
             </p>
