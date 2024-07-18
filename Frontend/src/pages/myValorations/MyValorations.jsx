@@ -8,7 +8,7 @@ import { Pending } from "./Pending.jsx";
 import { Completed } from "./Completed.jsx";
 
 export function MyValorations() {
-  const { orders } = useContext(UserContext);
+  const { ordersToValorate } = useContext(UserContext);
   const { loading } = useContext(ProductContext);
 
   return (
@@ -37,8 +37,14 @@ export function MyValorations() {
         ) : (
           <Routes>
             <Route path="/" element={<Navigate to="pending" />} />
-            <Route path="pending" element={<Pending orders={orders} />} />
-            <Route path="completed" element={<Completed orders={orders} />} />
+            <Route
+              path="pending"
+              element={<Pending orders={ordersToValorate} />}
+            />
+            <Route
+              path="completed"
+              element={<Completed orders={ordersToValorate} />}
+            />
           </Routes>
         )}
       </div>

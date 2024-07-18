@@ -75,6 +75,7 @@ export function UserProvider({ children }) {
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [questionsByUser, setQuestionsByUser] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [ordersToValorate, setOrdersToValorate] = useState([]);
   const [AddAddressSuccess, setAddAddressSuccess] = useState({
     success: "",
     error: "",
@@ -127,24 +128,50 @@ export function UserProvider({ children }) {
   const fetchOrders = async () => {
     try {
       if (userToken) {
-        const response = await fetch(
-          `http://localhost:3000/usuarios/usuario/ventas/?idUsuario=${user.id}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
+        const handleOrders = async () => {
+          const response = await fetch(
+            `http://localhost:3000/usuarios/usuario/ventas/?idUsuario=${user.id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userToken}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Error fetching orders");
           }
-        );
+          const data = await response.json();
 
-        if (!response.ok) {
-          throw new Error("Error fetching orders");
-        }
-        const data = await response.json();
+          setOrders(data.ventas);
 
-        setOrders(data.ventas);
+          return data;
+        };
 
-        return data;
+        const handleOrdersToValorate = async () => {
+          const response = await fetch(
+            `http://localhost:3000/usuarios/usuario/valorar/?idUsuario=${user.id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userToken}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Error fetching orders");
+          }
+          const data = await response.json();
+
+          setOrdersToValorate(data.ventasParaValorar);
+
+          return data;
+        };
+
+        await handleOrders();
+        await handleOrdersToValorate();
       } else {
         return;
       }
@@ -533,6 +560,8 @@ export function UserProvider({ children }) {
         orders,
         setOrders,
         fetchOrders,
+        ordersToValorate,
+        setOrdersToValorate,
       }}
     >
       {children}
