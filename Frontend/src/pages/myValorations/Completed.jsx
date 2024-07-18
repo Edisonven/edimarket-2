@@ -2,17 +2,15 @@ import { GoStar } from "react-icons/go";
 import { GoStarFill } from "react-icons/go";
 
 export function Completed({ orders }) {
-  const notValoradedProductos = orders.filter(
-    (order) => order.valorado === true
-  );
+  const valoradedProducts = orders.filter((order) => order.valorado === true);
 
-  console.log(notValoradedProductos);
+  console.log(valoradedProducts);
   return (
     <section className="">
       <p className="text-gray-400">¡Gracias por tu valoración!</p>
       <div>
-        {notValoradedProductos?.length > 0 ? (
-          notValoradedProductos?.map((order) => {
+        {valoradedProducts?.length > 0 ? (
+          valoradedProducts?.map((order) => {
             return (
               <div
                 className="border rounded-md p-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-[25px]"
@@ -33,12 +31,18 @@ export function Completed({ orders }) {
                     comprado el {order?.fecha_venta}
                   </p>
                 </div>
-                <div>
+                <div className="flex items-center gap-6 mt-3 sm:mt-0">
                   {[...new Array(5)].map((_, index) =>
-                    index <= order?.score ? (
-                      <GoStarFill></GoStarFill>
+                    index < order?.calificacion ? (
+                      <GoStarFill
+                        key={index}
+                        className="star-icon scale-[2.5] select-none text-teal-700 p-[2px] rounded-full"
+                      />
                     ) : (
-                      <GoStar></GoStar>
+                      <GoStar
+                        key={index}
+                        className="star-icon scale-[2.5] select-none text-gray-400 p-[2px] rounded-full"
+                      />
                     )
                   )}
                 </div>

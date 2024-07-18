@@ -24,6 +24,7 @@ export function SendMyValoration() {
         },
         body: JSON.stringify({
           orderId: productToRate.orderValorate_id,
+          score: productToRate.score,
         }),
       });
 

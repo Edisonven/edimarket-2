@@ -56,10 +56,10 @@ const valorate = async (IdUsuario, IdProducto, cantidad) => {
   return console.log("Compra realizada");
 };
 
-const editValorate = async (id, orderId, valorado = true, score) => {
-  const values = [id, orderId, valorado, score];
+const editValorate = async (id, orderId, score, valorado = true) => {
+  const values = [id, orderId, score, valorado];
   const consulta =
-    "UPDATE orders_valorate SET valorado = $3, calificacion= $4 WHERE comprador_id = $1 AND id = $2";
+    "UPDATE orders_valorate SET valorado = $4, calificacion = $3 WHERE comprador_id = $1 AND id = $2";
   await db.query(consulta, values);
   return console.log("producto actualizado");
 };
