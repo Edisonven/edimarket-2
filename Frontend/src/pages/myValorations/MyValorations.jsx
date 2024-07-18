@@ -15,7 +15,7 @@ export function MyValorations() {
     <section className="myvalorations__container">
       <h1 className="text-2xl font-semibold mb-5">Mis valoraciones</h1>
 
-      <div className="mb-4 flex items-center gap-4">
+      <div className="mb-4 flex items-center gap-6">
         <NavLink
           to="pending"
           className={`${({ isActive }) =>

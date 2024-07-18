@@ -1,4 +1,4 @@
-import { StarRating } from "./StarRating";
+import star from "/imgs/aplication/estrella3.png";
 
 export function Pending({ orders }) {
   return (
@@ -34,8 +34,13 @@ export function Pending({ orders }) {
         })
       ) : (
         <div className="flex flex-col items-center justify-center h-full mt-6">
-          <h3>No has hecho preguntas aún.</h3>
-          <p>Cuando hagas preguntas aparecerán acá.</p>
+          <h2 className="text-center">¡Estás al día con las valoraciones!</h2>
+          <figure>
+            <img className="w-full max-w-[200px] py-5" src={star} alt="" />
+          </figure>
+          <p className="text-center">
+            Cuando hagas compras, podrás valorarlas acá.
+          </p>
         </div>
       )}
     </div>
