@@ -46,6 +46,17 @@ const venta = async (IdUsuario, IdProducto, cantidad) => {
   return console.log("Compra realizada");
 };
 
+const valorate = async (IdUsuario, IdProducto, cantidad) => {
+  const producto = await consultarProductoById(IdProducto);
+  const valor_total = producto.precio * cantidad;
+  const values = [IdUsuario, IdProducto, cantidad, valor_total];
+  const consulta =
+    "INSERT INTO orders_valorate(id,comprador_id,producto_id,cantidad,valor_total,fecha_venta) VALUES (DEFAULT,$1,$2,$3,$4,now())";
+  await db.query(consulta, values);
+  return console.log("Compra realizada");
+};
+
+
 const idCategoria = async (categoria) => {
   const values = [categoria];
   const consulta = "SELECT id FROM categorias WHERE nombre_categoria = $1";
@@ -174,4 +185,5 @@ export const productModel = {
   preguntasByProductId,
   productOnQuestions,
   productValoration,
+  valorate
 };

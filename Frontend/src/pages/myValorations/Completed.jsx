@@ -1,7 +1,7 @@
 export function Completed() {
   return (
-    <section>
-      <h1>Hola soy las completadas</h1>
+    <section className="">
+      <p className="text-gray-400">¡Gracias por tu valoración!</p>
     </section>
   );
 }

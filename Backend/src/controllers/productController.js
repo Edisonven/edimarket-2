@@ -177,6 +177,20 @@ const ventaRealizada = async (req, res) => {
   }
 };
 
+const valorarProducto = async (req, res) => {
+  try {
+    const { idProducto, cantidad } = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, process.env.JWT_SECRET);
+    const { id } = jwt.decode(token);
+    await productModel.valorate(id, idProducto, cantidad);
+    res.status(200).json({ mensaje: "compra realizada" });
+  } catch (error) {
+    res.status(500).json({ mensaje: error.message });
+  }
+};
+
 const getPreguntasByProductId = async (req, res) => {
   try {
     const { idProduct } = req.params;
@@ -307,4 +321,5 @@ export const productController = {
   getPreguntasByProductId,
   getProductOnQuestions,
   sendProductValoration,
+  valorarProducto,
 };

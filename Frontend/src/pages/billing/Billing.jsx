@@ -77,13 +77,37 @@ export function Billing() {
         return data;
       };
 
+      const sendSecondProduct = async (producto) => {
+        const response = await fetch(`http://localhost:3000/venta/valorar`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({
+            idProducto: producto.producto_id,
+            cantidad: producto.cantidad,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Error en la segunda solicitud");
+        }
+
+        const data = await response.json();
+        return data;
+      };
+
       for (const producto of cart) {
         await sendProduct(producto);
+        await sendSecondProduct(producto);
       }
 
       if (directBuy !== null) {
         await sendProduct(directBuy);
+        await sendSecondProduct(directBuy);
       }
+
       fetchOrders();
       setDirectBuy(null);
       handleDeleteUserProducts();
