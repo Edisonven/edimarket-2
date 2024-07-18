@@ -4,11 +4,18 @@ import { ProductContext } from "../../context/ProductContext";
 import { StarRating } from "../myValorations/StarRating";
 import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
 import { UserContext } from "../../context/UserContext";
+import { CartAlert } from "../../components/cartAlert/CartAlert";
+import { useNavigate } from "react-router-dom";
 
 export function SendMyValoration() {
   const { productToRate, setProductToRate, score } = useContext(ProductContext);
-  const { userToken } = useContext(UserContext);
+  const { userToken, fetchOrders } = useContext(UserContext);
   const [valoration, setValoration] = useState("");
+  const navigate = useNavigate();
+  const [valorationSend, setValorationSend] = useState({
+    success: "",
+    error: "",
+  });
 
   const handleChange = (e) => {
     setValoration(e.target.value);
@@ -30,11 +37,35 @@ export function SendMyValoration() {
 
       if (!response.ok) {
         const errorData = await response.json();
+        setValorationSend((prevState) => ({
+          ...prevState,
+          error: "No pudimos enviar tu valoración",
+        }));
+        setValoration("");
+        setTimeout(() => {
+          setValorationSend((prevState) => ({
+            ...prevState,
+            error: "",
+          }));
+        }, 3000);
         throw new Error(
           errorData.message || "Error al actualizar producto valorado"
         );
       }
       const data = await response.json();
+      fetchOrders();
+      setValorationSend((prevState) => ({
+        ...prevState,
+        success: "¡Gracias por tu valoración!",
+      }));
+      setValoration("");
+      setTimeout(() => {
+        setValorationSend((prevState) => ({
+          ...prevState,
+          success: "",
+        }));
+        navigate("/my-valorations");
+      }, 1500);
       return data;
     } catch (error) {
       console.error(error.message || "Error al actualizar valoración");
@@ -143,6 +174,20 @@ export function SendMyValoration() {
           </form>
         </div>
       </div>
+      {valorationSend.success && (
+        <CartAlert>
+          <p className="card__perfil__alert shadow-md rounded-md bg-green-600">
+            {valorationSend.success}
+          </p>
+        </CartAlert>
+      )}
+      {valorationSend.error && (
+        <CartAlert>
+          <p className="card__perfil__alert shadow-md rounded-md bg-red-600">
+            {valorationSend.error}
+          </p>
+        </CartAlert>
+      )}
     </section>
   );
 }
