@@ -22,6 +22,9 @@
   width: 100%;
   max-width: 300px;
 }
+.products__card__allproducts:hover {
+  filter: brightness(90%);
+}
 .product__list__filters {
   display: flex;
   flex-direction: column;
