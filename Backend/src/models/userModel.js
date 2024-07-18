@@ -336,6 +336,15 @@ const consultarVentasUsuario = async (idUsuario) => {
   return ventas;
 };
 
+const consultarVentasUsuarioParaValorar = async (idUsuario) => {
+  const values = [idUsuario];
+  const consulta =
+    "select * from orders_valorate inner join productos on orders_valorate.producto_id=productos.id inner join producto_categoria on productos.id=producto_categoria.producto_id inner join categorias on categorias.id=producto_categoria.categoria_id where orders_valorate.comprador_id=$1";
+  const { rows: ventas } = await db.query(consulta, values);
+  console.log(ventas);
+  return ventas;
+};
+
 const pregunta = async (idProducto, idUsuario, pregunta) => {
   const values = [idProducto, idUsuario, pregunta];
   const query =
@@ -396,4 +405,5 @@ export const userModel = {
   getPreguntasByUser,
   modifyPreguntasByUser,
   deletePreguntasByUser,
+  consultarVentasUsuarioParaValorar,
 };

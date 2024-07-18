@@ -1,4 +1,5 @@
 import star from "/imgs/aplication/estrella3.png";
+import { StarRating } from "./StarRating";
 
 export function Pending({ orders }) {
   return (

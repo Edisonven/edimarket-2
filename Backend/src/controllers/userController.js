@@ -397,6 +397,42 @@ const consultarVentas = async (req, res) => {
   }
 };
 
+const consultarVentasParaValorar = async (req, res) => {
+  try {
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, process.env.JWT_SECRET);
+    const { email, id } = jwt.decode(token);
+    const ventas = await userModel.consultarVentasUsuarioParaValorar(id);
+    console.log(
+      `El usuario ${email} con el id ${id} ha consultado sus compras`
+    );
+    res.json({
+      ventasParaValorar: ventas.map((venta) => {
+        return {
+          id: venta.id,
+          comprador_id: venta.comprador_id,
+          producto_id: venta.producto_id,
+          nombre: venta.nombre,
+          descripcion: venta.descripcion,
+          imagen: venta.imagen,
+          nombre_categoria: venta.nombre_categoria,
+          cantidad: venta.cantidad,
+          valor_total: venta.valor_total,
+          fecha_venta: venta.fecha_venta.toLocaleString("es-ES", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            timeZone: "UTC",
+          }),
+        };
+      }),
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const preguntaRealizada = async (req, res) => {
   try {
     const { idProducto, pregunta } = req.body;
@@ -494,4 +530,5 @@ export const userController = {
   getPreguntas,
   modifyPreguntas,
   deletePreguntas,
+  consultarVentasParaValorar,
 };
