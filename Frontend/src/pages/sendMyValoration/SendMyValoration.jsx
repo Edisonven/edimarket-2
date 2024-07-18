@@ -23,9 +23,18 @@ export function SendMyValoration() {
           Authorization: `Bearer ${userToken}`,
         },
         body: JSON.stringify({
-          orderId: "",
+          orderId: productToRate.orderValorate_id,
         }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || "Error al actualizar producto valorado"
+        );
+      }
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error(error.message || "Error al actualizar valoración");
       throw error;
@@ -58,6 +67,7 @@ export function SendMyValoration() {
           throw new Error(errorData.message || "Error al enviar valoración");
         }
         const data = await response.json();
+        await handleUpdateProductValorated();
         return data;
       } catch (error) {
         console.error(error.message || "Error al enviar valoración");
