@@ -51,7 +51,7 @@ const valorate = async (IdUsuario, IdProducto, cantidad) => {
   const valor_total = producto.precio * cantidad;
   const values = [IdUsuario, IdProducto, cantidad, valor_total];
   const consulta =
-    "INSERT INTO orders_valorate(id,comprador_id,producto_id,cantidad,valor_total,fecha_venta) VALUES (DEFAULT,$1,$2,$3,$4,now())";
+    "INSERT INTO orders_valorate(id,comprador_id,producto_id,cantidad,valor_total,fecha_venta,valorado) VALUES (DEFAULT,$1,$2,$3,$4,now(),false)";
   await db.query(consulta, values);
   return console.log("Compra realizada");
 };

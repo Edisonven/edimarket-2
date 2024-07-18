@@ -425,6 +425,7 @@ const consultarVentasParaValorar = async (req, res) => {
             day: "2-digit",
             timeZone: "UTC",
           }),
+          valorado: venta.valorado,
         };
       }),
     });
