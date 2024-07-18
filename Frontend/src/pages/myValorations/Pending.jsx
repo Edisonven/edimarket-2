@@ -2,13 +2,17 @@ import star from "/imgs/aplication/estrella3.png";
 import { StarRating } from "./StarRating";
 
 export function Pending({ orders }) {
+  const notValoradedProductos = orders.filter(
+    (order) => order.valorado === false
+  );
+
   return (
     <div className="flex flex-col gap-5">
       <p className="text-gray-400">
         Valora tus productos y ayuda a las demás personas
       </p>
-      {orders?.length > 0 ? (
-        orders.map((order) => {
+      {notValoradedProductos?.length > 0 ? (
+        notValoradedProductos?.map((order) => {
           return (
             <div
               className="border rounded-md p-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-[25px]"
