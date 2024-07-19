@@ -1,7 +1,3 @@
-.comments__container {
-  grid-area: info;
-}
-
 .opiniones__body {
   overflow-y: auto;
   max-height: 400px;

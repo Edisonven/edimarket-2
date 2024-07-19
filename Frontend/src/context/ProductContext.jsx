@@ -38,9 +38,40 @@ export function ProductProvider({ children }) {
   const [questionsByProductId, setQuestionsByProductId] = useState([]);
   const [productToRate, setProductToRate] = useState(initialStateProductToRate);
   const [score, setScore] = useState(initialStateScore);
+  const [userValorations, setUserValorations] = useState([]);
   const [serverError, setServerError] = useState({
     myPostGetError: "",
   });
+
+  const handleGetUserValorations = async () => {
+    try {
+      if (productById) {
+        const response = await fetch(
+          `http://localhost:3000/productos/valoracion/${productById?.producto_id}`
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            errorData.message || "Error al obtener las valoraciones"
+          );
+        }
+
+        const data = await response.json();
+
+        setUserValorations(data?.valoraciones);
+        return data;
+      }
+    } catch (error) {
+      console.error(error.message || "Error al obtener las valoraciones");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    handleGetUserValorations();
+  }, [productById]);
 
   const handleGetQuestionsByProductId = async () => {
     setLoading(true);
@@ -261,6 +292,8 @@ export function ProductProvider({ children }) {
         setProductToRate,
         score,
         setScore,
+        userValorations,
+        setUserValorations,
       }}
     >
       {children}

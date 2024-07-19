@@ -331,7 +331,23 @@ const getProductValoration = async (req, res) => {
       productId
     );
 
-    res.status(200).json({ valoraciones: valoraciones });
+    res.status(200).json({
+      valoraciones: valoraciones.map((valoracion) => {
+        return {
+          id: valoracion.id,
+          valoracion: valoracion.valoracion,
+          comentario: valoracion.comentario,
+          calificacion: valoracion.calificacion,
+          usuario: valoracion.nombre_usuario,
+          fecha: valoracion.fecha.toLocaleString("es-ES", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            timeZone: "UTC",
+          }),
+        };
+      }),
+    });
   } catch (error) {
     res.status(500).json({ mensaje: error.message });
   }
