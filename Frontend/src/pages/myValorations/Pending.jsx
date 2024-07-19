@@ -15,7 +15,7 @@ export function Pending({ orders }) {
         notValoradedProductos?.map((order) => {
           return (
             <div
-              className="border rounded-md p-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-[25px]"
+              className="border rounded-md p-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-[25px] px-6"
               key={order?.orderValorate_id}
             >
               <div className="flex items-center gap-3 ">
@@ -28,12 +28,14 @@ export function Pending({ orders }) {
                   </p>
                 </div>
               </div>
-              <div>
-                <p className="text-sm text-gray-500">
-                  comprado el {order?.fecha_venta}
-                </p>
+              <div className="flex items-center flex-col gap-3 sm:flex-row-reverse justify-evenly w-full">
+                <div>
+                  <p className="text-sm text-gray-500">
+                    comprado el {order?.fecha_venta}
+                  </p>
+                </div>
+                <StarRating order={order} orderId={order?.id} />
               </div>
-              <StarRating order={order} orderId={order?.id} />
             </div>
           );
         })
