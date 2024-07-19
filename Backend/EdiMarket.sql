@@ -15,6 +15,7 @@ CREATE TABLE
 		stock INT NOT NULL,
 		imagen VARCHAR(255),
 		vendedor_id INT NOT NULL,
+		fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		FOREIGN KEY (vendedor_id) REFERENCES usuarios (id) ON DELETE CASCADE,
 		estado VARCHAR(255) NOT NULL
 	);
@@ -92,17 +93,21 @@ CREATE TABLE
 		FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
 	);
 
-CREATE TABLE valoraciones_producto (
-	id SERIAL PRIMARY KEY,
-	usuario_id INT NOT NULL,
-	producto_id INT NOT NULL,
-	comentario TEXT,
-	calificación INT NOT NULL CHECK (calificación >= 1 AND calificación <= 5),
-	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	valorado BOOLEAN NOT NULL,
-	FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE,
-	FOREIGN KEY (producto_id) REFERENCES productos (id) ON DELETE CASCADE
-);
+CREATE TABLE
+	valoraciones_producto (
+		id SERIAL PRIMARY KEY,
+		usuario_id INT NOT NULL,
+		producto_id INT NOT NULL,
+		comentario TEXT,
+		calificación INT NOT NULL CHECK (
+			calificación >= 1
+			AND calificación <= 5
+		),
+		fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		valorado BOOLEAN NOT NULL,
+		FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE,
+		FOREIGN KEY (producto_id) REFERENCES productos (id) ON DELETE CASCADE
+	);
 
 CREATE TABLE
 	preguntas_producto (
