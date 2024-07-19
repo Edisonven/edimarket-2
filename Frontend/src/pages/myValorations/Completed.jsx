@@ -1,6 +1,7 @@
 import { GoStar } from "react-icons/go";
 import { GoStarFill } from "react-icons/go";
 import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
+import { BsFillHandThumbsUpFill } from "react-icons/bs";
 
 export function Completed({ orders }) {
   const valoradedProducts = orders.filter((order) => order.valorado === true);
@@ -21,18 +22,18 @@ export function Completed({ orders }) {
                     <img className="w-[80px]" src={order?.imagen} alt="" />
                   </figure>
                   <div className="overflow-hidden w-full">
-                    <p className="w-full font-medium whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] sm:max-w-[500px] md:max-w-[300px]">
+                    <p className="w-full font-medium whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] sm:max-w-[500px] md:max-w-[250px] lg:max-w-[300px]">
                       {order?.nombre}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center flex-col gap-3 sm:flex-row-reverse  sm:justify-center sm:gap-10 justify-between w-full">
-                  <div>
-                    <p className="text-sm text-gray-500 whitespace-nowrap">
+                <div className="flex items-center flex-col gap-3 sm:flex-row sm:justify-center sm:gap-5 md:gap-10 justify-between w-full">
+                  <div className="w-full">
+                    <p className="text-sm text-gray-500 whitespace-normal lg:whitespace-nowrap ">
                       comprado el {order?.fecha_venta}
                     </p>
                   </div>
-                  <div className="flex items-center gap-6 mt-3 sm:mt-0">
+                  <div className="flex items-center gap-6 my-3 sm:my-0">
                     {[...new Array(5)].map((_, index) =>
                       index < order?.calificacion ? (
                         <GoStarFill
@@ -47,9 +48,16 @@ export function Completed({ orders }) {
                       )
                     )}
                   </div>
+                  <div className="flex gap-1">
+                    <BsFillHandThumbsUpFill className="text-[24px] text-gray-400" />
+                    <span>0</span>
+                  </div>
                 </div>
-                <div className="w-full flex items-center justify-end">
-                  <GeneralBtn className="max-w-[175px] h-[45px] flex items-center justify-center text-sm" type="secondary">
+                <div className="w-full flex items-center justify-end mt-5 sm:mt-0">
+                  <GeneralBtn
+                    className="max-w-[175px] h-[45px] flex items-center justify-center text-sm whitespace-nowrap"
+                    type="secondary"
+                  >
                     Editar opinión
                   </GeneralBtn>
                 </div>
