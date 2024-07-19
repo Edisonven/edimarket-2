@@ -8,7 +8,7 @@ import productRoutes from "./src/routes/productRoutes.js";
 import favoritosRoutes from "./src/routes/favoritosRoutes.js";
 import carritoRoutes from "./src/routes/carritoRoutes.js";
 import ventaRoutes from "./src/routes/ventaRoutes.js";
-const port = process.env.PORT || 3000;
+const port = process.env.POSTGRES_URL || 3000;
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
