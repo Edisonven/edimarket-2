@@ -324,6 +324,19 @@ const sendProductValoration = async (req, res) => {
   }
 };
 
+const getProductValoration = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const valoraciones = await productModel.productValorationObtained(
+      productId
+    );
+
+    res.status(200).json({ valoraciones: valoraciones });
+  } catch (error) {
+    res.status(500).json({ mensaje: error.message });
+  }
+};
+
 export const productController = {
   getProductos,
   getProductoById,
@@ -340,4 +353,5 @@ export const productController = {
   sendProductValoration,
   valorarProducto,
   actualizarProductoValorado,
+  getProductValoration,
 };

@@ -165,18 +165,22 @@ const productOnQuestions = async (id) => {
   const query =
     "SELECT preguntas_producto.id AS id_pregunta, preguntas_producto.producto_id, preguntas_producto.usuario_id, preguntas_producto.pregunta, preguntas_producto.fecha, productos.id AS productoId, productos.nombre AS producto_nombre, productos.precio, productos.stock, productos.imagen, usuarios.nombre AS nombre_usuario FROM preguntas_producto INNER JOIN productos ON preguntas_producto.producto_id = productos.id INNER JOIN usuarios ON usuarios.id = preguntas_producto.usuario_id WHERE usuarios.id = $1";
   const { rows: producto } = await db.query(query, values);
-
   return producto;
 };
 
 const productValoration = async (id, idProducto, comentario, calificacion) => {
   const values = [id, idProducto, comentario, calificacion];
-
   const query =
     "INSERT INTO valoraciones_producto(id, usuario_id, producto_id, comentario, calificacion, fecha, valorado) VALUES (DEFAULT, $1 , $2 , $3 , $4 , DEFAULT, true)";
-
   const { rows: valoracion } = await db.query(query, values);
+  return valoracion;
+};
 
+const productValorationObtained = async (productId) => {
+  const values = [productId];
+  const query =
+    "SELECT valoraciones_producto.*, usuarios.nombre AS nombre_usuario, usuarios.email AS usuario_email FROM valoraciones_producto INNER JOIN usuarios ON valoraciones_producto.usuario_id = usuarios.id WHERE producto_id = $1";
+  const { rows: valoracion } = await db.query(query, values);
   return valoracion;
 };
 
@@ -194,4 +198,5 @@ export const productModel = {
   productValoration,
   valorate,
   editValorate,
+  productValorationObtained,
 };
