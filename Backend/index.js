@@ -26,5 +26,5 @@ app.use("/venta", ventaRoutes);
 app.use("/preguntas", productRoutes);
 
 app.get("*", (_, res) => {
-  res.status(404).send("No encontrado");
+  res.status(404).send("Ruta no encontrada");
 });
