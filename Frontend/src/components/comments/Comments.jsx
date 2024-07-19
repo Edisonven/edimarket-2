@@ -7,7 +7,11 @@ import { GoStarFill } from "react-icons/go";
 import { GoStar } from "react-icons/go";
 
 export function Comments() {
-  const { userValorations } = useContext(ProductContext);
+  const { userValorations, productById } = useContext(ProductContext);
+
+  const productId = userValorations.find(
+    (product) => product.producto_id === productById.producto_id
+  );
 
   return (
     <section className="comments__container">
@@ -17,7 +21,7 @@ export function Comments() {
         este producto.
       </p>
       <div className="comments__container flex flex-col gap-5">
-        {userValorations ? (
+        {productId?.producto_id === productById?.producto_id ? (
           <div className="opiniones__container">
             <h3 className="my-3 font-medium">Opiniones</h3>
             <div className="opiniones__body flex flex-col">

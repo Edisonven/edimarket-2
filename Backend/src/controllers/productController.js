@@ -339,6 +339,7 @@ const getProductValoration = async (req, res) => {
           comentario: valoracion.comentario,
           calificacion: valoracion.calificacion,
           usuario: valoracion.nombre_usuario,
+          producto_id: valoracion.producto_id,
           fecha: valoracion.fecha.toLocaleString("es-ES", {
             year: "numeric",
             month: "2-digit",
