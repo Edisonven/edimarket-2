@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { GeneralBtn } from '../generalBtn/GeneralBtn'
+import card from "/imgs/aplication/card.png"
 
 export function NoPaymentMethodsAdded() {
 
@@ -10,13 +11,19 @@ export function NoPaymentMethodsAdded() {
   }
 
   return (
-    <div className='pt-36 flex flex-col align-center justify-center'>
-      <div className='flex  flex-col justify-center align-center lg:m-96 md:m-80 m-20'>
-        <h1 className="mb-10 text-center">No has añadido ningún medio de pago :(</h1>
-        <GeneralBtn type='primary' className="" onClick={handleAddCard}>
-          Añadir tarjeta
-        </GeneralBtn>
+<section className="flex flex-col align-center justify-center max-w-[1000px] mx-auto min-h-[480px] bg-white shadow-sm rounded-md">
+      <div className="flex flex-col justify-center items-center gap-6">
+        <h1 className="text-center">No has añadido ningún método de pago</h1>
+        <figure>
+          <img className="w-full max-w-[120px] rounded-md" src={card} alt="" />
+        </figure>
+        <div className="flex flex-col justify-center items-center gap-4">
+          <p className="text-center font-medium">Por favor, añade un método de pago para continuar</p>
+          <GeneralBtn type="primary" className="" onClick={handleAddCard}>
+            Añadir tarjeta
+          </GeneralBtn>
+        </div>
       </div>
-    </div>
+    </section>
   )
 };
