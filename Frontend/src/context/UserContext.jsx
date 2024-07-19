@@ -185,7 +185,7 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [userToken]);
 
   const handleGetQuestionsByUser = async () => {
     try {
@@ -218,7 +218,7 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     handleGetQuestionsByUser();
-  }, []);
+  }, [userToken]);
 
   const handleUserCards = async () => {
     try {
