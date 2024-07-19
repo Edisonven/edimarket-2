@@ -3,3 +3,4 @@
 .env
 pacakage-lock.json
 node_modules/*
+.vercel
