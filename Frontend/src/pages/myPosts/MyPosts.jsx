@@ -125,7 +125,7 @@ export function MyPosts() {
       ) : serverError.myPostGetError ? (
         <p>{serverError.myPostGetError}</p>
       ) : (
-        <div className="myposts__body flex flex-col gap-5 h-full bg-white shadow-sm p-3 rounded-md">
+        <div className="myposts__body flex flex-col gap-5 h-full bg-white shadow-sm p-3 rounded-md min-h-[480px]">
           {myProducts.length > 0 ? (
             myProducts.map((product) => (
               <ProductCard
@@ -253,7 +253,7 @@ export function MyPosts() {
                 Aún no has publicado.
               </span>
               <p className=" text-center">
-                Cuando vendas tus publicaciones aparecerán aquí.
+                Cuando vendas, tus publicaciones aparecerán aquí.
               </p>
               <img className="post__img" src={postImg} alt="" />
             </div>
