@@ -9,7 +9,7 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD,
   port: process.env.DB_PORT || 5432,
   ssl: {
-    rejectUnauthorized: false 
+    rejectUnauthorized: false // Ajusta esta configuración según los requisitos de tu base de datos
   }
 });
 
