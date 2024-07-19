@@ -2,12 +2,12 @@ import "dotenv/config";
 import express, { json } from "express";
 const app = express();
 import cors from "cors";
-import userRoutes from "../Backend/src/routes/userRoutes.js";
-import categoriaRoutes from "../Backend/src/routes/categoriaRoutes.js";
-import productRoutes from "../Backend/src/routes/productRoutes.js";
-import favoritosRoutes from "../Backend/src/routes/favoritosRoutes.js";
-import carritoRoutes from "../Backend/src/routes/carritoRoutes.js";
-import ventaRoutes from "../Backend/src/routes/ventaRoutes.js";
+import userRoutes from "./src/routes/userRoutes.js";
+import categoriaRoutes from "./src/routes/categoriaRoutes.js";
+import productRoutes from "./src/routes/productRoutes.js";
+import favoritosRoutes from "./src/routes/favoritosRoutes.js";
+import carritoRoutes from "./src/routes/carritoRoutes.js";
+import ventaRoutes from "./src/routes/ventaRoutes.js";
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
