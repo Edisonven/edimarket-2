@@ -2,8 +2,11 @@ import { GoStar } from "react-icons/go";
 import { GoStarFill } from "react-icons/go";
 import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
 import { BsFillHandThumbsUpFill } from "react-icons/bs";
+import { useContext } from "react";
+import { ProductContext } from "../../context/ProductContext";
 
 export function Completed({ orders }) {
+  const { handleProductDetail } = useContext(ProductContext);
   const valoradedProducts = orders.filter((order) => order.valorado === true);
 
   return (
@@ -17,9 +20,16 @@ export function Completed({ orders }) {
                 className="border rounded-md p-3 flex flex-col md:flex-row items-center  gap-3 sm:gap-[25px] md:justify-between px-6"
                 key={order?.orderValorate_id}
               >
-                <div className="flex items-center gap-3 w-full">
+                <div
+                  onClick={() => handleProductDetail(order?.producto_id)}
+                  className="flex items-center gap-3 w-full cursor-pointer"
+                >
                   <figure className="border rounded-md shadow">
-                    <img className="w-[80px]" src={order?.imagen} alt="" />
+                    <img
+                      className="w-[80px] h-[60px] object-cover"
+                      src={order?.imagen}
+                      alt=""
+                    />
                   </figure>
                   <div className="overflow-hidden w-full">
                     <p className="w-full font-medium whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] sm:max-w-[500px] md:max-w-[250px] lg:max-w-[300px]">
