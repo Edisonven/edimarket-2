@@ -38,12 +38,12 @@ export function Comments() {
                         {[...new Array(5)].map((_, index) =>
                           index < valoration?.calificacion ? (
                             <GoStarFill
-                              className="star-icon text-sm sm:text-[20px] select-none text-teal-700 rounded-full"
+                              className="star-icon text-sm sm:text-[15px] select-none text-teal-700 rounded-full"
                               key={index}
                             />
                           ) : (
                             <GoStar
-                              className="star-icon text-sm sm:text-[20px] select-none text-gray-400 rounded-full"
+                              className="star-icon text-sm sm:text-[15px] select-none text-gray-400 rounded-full"
                               key={index}
                             />
                           )
