@@ -434,9 +434,9 @@ export function ProductDetail() {
                 <div className="card__payment ">
                   <h3 className="mb-4 font-medium">Medios de pago</h3>
                   <div className="flex items-center justify-between">
-                    <img className="w-16 aspect-auto" src={visa} alt="" />
-                    <img className="w-16 aspect-auto" src={masterCard} alt="" />
-                    <img className="w-16 aspect-auto" src={cash} alt="" />
+                    <img className="w-16 aspect-w-1 aspect-h-1" src={visa} alt="" />
+                    <img className="w-16 aspect-w-1 aspect-h-1" src={masterCard} alt="" />
+                    <img className="w-16 aspect-w-1 aspect-h-1" src={cash} alt="" />
                   </div>
                 </div>
               </div>
