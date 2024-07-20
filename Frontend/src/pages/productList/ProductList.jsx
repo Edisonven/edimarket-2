@@ -25,7 +25,7 @@ export function ProductList() {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:3000/categorias/${categoria}?page=${page}&limits=${limit}`
+        `https://backend-mu-three-82.vercel.app/categorias/${categoria}?page=${page}&limits=${limit}`
       );
       if (!response.ok) {
         throw new Error("Producto no encontrado");

@@ -33,7 +33,7 @@ export function SingUp() {
   };
 
   const registerNewUser = async (nombre, email, contraseña) => {
-    const response = await fetch("http://localhost:3000/usuarios/registro", {
+    const response = await fetch("https://backend-mu-three-82.vercel.app/usuarios/registro", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nombre, email, contraseña }),
@@ -139,7 +139,7 @@ export function SingUp() {
 
   const handleGoogleAuth = async () => {
     try {
-      const response = await fetch("http://localhost:3000/auth/google");
+      const response = await fetch("https://backend-mu-three-82.vercel.app/auth/google");
 
       if (!response.ok) {
         const errorData = await response.json();

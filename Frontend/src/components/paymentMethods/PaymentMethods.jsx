@@ -17,7 +17,7 @@ export function PaymentMethods() {
   const handleUserCards = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/usuarios/usuario/metodosPago/?idUsuario=${user.id}`,
+        `https://backend-mu-three-82.vercel.app/usuarios/usuario/metodosPago/?idUsuario=${user.id}`,
         {
           headers: {
             "Content-Type": "application/json",

@@ -36,7 +36,7 @@ export function AddUserCards() {
   ) => {
     try {
       const response = await fetch(
-        "http://localhost:3000/usuarios/metodosPago",
+        "https://backend-mu-three-82.vercel.app/usuarios/metodosPago",
         {
           method: "POST",
           headers: {

@@ -16,7 +16,7 @@ export function CarritoModal() {
     try {
       if (userToken) {
         const response = await fetch(
-          `http://localhost:3000/carrito/${product_id}`,
+          `https://backend-mu-three-82.vercel.app/carrito/${product_id}`,
           {
             method: "DELETE",
             headers: {

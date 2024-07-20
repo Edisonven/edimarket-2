@@ -35,7 +35,7 @@ export function AddUserAdress() {
     try {
       if (userToken) {
         const response = await fetch(
-          "http://localhost:3000/usuarios/domicilio",
+          "https://backend-mu-three-82.vercel.app/usuarios/domicilio",
           {
             method: "POST",
             headers: {

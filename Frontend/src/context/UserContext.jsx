@@ -130,7 +130,7 @@ export function UserProvider({ children }) {
       if (userToken) {
         const handleOrders = async () => {
           const response = await fetch(
-            `http://localhost:3000/usuarios/usuario/ventas/?idUsuario=${user.id}`,
+            `https://backend-mu-three-82.vercel.app/usuarios/usuario/ventas/?idUsuario=${user.id}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -151,7 +151,7 @@ export function UserProvider({ children }) {
 
         const handleOrdersToValorate = async () => {
           const response = await fetch(
-            `http://localhost:3000/usuarios/usuario/valorar/?idUsuario=${user.id}`,
+            `https://backend-mu-three-82.vercel.app/usuarios/usuario/valorar/?idUsuario=${user.id}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -191,7 +191,7 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          `http://localhost:3000/usuarios/preguntas/${user.id}`,
+          `https://backend-mu-three-82.vercel.app/usuarios/preguntas/${user.id}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -224,7 +224,7 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          `http://localhost:3000/usuarios/usuario/metodosPago/?idUsuario=${user.id}`,
+          `https://backend-mu-three-82.vercel.app/usuarios/usuario/metodosPago/?idUsuario=${user.id}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -267,7 +267,7 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          "http://localhost:3000/usuarios/usuario/productos",
+          "https://backend-mu-three-82.vercel.app/usuarios/usuario/productos",
           {
             headers: {
               "Content-Type": "application/json",
@@ -307,7 +307,7 @@ export function UserProvider({ children }) {
   const handleAddedToCart = async () => {
     try {
       if (userToken) {
-        const response = await fetch("http://localhost:3000/carrito", {
+        const response = await fetch("https://backend-mu-three-82.vercel.app/carrito", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${userToken}`,
@@ -341,7 +341,7 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          `http://localhost:3000/usuarios/usuario/domicilio?userId=${user.id}`,
+          `https://backend-mu-three-82.vercel.app/usuarios/usuario/domicilio?userId=${user.id}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -383,7 +383,7 @@ export function UserProvider({ children }) {
   const handleGetFavs = async () => {
     try {
       if (userToken) {
-        const response = await fetch("http://localhost:3000/favoritos", {
+        const response = await fetch("https://backend-mu-three-82.vercel.app/favoritos", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${userToken}`,
@@ -410,7 +410,7 @@ export function UserProvider({ children }) {
   const handleDeleteFav = async (e, id) => {
     e.stopPropagation();
     try {
-      const response = await fetch(`http://localhost:3000/favoritos/${id}`, {
+      const response = await fetch(`https://backend-mu-three-82.vercel.app/favoritos/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

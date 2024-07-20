@@ -23,7 +23,7 @@ export function SendMyValoration() {
 
   const handleUpdateProductValorated = async () => {
     try {
-      const response = await fetch("http://localhost:3000/venta/valorar", {
+      const response = await fetch("https://backend-mu-three-82.vercel.app/venta/valorar", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export function SendMyValoration() {
     if (userToken) {
       try {
         const response = await fetch(
-          "http://localhost:3000/productos/valoracion",
+          "https://backend-mu-three-82.vercel.app/productos/valoracion",
           {
             method: "POST",
             headers: {

@@ -47,7 +47,7 @@ export function ProductProvider({ children }) {
     try {
       if (productById) {
         const response = await fetch(
-          `http://localhost:3000/productos/valoracion/${productById?.producto_id}`
+          `https://backend-mu-three-82.vercel.app/productos/valoracion/${productById?.producto_id}`
         );
 
         if (!response.ok) {
@@ -78,7 +78,7 @@ export function ProductProvider({ children }) {
     try {
       if (productById) {
         const response = await fetch(
-          `http://localhost:3000/productos/preguntas/${productById?.producto_id}`
+          `https://backend-mu-three-82.vercel.app/productos/preguntas/${productById?.producto_id}`
         );
 
         if (!response.ok) {
@@ -145,7 +145,7 @@ export function ProductProvider({ children }) {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:3000/usuarios/${vendedor_id}`
+        `https://backend-mu-three-82.vercel.app/usuarios/${vendedor_id}`
       );
 
       if (!response.ok) {
@@ -172,7 +172,7 @@ export function ProductProvider({ children }) {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:3000/productos?page=${page}&limits=${limit}&order_by=${order_by}`
+        `https://backend-mu-three-82.vercel.app/productos?page=${page}&limits=${limit}&order_by=${order_by}`
       );
       if (!response.ok) {
         const errorData = await response.json();
@@ -215,7 +215,7 @@ export function ProductProvider({ children }) {
   const handleGetProduct = async (id) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/productos/${id}`);
+      const response = await fetch(`https://backend-mu-three-82.vercel.app/productos/${id}`);
       if (!response.ok) {
         throw new Error("Producto no encontrado");
       }

@@ -81,7 +81,7 @@ export function ProductDetail() {
         }, 2400);
       } else {
         if (userToken) {
-          const response = await fetch("http://localhost:3000/carrito", {
+          const response = await fetch("https://backend-mu-three-82.vercel.app/carrito", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -120,7 +120,7 @@ export function ProductDetail() {
       );
       if (!productFinded) {
         const response = await fetch(
-          `http://localhost:3000/favoritos/${productById.producto_id}`,
+          `https://backend-mu-three-82.vercel.app/favoritos/${productById.producto_id}`,
           {
             method: "POST",
             headers: {
@@ -155,7 +155,7 @@ export function ProductDetail() {
         return data;
       } else {
         const response = await fetch(
-          `http://localhost:3000/favoritos/${productFinded.id}`,
+          `https://backend-mu-three-82.vercel.app/favoritos/${productFinded.id}`,
           {
             method: "DELETE",
             headers: {

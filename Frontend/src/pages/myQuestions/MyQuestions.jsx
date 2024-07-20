@@ -26,7 +26,7 @@ export function MyQuestions() {
     try {
       if (userToken) {
         const response = await fetch(
-          `http://localhost:3000/productos/producto/${user.id}`,
+          `https://backend-mu-three-82.vercel.app/productos/producto/${user.id}`,
           {
             headers: {
               "Content-Type": "application/json",

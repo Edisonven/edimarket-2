@@ -36,7 +36,7 @@ export function EditUserData() {
   const handleUpdateUserData = async (nombre, email, contraseña) => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/usuarios", {
+      const response = await fetch("https://backend-mu-three-82.vercel.app/usuarios", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

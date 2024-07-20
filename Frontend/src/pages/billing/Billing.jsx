@@ -25,7 +25,7 @@ export function Billing() {
       if (userToken) {
         for (const producto of cart) {
           const response = await fetch(
-            `http://localhost:3000/carrito/${producto.producto_id}`,
+            `https://backend-mu-three-82.vercel.app/carrito/${producto.producto_id}`,
             {
               method: "DELETE",
               headers: {
@@ -57,7 +57,7 @@ export function Billing() {
   const handleOrder = async () => {
     try {
       const sendProduct = async (producto) => {
-        const response = await fetch(`http://localhost:3000/venta`, {
+        const response = await fetch(`https://backend-mu-three-82.vercel.app/venta`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export function Billing() {
       };
 
       const sendSecondProduct = async (producto) => {
-        const response = await fetch(`http://localhost:3000/venta/valorar`, {
+        const response = await fetch(`https://backend-mu-three-82.vercel.app/venta/valorar`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

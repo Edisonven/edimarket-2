@@ -42,7 +42,7 @@ export function MyPosts() {
   const handleDeleteMyProducts = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/usuarios/${id}`,
+        `https://backend-mu-three-82.vercel.app/usuarios/${id}`,
         {
           method: "DELETE",
           headers: {

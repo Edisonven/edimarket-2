@@ -19,7 +19,7 @@ export function Adresses() {
       try {
         if (userToken) {
           const response = await fetch(
-            `http://localhost:3000/usuarios/usuario/domicilio?idUsuario=${userData.id}`,
+            `https://backend-mu-three-82.vercel.app/usuarios/usuario/domicilio?idUsuario=${userData.id}`,
             {
               headers: {
                 "Content-Type": "application/json",

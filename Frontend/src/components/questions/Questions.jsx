@@ -36,7 +36,7 @@ export function Questions({ vendedor_id }) {
 
   const handleSendQuestion = async () => {
     try {
-      const response = await fetch("http://localhost:3000/usuarios/preguntas", {
+      const response = await fetch("https://backend-mu-three-82.vercel.app/usuarios/preguntas", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -16,7 +16,7 @@ export const SearchBar = forwardRef(({ className, openSearchBar }, ref) => {
   const handleSearchProduct = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3000/productos/productos/all"
+        "https://backend-mu-three-82.vercel.app/productos/productos/all"
       );
 
       if (!response.ok) {
@@ -28,7 +28,7 @@ export const SearchBar = forwardRef(({ className, openSearchBar }, ref) => {
       setPorducts(data);
       return data;
     } catch (error) {
-      console.error("Error al obtener usuario:", error);
+      console.error("Error al obtener productos:", error);
     } finally {
       setLoading(false);
     }

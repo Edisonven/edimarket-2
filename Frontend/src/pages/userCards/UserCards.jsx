@@ -41,7 +41,7 @@ export function UserCards() {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:3000/usuarios/usuario/metodosPago/${id}`,
+        `https://backend-mu-three-82.vercel.app/usuarios/usuario/metodosPago/${id}`,
         {
           method: "DELETE",
           headers: {

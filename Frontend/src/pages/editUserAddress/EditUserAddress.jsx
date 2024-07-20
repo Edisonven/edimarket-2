@@ -36,7 +36,7 @@ export function EditUserAddress() {
     idUsuario
   ) => {
     try {
-      const response = await fetch("http://localhost:3000/usuarios/domicilio", {
+      const response = await fetch("https://backend-mu-three-82.vercel.app/usuarios/domicilio", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

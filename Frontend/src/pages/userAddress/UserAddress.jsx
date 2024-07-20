@@ -41,7 +41,7 @@ export function UserAddress() {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:3000/usuarios/usuario/domicilio/${id}`,
+        `https://backend-mu-three-82.vercel.app/usuarios/usuario/domicilio/${id}`,
         {
           method: "DELETE",
           headers: {

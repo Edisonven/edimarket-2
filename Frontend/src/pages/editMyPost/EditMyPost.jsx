@@ -44,7 +44,7 @@ export function EditMyPost() {
   ) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/productos/${id}`,
+        `https://backend-mu-three-82.vercel.app/productos/${id}`,
         {
           method: "PUT",
           headers: {
