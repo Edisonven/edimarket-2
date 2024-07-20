@@ -355,6 +355,21 @@ const getProductValoration = async (req, res) => {
   }
 };
 
+const updateStockInProduct = async (req, res) => {
+  try {
+    const { productId, newStock } = req.body;
+    if (productId === "" || newStock === "") {
+      throw new Error("id de producto o stock no proporcionados");
+    }
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, process.env.JWT_SECRET);
+    await productModel.setStockInProduct(productId, newStock);
+    res.status(200).json({ message: "stock actualizado con éxito" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 export const productController = {
   getProductos,
   getProductoById,
@@ -372,4 +387,5 @@ export const productController = {
   valorarProducto,
   actualizarProductoValorado,
   getProductValoration,
+  updateStockInProduct,
 };

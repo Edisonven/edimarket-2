@@ -389,7 +389,8 @@ export function ProductDetail() {
                           backgroundColor:
                             product?.stock < productQuantity ? "gray" : "",
                           cursor:
-                            product?.stock < productQuantity || product?.stock
+                            product?.stock < productQuantity ||
+                            product?.stock === 0
                               ? "not-allowed"
                               : "",
                         }}
@@ -424,7 +425,6 @@ export function ProductDetail() {
                               : "brightness(100%)",
                           backgroundColor:
                             product?.stock < productQuantity ? "gray" : "",
-
                           cursor:
                             product?.stock < productQuantity ||
                             product?.stock === 0

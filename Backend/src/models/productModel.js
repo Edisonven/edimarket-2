@@ -184,6 +184,13 @@ const productValorationObtained = async (productId) => {
   return valoracion;
 };
 
+const setStockInProduct = async (productId, newStock) => {
+  const values = [productId, newStock];
+  const query = "UPDATE productos SET stock = $2 WHERE id = $1";
+  const { rows: newProduct } = await db.query(query, values);
+  return newProduct;
+};
+
 export const productModel = {
   modificarProducto,
   venta,
@@ -199,4 +206,5 @@ export const productModel = {
   valorate,
   editValorate,
   productValorationObtained,
+  setStockInProduct,
 };

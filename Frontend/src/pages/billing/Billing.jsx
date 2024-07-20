@@ -25,7 +25,7 @@ export function Billing() {
       if (userToken) {
         for (const producto of cart) {
           const response = await fetch(
-            `https://backend-mu-three-82.vercel.app/carrito/${producto.producto_id}`,
+            `https://backend-mu-three-82.vercel.app/carrito/${producto?.producto_id}`,
             {
               method: "DELETE",
               headers: {
