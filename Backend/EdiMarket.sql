@@ -84,7 +84,6 @@ CREATE TABLE
 	metodos_pago (
 		id SERIAL PRIMARY KEY,
 		usuario_id INT NOT NULL,
-		producto_id INT NOT NULL,
 		tipo_tarjeta VARCHAR(50) NOT NULL,
 		numero_tarjeta VARCHAR(255) NOT NULL,
 		nombre_titular VARCHAR(255) NOT NULL,
@@ -99,7 +98,7 @@ CREATE TABLE
 		usuario_id INT NOT NULL,
 		producto_id INT NOT NULL,
 		comentario TEXT,
-		calificación INT NOT NULL CHECK (
+		calificacion INT NOT NULL CHECK (
 			calificación >= 1
 			AND calificación <= 5
 		),
@@ -125,11 +124,11 @@ CREATE TABLE
 		id SERIAL PRIMARY KEY,
 		comprador_id INT NOT NULL,
 		producto_id INT NOT NULL,
-		valorado BOOLEAN NOT NULL,
-		calificacion INT NOT NULL,
 		cantidad INT NOT NULL,
 		valor_total NUMERIC(12, 3) CHECK (valor_total >= 0) NOT NULL,
 		fecha_venta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		valorado BOOLEAN NOT NULL,
+		calificacion INT NOT NULL,
 		FOREIGN KEY (comprador_id) REFERENCES usuarios (id) ON DELETE CASCADE,
 		FOREIGN KEY (producto_id) REFERENCES productos (id) ON DELETE CASCADE
 	);
