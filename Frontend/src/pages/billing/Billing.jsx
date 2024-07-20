@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import summary from "../../components/summary/summary.module.css";
 import billing from "./billing.module.css";
 import classNames from "classnames";
@@ -19,6 +19,49 @@ export function Billing() {
     useContext(CheckoutContext);
   const { cart } = useContext(CartContext);
   const { directBuy, setDirectBuy } = useContext(ProductContext);
+  const [newStock, setNewStock] = useState({
+    cart: 0,
+    directBuy: 0,
+  });
+
+  /*   useEffect(() => {
+    const updatedCart = cart.map((product) => product.stock - product.cantidad);
+    console.log(updatedCart);
+  }, [cart]); */
+
+  const handleUpdateProductStock = async () => {
+    const updateStock = directBuy?.stock - directBuy?.cantidad;
+    setNewStock((prevstock) => ({
+      ...prevstock,
+      directBuy: updateStock,
+    }));
+    try {
+      const response = await fetch(
+        "https://backend-mu-three-82.vercel.app/productos/updatestock",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({
+            productId: directBuy?.producto_id,
+            newStock: newStock.directBuy,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al actualizar stock");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error.message || "Error al actualizar stock del producto");
+      throw error;
+    }
+  };
 
   const handleDeleteUserProducts = async (usuario_id) => {
     try {
@@ -57,17 +100,20 @@ export function Billing() {
   const handleOrder = async () => {
     try {
       const sendProduct = async (producto) => {
-        const response = await fetch(`https://backend-mu-three-82.vercel.app/venta`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-          body: JSON.stringify({
-            idProducto: producto.producto_id,
-            cantidad: producto.cantidad,
-          }),
-        });
+        const response = await fetch(
+          `https://backend-mu-three-82.vercel.app/venta`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({
+              idProducto: producto.producto_id,
+              cantidad: producto.cantidad,
+            }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Error en la solicitud");
@@ -78,17 +124,20 @@ export function Billing() {
       };
 
       const sendSecondProduct = async (producto) => {
-        const response = await fetch(`https://backend-mu-three-82.vercel.app/venta/valorar`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-          body: JSON.stringify({
-            idProducto: producto.producto_id,
-            cantidad: producto.cantidad,
-          }),
-        });
+        const response = await fetch(
+          `https://backend-mu-three-82.vercel.app/venta/valorar`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({
+              idProducto: producto.producto_id,
+              cantidad: producto.cantidad,
+            }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Error en la segunda solicitud");
@@ -108,6 +157,7 @@ export function Billing() {
         await sendSecondProduct(directBuy);
       }
 
+      handleUpdateProductStock();
       fetchOrders();
       setDirectBuy(null);
       handleDeleteUserProducts();
