@@ -81,18 +81,21 @@ export function ProductDetail() {
         }, 2400);
       } else {
         if (userToken) {
-          const response = await fetch("https://backend-mu-three-82.vercel.app/carrito", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              idUsuario,
-              idProducto,
-              cantidad,
-            }),
-          });
+          const response = await fetch(
+            "https://backend-mu-three-82.vercel.app/carrito",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userToken}`,
+              },
+              body: JSON.stringify({
+                idUsuario,
+                idProducto,
+                cantidad,
+              }),
+            }
+          );
           if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || "Error al agregar al carrito");
@@ -385,6 +388,12 @@ export function ProductDetail() {
                             product?.stock === 0
                               ? "brightness(70%)"
                               : "brightness(100%)",
+                          backgroundColor:
+                            product?.stock < productQuantity ? "gray" : "",
+                          cursor:
+                            product?.stock < productQuantity
+                              ? "not-allowed"
+                              : "",
                         }}
                         disabled={
                           product?.stock === 0 ||
@@ -417,6 +426,13 @@ export function ProductDetail() {
                             product?.stock === 0
                               ? "brightness(70%)"
                               : "brightness(100%)",
+                          backgroundColor:
+                            product?.stock < productQuantity ? "gray" : "",
+
+                          cursor:
+                            product?.stock < productQuantity
+                              ? "not-allowed"
+                              : "",
                         }}
                         disabled={
                           product?.stock === 0 ||
