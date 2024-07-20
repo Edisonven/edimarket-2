@@ -381,8 +381,6 @@ export function ProductDetail() {
                         onClick={() => handleDirectBuy(productQuantity, cart)}
                         style={{
                           pointerEvents: product?.stock === 0 ? "none" : "auto",
-                          cursor:
-                            product?.stock === 0 ? "not-allowed" : "pointer",
                           opacity: product?.stock === 0 ? "0.7" : "1",
                           filter:
                             product?.stock === 0
@@ -391,7 +389,7 @@ export function ProductDetail() {
                           backgroundColor:
                             product?.stock < productQuantity ? "gray" : "",
                           cursor:
-                            product?.stock < productQuantity
+                            product?.stock < productQuantity || product?.stock
                               ? "not-allowed"
                               : "",
                         }}
@@ -419,8 +417,6 @@ export function ProductDetail() {
                         type="primary"
                         style={{
                           pointerEvents: product?.stock === 0 ? "none" : "auto",
-                          cursor:
-                            product?.stock === 0 ? "not-allowed" : "pointer",
                           opacity: product?.stock === 0 ? "0.7" : "1",
                           filter:
                             product?.stock === 0
@@ -430,7 +426,8 @@ export function ProductDetail() {
                             product?.stock < productQuantity ? "gray" : "",
 
                           cursor:
-                            product?.stock < productQuantity
+                            product?.stock < productQuantity ||
+                            product?.stock === 0
                               ? "not-allowed"
                               : "",
                         }}
