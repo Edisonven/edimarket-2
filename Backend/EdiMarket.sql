@@ -11,8 +11,7 @@ CREATE TABLE
 		id SERIAL PRIMARY KEY,
 		nombre VARCHAR(255) NOT NULL,
 		descripcion TEXT,
-		estado VARCHAR(255) NOT NULL
-		precio NUMERIC(12, 3) CHECK (precio >= 0) NOT NULL,
+		estado VARCHAR(255) NOT NULL precio NUMERIC(12, 3) CHECK (precio >= 0) NOT NULL,
 		stock INT NOT NULL,
 		imagen VARCHAR(255),
 		vendedor_id INT NOT NULL,
@@ -128,7 +127,7 @@ CREATE TABLE
 		valor_total NUMERIC(12, 3) CHECK (valor_total >= 0) NOT NULL,
 		fecha_venta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		valorado BOOLEAN NOT NULL,
-		calificacion INT NOT NULL,
+		calificacion INT DEFAULT 0 NOT NULL,
 		FOREIGN KEY (comprador_id) REFERENCES usuarios (id) ON DELETE CASCADE,
 		FOREIGN KEY (producto_id) REFERENCES productos (id) ON DELETE CASCADE
 	);
