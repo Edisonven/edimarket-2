@@ -2,6 +2,7 @@ import { userModel } from "../models/userModel.js";
 import { hateoasModel } from "../models/hateoasModel.js";
 import { productModel } from "../models/productModel.js";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 const getProductos = async (req, res) => {
   try {
