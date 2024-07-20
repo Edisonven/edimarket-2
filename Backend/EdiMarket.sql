@@ -11,12 +11,12 @@ CREATE TABLE
 		id SERIAL PRIMARY KEY,
 		nombre VARCHAR(255) NOT NULL,
 		descripcion TEXT,
+		estado VARCHAR(255) NOT NULL
 		precio NUMERIC(12, 3) CHECK (precio >= 0) NOT NULL,
 		stock INT NOT NULL,
 		imagen VARCHAR(255),
 		vendedor_id INT NOT NULL,
 		FOREIGN KEY (vendedor_id) REFERENCES usuarios (id) ON DELETE CASCADE,
-		estado VARCHAR(255) NOT NULL
 		fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	);
 

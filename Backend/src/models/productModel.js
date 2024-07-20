@@ -80,14 +80,14 @@ const registrarProducto = async (producto, vendedor_id) => {
     const valuesProducto = [
       nombre,
       descripcion,
-      estado,
       precio,
       stock,
       imagen,
       vendedor_id,
+      estado,
     ];
     const consultaProducto =
-      "INSERT INTO productos (nombre, descripcion, estado, precio, stock, imagen, vendedor_id, fecha) VALUES ($1, $2, $3, $4, $5, $6, $7, DEFAULT) RETURNING id";
+      "INSERT INTO productos (nombre, descripcion, precio, stock, imagen, vendedor_id, estado, fecha) VALUES ($1, $2, $3, $4, $5, $6, $7, DEFAULT) RETURNING id";
     const { rows } = await db.query(consultaProducto, valuesProducto);
     const productoId = rows[0].id;
     const valuesCategoria = [productoId, categoriaId];
