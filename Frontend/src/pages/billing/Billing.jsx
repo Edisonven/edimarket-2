@@ -19,9 +19,9 @@ export function Billing() {
     useContext(CheckoutContext);
   const { cart } = useContext(CartContext);
   const { directBuy, setDirectBuy } = useContext(ProductContext);
-  const [newStock, setNewStock] = useState({
-    cart: 0,
-    directBuy: 0,
+  const [updateLastStock, setUpdateLastStock] = useState({
+    cartValue: 0,
+    directBuyValue: 0,
   });
 
   /*   useEffect(() => {
@@ -29,12 +29,18 @@ export function Billing() {
     console.log(updatedCart);
   }, [cart]); */
 
-  const handleUpdateProductStock = async () => {
+  useEffect(() => {
     const updateStock = directBuy?.stock - directBuy?.cantidad;
-    setNewStock((prevstock) => ({
-      ...prevstock,
-      directBuy: updateStock,
-    }));
+
+    if (updateStock) {
+      setUpdateLastStock((prevstock) => ({
+        ...prevstock,
+        directBuyValue: updateStock,
+      }));
+    }
+  }, [directBuy]);
+
+  const handleUpdateProductStock = async () => {
     try {
       const response = await fetch(
         "https://backend-mu-three-82.vercel.app/productos/updatestock",
@@ -46,7 +52,7 @@ export function Billing() {
           },
           body: JSON.stringify({
             productId: directBuy?.producto_id,
-            newStock: newStock.directBuy,
+            newStock: updateLastStock?.directBuyValue,
           }),
         }
       );
