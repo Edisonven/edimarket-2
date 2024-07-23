@@ -50,23 +50,24 @@ export function MyOrders() {
                       "order_box flex flex-row w-full border shadow-sm rounded-md gap-2 max-w-[800px] mx-auto",
                       myOrders.order__container
                     )}
-                    key={`${order.producto_id}_${index}`}
+                    key={`${order?.producto_id}_${index}`}
                   >
                     <div>
                       <h2 className="pb-2 text-base sm:text-lg">
-                        Número de órden: #{`${order.producto_id * 2}`}
+                        Número de órden: #
+                        {`${order?.producto_id * 10 + order?.id}`}
                       </h2>
                       <p className="text-sm mb-3">
-                        Fecha de compra: {order.fecha_venta}
+                        Fecha de compra: {order?.fecha_venta}
                       </p>
                       <p className="font-semibold">
-                        {formatearPrecio(order.valor_total)}
+                        {formatearPrecio(order?.valor_total)}
                       </p>
                     </div>
                     <figure className="w-[100px] h-[80px] sm:w-[150px]h-[120px]">
                       <img
                         className="w-[80px] h-[60px] sm:w-full sm:h-full object-cover"
-                        src={order.imagen}
+                        src={order?.imagen}
                         alt=""
                       />
                     </figure>
