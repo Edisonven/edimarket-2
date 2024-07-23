@@ -27,7 +27,7 @@ export function SearchProduct() {
               className="products__card__list shadow-md bg-white"
             >
               <div className="products__card__img__container">
-                {user.id === product?.vendedor_id ? (
+                {user?.id === product?.vendedor_id ? (
                   <div className="product__star__container">
                     <span className="font-semibold">Mi producto</span>
                     <img className="product__star__icon" src={star} alt="" />
