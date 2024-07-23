@@ -125,7 +125,7 @@ export function MyPosts() {
       ) : serverError.myPostGetError ? (
         <p>{serverError.myPostGetError}</p>
       ) : (
-        <div className="myposts__body flex flex-col gap-5 h-full bg-white shadow-sm p-3 rounded-md min-h-[480px]">
+        <div className="myposts__body flex flex-col gap-5 h-full bg-white shadow-sm p-3 rounded-md min-h-[500px]">
           {myProducts.length > 0 ? (
             myProducts.map((product) => (
               <ProductCard

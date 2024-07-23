@@ -37,7 +37,7 @@ export function MyOrders() {
       )}
     >
       <h1 className="text-2xl font-semibold mb-5">Mis compras</h1>
-      <div className="orders_box bg-white shadow-sm rounded-md p-3 min-h-[480px]">
+      <div className="orders_box bg-white shadow-sm rounded-md p-3 min-h-[500px]">
         {loading ? (
           <Loader />
         ) : (

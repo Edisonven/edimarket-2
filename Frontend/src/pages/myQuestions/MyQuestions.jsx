@@ -87,7 +87,7 @@ export function MyQuestions() {
   return (
     <section className="myquestions___container ">
       <h1 className="text-2xl font-semibold mb-5">Mis preguntas realizadas</h1>
-      <div className="myquestions__body flex flex-col gap-5 bg-white shadow-sm rounded-md p-3 h-[480px]">
+      <div className="myquestions__body flex flex-col gap-5 bg-white shadow-sm rounded-md p-3 h-[500px]">
         {product.length > 0 ? (
           product.map((element) => {
             return (

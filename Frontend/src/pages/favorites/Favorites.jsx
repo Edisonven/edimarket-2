@@ -20,7 +20,7 @@ export function Favorites() {
           <Loader />
         ) : (
           <div>
-            <div className="favorites__cards__container bg-white shadow-sm rounded-md p-3 h-[480px]">
+            <div className="favorites__cards__container bg-white shadow-sm rounded-md p-3 h-[500px]">
               {addedToFav.length > 0 ? (
                 addedToFav.map((product) => {
                   return (
