@@ -285,7 +285,7 @@ export function AddUserCards() {
                     ? "focus: outline-2 outline outline-red-600"
                     : "focus: outline-2 outline-green-300"
                 }`}
-                type="text"
+                type="password"
                 maxLength="3"
                 name="cvv"
                 placeholder="CVV"
