@@ -251,7 +251,9 @@ export function ProductDetail() {
   return (
     <section className="productdetail__container">
       {loading ? (
-        <Loader />
+        <div className="mx-auto">
+          <Loader />
+        </div>
       ) : (
         <div className="card__container">
           <OverlayScreen />
