@@ -56,6 +56,7 @@ export function ProductDetail() {
   const modalIconRef = useRef(null);
   const heartIconRef = useRef(null);
   const cartBtnRef = useRef(null);
+  const [changeHeartColor, setChangeHeartColor] = useState(false);
 
   useEffect(() => {
     handleGetProduct(id);
@@ -122,6 +123,7 @@ export function ProductDetail() {
         (product) => product.producto_id === productById.producto_id
       );
       if (!productFinded) {
+        setChangeHeartColor(true);
         const response = await fetch(
           `https://backend-mu-three-82.vercel.app/favoritos/${productById.producto_id}`,
           {
@@ -157,6 +159,7 @@ export function ProductDetail() {
 
         return data;
       } else {
+        setChangeHeartColor(false);
         const response = await fetch(
           `https://backend-mu-three-82.vercel.app/favoritos/${productFinded.id}`,
           {
@@ -298,8 +301,8 @@ export function ProductDetail() {
                         }
                         className={`card__info__like__icon ${
                           addedToFav?.some(
-                            (p) => p?.producto_id === product?.producto_id
-                          )
+                            (p) => p.producto_id === product.producto_id
+                          ) || changeHeartColor
                             ? "text-red-600 transition duration-300"
                             : "text-gray-400 transition duration-300"
                         }`}
