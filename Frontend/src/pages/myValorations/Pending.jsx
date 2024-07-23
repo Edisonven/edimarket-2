@@ -20,7 +20,7 @@ export function Pending({ orders }) {
             >
               <div className="flex items-center gap-3 ">
                 <figure className="border rounded-md shadow">
-                  <img className="w-[80px]" src={order?.imagen} alt="" />
+                  <img className="w-[80px] h-[60px] object-contain" src={order?.imagen} alt="" />
                 </figure>
                 <div className="overflow-hidden w-full">
                   <p className="w-full font-medium whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] md:max-w-[400px]">

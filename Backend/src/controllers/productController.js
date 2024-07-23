@@ -370,6 +370,7 @@ const updateStockInProduct = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 export const productController = {
   getProductos,
   getProductoById,

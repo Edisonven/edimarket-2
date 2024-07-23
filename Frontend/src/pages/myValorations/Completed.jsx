@@ -26,7 +26,7 @@ export function Completed({ orders }) {
                 >
                   <figure className="border rounded-md shadow">
                     <img
-                      className="w-[80px] h-[60px] object-cover"
+                      className="w-[80px] h-[60px] object-contain"
                       src={order?.imagen}
                       alt=""
                     />
