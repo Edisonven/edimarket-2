@@ -20,14 +20,21 @@ export function Billing() {
   const { cart } = useContext(CartContext);
   const { directBuy, setDirectBuy } = useContext(ProductContext);
   const [updateLastStock, setUpdateLastStock] = useState({
-    cartValue: 0,
+    cartValue: [],
     directBuyValue: 0,
   });
 
-  /*   useEffect(() => {
-    const updatedCart = cart.map((product) => product.stock - product.cantidad);
-    console.log(updatedCart);
-  }, [cart]); */
+  useEffect(() => {
+    const updatedCart = cart.map((product) => ({
+      producto_id: product.producto_id,
+      newStock: product.stock - product.cantidad,
+    }));
+
+    setUpdateLastStock((prevsate) => ({
+      ...prevsate,
+      cartValue: updatedCart,
+    }));
+  }, [cart]);
 
   useEffect(() => {
     const updateStock = directBuy?.stock - directBuy?.cantidad;
@@ -42,27 +49,59 @@ export function Billing() {
 
   const handleUpdateProductStock = async () => {
     try {
-      const response = await fetch(
-        "https://backend-mu-three-82.vercel.app/productos/updatestock",
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-          body: JSON.stringify({
-            productId: directBuy?.producto_id,
-            newStock: updateLastStock?.directBuyValue,
-          }),
-        }
-      );
+      const senDirectBuyStock = async () => {
+        const response = await fetch(
+          "https://backend-mu-three-82.vercel.app/productos/updatestock",
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({
+              productId: directBuy?.producto_id,
+              newStock: updateLastStock?.directBuyValue,
+            }),
+          }
+        );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Error al actualizar stock");
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Error al actualizar stock");
+        }
+        const data = await response.json();
+        return data;
+      };
+
+      await senDirectBuyStock();
+
+      const sendProductInCartStock = async (updateProductCart) => {
+        const response = await fetch(
+          "https://backend-mu-three-82.vercel.app/productos/updatestock",
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({
+              productId: updateProductCart?.producto_id,
+              newStock: updateProductCart?.newStock,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Error al actualizar stock");
+        }
+        const data = await response.json();
+        return data;
+      };
+
+      for (const updateProductCart of updateLastStock.cartValue) {
+        await sendProductInCartStock(updateProductCart);
       }
-      const data = await response.json();
-      return data;
     } catch (error) {
       console.error(error.message || "Error al actualizar stock del producto");
       throw error;
