@@ -66,7 +66,7 @@ export function MyOrders() {
                     </div>
                     <figure className="w-[100px] h-[80px] sm:w-[150px]h-[120px]">
                       <img
-                        className="w-[80px] h-[60px] sm:w-full sm:h-full object-cover"
+                        className="w-[80px] h-[60px] sm:w-full sm:h-full object-contain"
                         src={order?.imagen}
                         alt=""
                       />
