@@ -412,7 +412,7 @@ export function ProductDetail() {
                         ref={cartBtnRef}
                         onClick={() =>
                           handleAddToCart(
-                            user.id,
+                            user?.id,
                             parseInt(id),
                             productQuantity
                           )
