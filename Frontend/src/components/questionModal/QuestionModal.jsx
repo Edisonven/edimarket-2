@@ -30,14 +30,14 @@ export const QuestionModal = forwardRef(
     const handleDeleteQuestions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/usuarios/preguntas/${productId}`,
+          `https://backend-mu-three-82.vercel.app/usuarios/preguntas/${productId}`,
           {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${userToken}`,
             },
-            body: JSON.stringify({ id: user.id }),
+            body: JSON.stringify({ id: user?.id }),
           }
         );
 
