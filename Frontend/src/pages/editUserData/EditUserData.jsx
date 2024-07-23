@@ -151,8 +151,8 @@ export function EditUserData() {
   useEffect(() => {
     setUserData((prevData) => ({
       ...prevData,
-      nombre: user.nombre,
-      email: user.email,
+      nombre: user?.nombre,
+      email: user?.email,
     }));
 
     inputRefs.nombre.current.focus();
