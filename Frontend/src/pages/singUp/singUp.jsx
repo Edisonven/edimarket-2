@@ -310,7 +310,7 @@ export function SingUp() {
             </NavLink>
           </div>
         </form>
-        <hr className="w-full my-4" />
+       {/*  <hr className="w-full my-4" />
         <h4 className="text-center mt-3 font-medium text-md text-gray-800">
           También puedes crear tu cuenta con
         </h4>
@@ -323,7 +323,7 @@ export function SingUp() {
             <img className="w-[20px]" src={google} alt="" />
             Ingresar con google
           </PerfilBtn>
-        </div>
+        </div> */}
       </div>
     </section>
   );
