@@ -138,6 +138,10 @@ export function Questions({ vendedor_id }) {
     }
   }, [questionsByProductId]);
 
+  const questionFinded = questionsByProductId.find(
+    (question) => question?.usuario_id !== user?.id
+  );
+
   return (
     <section className="questions__container">
       <h1 className="text-2xl mt-5">Preguntas</h1>
@@ -250,7 +254,7 @@ export function Questions({ vendedor_id }) {
                   ""
                 );
               })}
-              <p>{questionsByOtherUsers}</p>
+              {!questionFinded ? <p>{questionsByOtherUsers}</p> : ""}
             </div>
           ) : (
             <div className="flex justify-center mt-10 flex-col ml-5">
