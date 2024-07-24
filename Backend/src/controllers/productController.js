@@ -371,6 +371,29 @@ const updateStockInProduct = async (req, res) => {
   }
 };
 
+const sendProductValorationEdited = async (req, res) => {
+  try {
+    const { idProducto, comentario, calificacion } = req.body;
+    if (!idProducto || !calificacion) {
+      throw new Error("Id de producto o calificación no proporcionados");
+    }
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, process.env.JWT_SECRET);
+    const { id } = jwt.decode(token);
+    await productModel.productValorationEdited(
+      id,
+      idProducto,
+      comentario,
+      calificacion
+    );
+
+    res.status(200).json({ mensaje: "valoración actualizada" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const productController = {
   getProductos,
   getProductoById,
@@ -389,4 +412,5 @@ export const productController = {
   actualizarProductoValorado,
   getProductValoration,
   updateStockInProduct,
+  sendProductValorationEdited,
 };

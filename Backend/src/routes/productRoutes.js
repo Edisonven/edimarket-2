@@ -13,5 +13,6 @@ router.get("/producto/:IdUser",verificarToken, productController.getProductOnQue
 router.post("/valoracion",verificarToken, productController.sendProductValoration);
 router.get("/valoracion/:productId", productController.getProductValoration);
 router.patch("/updatestock", verificarToken,productController.updateStockInProduct);
+router.patch("/update-valoracion",verificarToken, productController.sendProductValorationEdited);
 
 export default router;

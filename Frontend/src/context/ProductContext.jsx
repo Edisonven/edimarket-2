@@ -215,7 +215,9 @@ export function ProductProvider({ children }) {
   const handleGetProduct = async (id) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://backend-mu-three-82.vercel.app/productos/${id}`);
+      const response = await fetch(
+        `https://backend-mu-three-82.vercel.app/productos/${id}`
+      );
       if (!response.ok) {
         throw new Error("Producto no encontrado");
       }

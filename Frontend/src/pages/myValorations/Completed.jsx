@@ -4,10 +4,18 @@ import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
 import { BsFillHandThumbsUpFill } from "react-icons/bs";
 import { useContext } from "react";
 import { ProductContext } from "../../context/ProductContext";
+import { useNavigate } from "react-router-dom";
 
 export function Completed({ orders }) {
   const { handleProductDetail } = useContext(ProductContext);
   const valoradedProducts = orders.filter((order) => order.valorado === true);
+  const naviagate = useNavigate();
+
+  const handleNavigateToEdit = (productId) => {
+    if (productId) {
+      naviagate(`/edit-my-valoration/${productId}`);
+    }
+  };
 
   return (
     <section className="flex flex-col gap-5">
@@ -65,6 +73,7 @@ export function Completed({ orders }) {
                 </div>
                 <div className="w-full flex items-center justify-end mt-5 sm:mt-0">
                   <GeneralBtn
+                    onClick={() => handleNavigateToEdit(order?.producto_id)}
                     className="max-w-[175px] h-[45px] flex items-center justify-center text-sm whitespace-nowrap"
                     type="secondary"
                   >

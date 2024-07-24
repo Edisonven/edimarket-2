@@ -37,6 +37,7 @@ import { MyQuestions } from "./pages/myQuestions/MyQuestions.jsx";
 import { AllProducts } from "./pages/allProducts/AllProducts.jsx";
 import { MyValorations } from "./pages/myValorations/MyValorations.jsx";
 import { SendMyValoration } from "./pages/sendMyValoration/SendMyValoration.jsx";
+import { UpdateMyValoration } from "./pages/myValorations/UpdateMyValoration.jsx";
 
 function App() {
   const { userToken } = useContext(UserContext);
@@ -177,6 +178,12 @@ function App() {
             path="/send-my-valoration"
             element={
               userToken ? <SendMyValoration /> : <Navigate to="/sign-in" />
+            }
+          />
+          <Route
+            path="/edit-my-valoration/:productId"
+            element={
+              userToken ? <UpdateMyValoration /> : <Navigate to="/sign-in" />
             }
           />
           <Route path="/not-found" element={<NotFound />} />

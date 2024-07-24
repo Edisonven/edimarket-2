@@ -141,7 +141,7 @@ export function SendMyValoration() {
         <div className="flex flex-col items-center gap-5">
           <figure>
             <img
-              className="w-full max-w-[150px]"
+              className="w-full max-w-[150px] max-h-[130px]"
               src={productToRate?.imagen}
               alt=""
             />
