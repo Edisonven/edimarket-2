@@ -36,17 +36,20 @@ export function Questions({ vendedor_id }) {
 
   const handleSendQuestion = async () => {
     try {
-      const response = await fetch("https://backend-mu-three-82.vercel.app/usuarios/preguntas", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
-        },
-        body: JSON.stringify({
-          idProducto: id,
-          pregunta: userData.preguntas,
-        }),
-      });
+      const response = await fetch(
+        "https://backend-mu-three-82.vercel.app/usuarios/preguntas",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({
+            idProducto: id,
+            pregunta: userData.preguntas,
+          }),
+        }
+      );
 
       if (!response) {
         const errorData = await response.json();
@@ -244,9 +247,10 @@ export function Questions({ vendedor_id }) {
                     </div>
                   </div>
                 ) : (
-                  <p key={pregunta?.id}>{questionsByOtherUsers}</p>
+                  ""
                 );
               })}
+              <p>{questionsByOtherUsers}</p>
             </div>
           ) : (
             <div className="flex justify-center mt-10 flex-col ml-5">
