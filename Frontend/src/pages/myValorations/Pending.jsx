@@ -1,7 +1,11 @@
 import star from "/imgs/aplication/estrella3.png";
 import { StarRating } from "./StarRating";
+import { useContext } from "react";
+import { ProductContext } from "../../context/ProductContext";
 
 export function Pending({ orders }) {
+  const { handleProductDetail } = useContext(ProductContext);
+
   const notValoradedProductos = orders.filter(
     (order) => order.valorado === false
   );
@@ -18,9 +22,16 @@ export function Pending({ orders }) {
               className="border rounded-md p-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-[25px] px-6"
               key={order?.orderValorate_id}
             >
-              <div className="flex items-center gap-3 ">
+              <div
+                onClick={() => handleProductDetail(order?.producto_id)}
+                className="flex items-center gap-3 cursor-pointer"
+              >
                 <figure className="border rounded-md shadow">
-                  <img className="w-[80px] h-[60px] object-contain" src={order?.imagen} alt="" />
+                  <img
+                    className="w-[80px] h-[60px] object-contain"
+                    src={order?.imagen}
+                    alt=""
+                  />
                 </figure>
                 <div className="overflow-hidden w-full">
                   <p className="w-full font-medium whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] md:max-w-[400px]">
