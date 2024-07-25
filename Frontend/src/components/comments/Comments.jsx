@@ -49,7 +49,8 @@ export function Comments() {
         cal.calificacion_id === valoration.id && cal.usuario_id === user?.id
     );
     const calificationIdFound = califications.find(
-      (cal) => cal.calificacion_id === valoration.id
+      (cal) =>
+        cal.calificacion_id === valoration.id && cal.usuario_id === user?.id
     );
 
     try {
