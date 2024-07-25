@@ -7,7 +7,7 @@ import { ProductContext } from "../../context/ProductContext";
 import { GoStarFill } from "react-icons/go";
 import { GoStar } from "react-icons/go";
 import { UserContext } from "../../context/UserContext";
-import { json, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export function Comments() {
   const { userValorations, productById } = useContext(ProductContext);
@@ -15,7 +15,6 @@ export function Comments() {
   const { id } = useParams();
   const parsedId = parseInt(id);
   const [califications, setCalifications] = useState([]);
-  const [calificacionValue, setCalificationValue] = useState("");
 
   const productId = userValorations.find(
     (product) => product.producto_id === productById.producto_id
@@ -48,24 +47,30 @@ export function Comments() {
       (cal) =>
         cal.calificacion_id === valoration.id && cal.usuario_id === user?.id
     );
-    const calificationIdFound = califications.find(
-      (cal) =>
-        cal.calificacion_id === valoration.id && cal.usuario_id === user?.id
-    );
 
     try {
       if (calificationAlreadyExists) {
-        const response = await fetch("https://backend-mu-three-82.vercel.app/venta/calificar", {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-          body: JSON.stringify({
-            calificacion: !calificationIdFound?.positiva,
-            calificationId: calificationIdFound?.id,
-          }),
-        });
+        const calificationFound = califications.find(
+          (cal) =>
+            cal.calificacion_id === valoration.id && cal.usuario_id === user?.id
+        );
+
+        const response = await fetch(
+          "https://backend-mu-three-82.vercel.app/venta/calificar",
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({
+              calificacion: calificationFound.positiva
+                ? !calificationFound.positiva
+                : true,
+              calificationId: calificationFound?.id,
+            }),
+          }
+        );
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -154,9 +159,28 @@ export function Comments() {
                     <div className="flex items-center gap-3 mt-3">
                       <div
                         onClick={() => handleSendMyCalification(valoration)}
-                        className="flex items-center gap-2 cursor-pointer hover:outline outline-teal-500 outline-1 rounded-xl px-2 select-none"
+                        className={`flex items-center gap-2 cursor-pointer hover:outline outline-teal-500 outline-1 rounded-xl px-2 py-[1px] select-none ${
+                          califications.some(
+                            (cal) =>
+                              cal.positiva === true &&
+                              cal.calificacion_id === valoration.id &&
+                              cal.usuario_id === user?.id
+                          )
+                            ? "bg-teal-500 shadow-md text-white"
+                            : ""
+                        }`}
                       >
-                        <BsHandThumbsUp />
+                        {califications.some(
+                          (cal) =>
+                            cal.positiva === true &&
+                            cal.calificacion_id === valoration.id &&
+                            cal.usuario_id === user?.id
+                        ) ? (
+                          <BsFillHandThumbsUpFill />
+                        ) : (
+                          <BsHandThumbsUp />
+                        )}
+
                         <span className="text-sm font-medium">
                           {
                             califications.filter(
