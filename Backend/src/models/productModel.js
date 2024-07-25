@@ -235,6 +235,18 @@ const calificationOfValorate = async (
   return calificationSended;
 };
 
+const calificationOfValorateUpdated = async (
+  calificacion,
+  calificationId,
+  id
+) => {
+  const values = [calificacion, calificationId, id];
+  const query =
+    "UPDATE calificar_valoraciones SET positiva = $1 WHERE id = $2 AND usuario_id = $3";
+  const { rows: calificationUpdated } = await db.query(query, values);
+  return calificationUpdated;
+};
+
 export const productModel = {
   modificarProducto,
   venta,
@@ -254,4 +266,5 @@ export const productModel = {
   productValorationEdited,
   calificationOfValorate,
   calificationOfValorateObtained,
+  calificationOfValorateUpdated,
 };

@@ -431,6 +431,28 @@ const getCalificationOfValorate = async (req, res) => {
   }
 };
 
+const updateCalificationOfValorate = async (req, res) => {
+  try {
+    const { calificacion, calificationId } = req.body;
+    if (calificacion === "" || !calificationId) {
+      throw new Error("Uno de los parametros no fue proporcionado");
+    }
+
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split(" ")[1];
+    jwt.verify(token, process.env.JWT_SECRET);
+    const { id } = jwt.decode(token);
+    await productModel.calificationOfValorateUpdated(
+      calificacion,
+      calificationId,
+      id
+    );
+    res.status(200).json({ message: "Calificación actualizada" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const productController = {
   getProductos,
   getProductoById,
@@ -452,4 +474,5 @@ export const productController = {
   sendProductValorationEdited,
   sendCalificationOfValorate,
   getCalificationOfValorate,
+  updateCalificationOfValorate,
 };

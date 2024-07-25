@@ -1,12 +1,13 @@
 import "../comments/comments.css";
 import { BsHandThumbsUp } from "react-icons/bs";
+import { BsFillHandThumbsUpFill } from "react-icons/bs";
 import { BsHandThumbsDown } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../context/ProductContext";
 import { GoStarFill } from "react-icons/go";
 import { GoStar } from "react-icons/go";
 import { UserContext } from "../../context/UserContext";
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 
 export function Comments() {
   const { userValorations, productById } = useContext(ProductContext);
@@ -14,6 +15,7 @@ export function Comments() {
   const { id } = useParams();
   const parsedId = parseInt(id);
   const [califications, setCalifications] = useState([]);
+  const [calificacionValue, setCalificationValue] = useState("");
 
   const productId = userValorations.find(
     (product) => product.producto_id === productById.producto_id
@@ -22,7 +24,7 @@ export function Comments() {
   const handleGetCalificationsProduct = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/venta/calificar/${parsedId}`
+        `https://backend-mu-three-82.vercel.app/venta/calificar/${parsedId}`
       );
       if (!response.ok) {
         const errorData = await response.json();
@@ -46,23 +48,47 @@ export function Comments() {
       (cal) =>
         cal.calificacion_id === valoration.id && cal.usuario_id === user?.id
     );
+    const calificationIdFound = califications.find(
+      (cal) => cal.calificacion_id === valoration.id
+    );
 
     try {
       if (calificationAlreadyExists) {
-        console.log("ya existo jeje kteparec");
-      } else {
         const response = await fetch("http://localhost:3000/venta/calificar", {
-          method: "POST",
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${userToken}`,
           },
           body: JSON.stringify({
-            productId: parsedId,
-            calificacionId: valoration.id,
-            positiva: true,
+            calificacion: !calificationIdFound?.positiva,
+            calificationId: calificationIdFound?.id,
           }),
         });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Error al obtener datos");
+        }
+        const data = await response.json();
+        handleGetCalificationsProduct();
+        return data;
+      } else {
+        const response = await fetch(
+          "https://backend-mu-three-82.vercel.app/venta/calificar",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({
+              productId: parsedId,
+              calificacionId: valoration.id,
+              positiva: true,
+            }),
+          }
+        );
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -130,7 +156,15 @@ export function Comments() {
                         className="flex items-center gap-2 cursor-pointer hover:outline outline-teal-500 outline-1 rounded-xl px-2 select-none"
                       >
                         <BsHandThumbsUp />
-                        <span>0</span>
+                        <span className="text-sm font-medium">
+                          {
+                            califications.filter(
+                              (cal) =>
+                                cal.calificacion_id === valoration.id &&
+                                cal.positiva === true
+                            ).length
+                          }
+                        </span>
                       </div>
                       <div className="flex items-center gap-2 cursor-pointer hover:outline outline-teal-500 outline-1 rounded-xl px-2 select-none">
                         <BsHandThumbsDown />
