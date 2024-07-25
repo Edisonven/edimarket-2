@@ -8,5 +8,6 @@ router.post("/", verificarToken, productController.ventaRealizada);
 router.post("/valorar", verificarToken, productController.valorarProducto);
 router.put("/valorar", verificarToken, productController.actualizarProductoValorado);
 router.post("/calificar", verificarToken, productController.sendCalificationOfValorate);
+router.get("/calificar/:productId",  productController.getCalificationOfValorate);
 
 export default router;

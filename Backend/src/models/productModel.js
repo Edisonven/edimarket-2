@@ -204,6 +204,13 @@ const productValorationEdited = async (
   return newProductValorated;
 };
 
+const calificationOfValorateObtained = async (productId) => {
+  const values = [productId];
+  const query = "SELECT * FROM calificar_valoraciones WHERE producto_id = $1";
+  const { rows: calificaciones } = await db.query(query, values);
+  return calificaciones;
+};
+
 const calificationOfValorate = async (
   id,
   productId,
@@ -211,6 +218,13 @@ const calificationOfValorate = async (
   positiva,
   negativa = false
 ) => {
+  const calificationExists = await calificationOfValorateObtained(productId);
+  const calificationFinded = calificationExists.find(
+    (cal) => cal.calificacion_id === calificacionId
+  );
+  if (calificationFinded.calificacion_id) {
+    throw new Error("ya existe una calificación positiva para este producto");
+  }
   const values = [id, productId, calificacionId, positiva, negativa];
   const query =
     "INSERT INTO calificar_valoraciones (id, producto_id, usuario_id, calificacion_id ,positiva, negativa, fecha) VALUES (DEFAULT, $2, $1, $3, $4, $5, DEFAULT)";
@@ -236,4 +250,5 @@ export const productModel = {
   setStockInProduct,
   productValorationEdited,
   calificationOfValorate,
+  calificationOfValorateObtained,
 };

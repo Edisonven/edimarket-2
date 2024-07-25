@@ -418,6 +418,18 @@ const sendCalificationOfValorate = async (req, res) => {
   }
 };
 
+const getCalificationOfValorate = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const calificaciones = await productModel.calificationOfValorateObtained(
+      productId
+    );
+    res.status(200).json(calificaciones);
+  } catch (error) {
+    res.status(500).json({ message: "error al obtener calificaciones" });
+  }
+};
+
 export const productController = {
   getProductos,
   getProductoById,
@@ -438,4 +450,5 @@ export const productController = {
   updateStockInProduct,
   sendProductValorationEdited,
   sendCalificationOfValorate,
+  getCalificationOfValorate,
 };

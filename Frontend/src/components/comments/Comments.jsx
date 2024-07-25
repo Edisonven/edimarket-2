@@ -1,7 +1,7 @@
 import "../comments/comments.css";
 import { BsHandThumbsUp } from "react-icons/bs";
 import { BsHandThumbsDown } from "react-icons/bs";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../context/ProductContext";
 import { GoStarFill } from "react-icons/go";
 import { GoStar } from "react-icons/go";
@@ -13,10 +13,33 @@ export function Comments() {
   const { userToken } = useContext(UserContext);
   const { id } = useParams();
   const parsedId = parseInt(id);
+  const [califications, setCalifications] = useState([]);
 
   const productId = userValorations.find(
     (product) => product.producto_id === productById.producto_id
   );
+
+  const handleGetCalificationsProduct = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/venta/calificar/${parsedId}`
+      );
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error en la respuesta");
+      }
+
+      const data = await response.json();
+      setCalifications(data);
+      return data;
+    } catch (error) {
+      console.error(error.message || "Error al obtener calificaicones");
+    }
+  };
+
+  useEffect(() => {
+    handleGetCalificationsProduct();
+  }, []);
 
   const handleSendMyCalification = async (valoration) => {
     try {
