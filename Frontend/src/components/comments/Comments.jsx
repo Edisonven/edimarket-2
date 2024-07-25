@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 
 export function Comments() {
   const { userValorations, productById } = useContext(ProductContext);
-  const { userToken } = useContext(UserContext);
+  const { userToken, user } = useContext(UserContext);
   const { id } = useParams();
   const parsedId = parseInt(id);
   const [califications, setCalifications] = useState([]);
@@ -39,13 +39,12 @@ export function Comments() {
 
   useEffect(() => {
     handleGetCalificationsProduct();
-  }, []);
+  }, [userToken]);
 
   const handleSendMyCalification = async (valoration) => {
     const calificationAlreadyExists = califications.some(
       (cal) =>
-        cal.calificacion_id === valoration.id &&
-        cal.usuario_id === valoration.usuario_id
+        cal.calificacion_id === valoration.id && cal.usuario_id === user?.id
     );
 
     try {
@@ -72,6 +71,7 @@ export function Comments() {
           );
         }
         const data = await response.json();
+        handleGetCalificationsProduct();
         return data;
       }
     } catch (error) {
