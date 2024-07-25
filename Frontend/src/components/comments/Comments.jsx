@@ -42,26 +42,38 @@ export function Comments() {
   }, []);
 
   const handleSendMyCalification = async (valoration) => {
-    try {
-      const response = await fetch("http://localhost:3000/venta/calificar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
-        },
-        body: JSON.stringify({
-          productId: parsedId,
-          calificacionId: valoration,
-          positiva: true,
-        }),
-      });
+    const calificationAlreadyExists = califications.some(
+      (cal) =>
+        cal.calificacion_id === valoration.id &&
+        cal.usuario_id === valoration.usuario_id
+    );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Error al enviar la calificación");
+    try {
+      if (calificationAlreadyExists) {
+        console.log("ya existo jeje kteparec");
+      } else {
+        const response = await fetch("http://localhost:3000/venta/calificar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({
+            productId: parsedId,
+            calificacionId: valoration.id,
+            positiva: true,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            errorData.message || "Error al enviar la calificación"
+          );
+        }
+        const data = await response.json();
+        return data;
       }
-      const data = await response.json();
-      return data;
     } catch (error) {
       console.error(error.message || "Error al enviar calificación");
     }
@@ -114,7 +126,7 @@ export function Comments() {
                     <p className="font-normal pl-3">{valoration?.comentario}</p>
                     <div className="flex items-center gap-3 mt-3">
                       <div
-                        onClick={() => handleSendMyCalification(valoration?.id)}
+                        onClick={() => handleSendMyCalification(valoration)}
                         className="flex items-center gap-2 cursor-pointer hover:outline outline-teal-500 outline-1 rounded-xl px-2 select-none"
                       >
                         <BsHandThumbsUp />

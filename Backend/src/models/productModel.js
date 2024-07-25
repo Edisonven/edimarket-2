@@ -219,11 +219,14 @@ const calificationOfValorate = async (
   negativa = false
 ) => {
   const calificationExists = await calificationOfValorateObtained(productId);
-  const calificationFinded = calificationExists.find(
-    (cal) => cal.calificacion_id === calificacionId
+  const calificationFinded = calificationExists.some(
+    (cal) => cal.calificacion_id === calificacionId && cal.usuario_id === id
   );
-  if (calificationFinded.calificacion_id) {
-    throw new Error("ya existe una calificación positiva para este producto");
+
+  if (calificationFinded) {
+    throw new Error(
+      "ya existe una calificación positiva de este usuario para esta valoración"
+    );
   }
   const values = [id, productId, calificacionId, positiva, negativa];
   const query =

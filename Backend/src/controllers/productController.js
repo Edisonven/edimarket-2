@@ -331,12 +331,13 @@ const getProductValoration = async (req, res) => {
     const valoraciones = await productModel.productValorationObtained(
       productId
     );
-
+    console.log(valoraciones);
     res.status(200).json({
       valoraciones: valoraciones.map((valoracion) => {
         return {
           id: valoracion.id,
           valoracion: valoracion.valoracion,
+          usuario_id: valoracion.usuario_id,
           comentario: valoracion.comentario,
           calificacion: valoracion.calificacion,
           usuario: valoracion.nombre_usuario,
