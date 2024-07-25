@@ -55,7 +55,7 @@ export function Comments() {
 
     try {
       if (calificationAlreadyExists) {
-        const response = await fetch("http://localhost:3000/venta/calificar", {
+        const response = await fetch("https://backend-mu-three-82.vercel.app/venta/calificar", {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
