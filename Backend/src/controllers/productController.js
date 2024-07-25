@@ -394,6 +394,30 @@ const sendProductValorationEdited = async (req, res) => {
   }
 };
 
+const sendCalificationOfValorate = async (req, res) => {
+  try {
+    const { productId, calificacionId, positiva, negativa } = req.body;
+    if (!productId || !positiva || !calificacionId) {
+      throw new Error("Uno de los parametros no fue proporcionado");
+    }
+
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split(" ")[1];
+    jwt.verify(token, process.env.JWT_SECRET);
+    const { id } = jwt.decode(token);
+    await productModel.calificationOfValorate(
+      id,
+      productId,
+      calificacionId,
+      positiva,
+      negativa
+    );
+    res.status(200).json({ message: "calificación enviada exitosamente" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const productController = {
   getProductos,
   getProductoById,
@@ -413,4 +437,5 @@ export const productController = {
   getProductValoration,
   updateStockInProduct,
   sendProductValorationEdited,
+  sendCalificationOfValorate,
 };

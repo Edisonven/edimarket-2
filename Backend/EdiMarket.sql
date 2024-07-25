@@ -131,3 +131,14 @@ CREATE TABLE
 		FOREIGN KEY (comprador_id) REFERENCES usuarios (id) ON DELETE CASCADE,
 		FOREIGN KEY (producto_id) REFERENCES productos (id) ON DELETE CASCADE
 	);
+
+CREATE TABLE
+	calificar_valoraciones (
+		id SERIAL PRIMARY KEY,
+		producto_id INT NOT NULL,
+		usuario_id INT NOT NULL,
+		calificacion_id INT NOT NULL
+		positiva BOOLEAN NOT NULL,
+		negativa BOOLEAN NOT NULL,
+		fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	);

@@ -204,6 +204,20 @@ const productValorationEdited = async (
   return newProductValorated;
 };
 
+const calificationOfValorate = async (
+  id,
+  productId,
+  calificacionId,
+  positiva,
+  negativa = false
+) => {
+  const values = [id, productId, calificacionId, positiva, negativa];
+  const query =
+    "INSERT INTO calificar_valoraciones (id, producto_id, usuario_id, calificacion_id ,positiva, negativa, fecha) VALUES (DEFAULT, $2, $1, $3, $4, $5, DEFAULT)";
+  const { rows: calificationSended } = await db.query(query, values);
+  return calificationSended;
+};
+
 export const productModel = {
   modificarProducto,
   venta,
@@ -221,4 +235,5 @@ export const productModel = {
   productValorationObtained,
   setStockInProduct,
   productValorationEdited,
+  calificationOfValorate,
 };

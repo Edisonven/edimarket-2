@@ -5,13 +5,44 @@ import { useContext } from "react";
 import { ProductContext } from "../../context/ProductContext";
 import { GoStarFill } from "react-icons/go";
 import { GoStar } from "react-icons/go";
+import { UserContext } from "../../context/UserContext";
+import { useParams } from "react-router-dom";
 
 export function Comments() {
   const { userValorations, productById } = useContext(ProductContext);
+  const { userToken } = useContext(UserContext);
+  const { id } = useParams();
+  const parsedId = parseInt(id);
 
   const productId = userValorations.find(
     (product) => product.producto_id === productById.producto_id
   );
+
+  const handleSendMyCalification = async (valoration) => {
+    try {
+      const response = await fetch("http://localhost:3000/venta/calificar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({
+          productId: parsedId,
+          calificacionId: valoration,
+          positiva: true,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al enviar la calificación");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error.message || "Error al enviar calificación");
+    }
+  };
 
   return (
     <section className="comments__container">
@@ -59,7 +90,10 @@ export function Comments() {
                   <div>
                     <p className="font-normal pl-3">{valoration?.comentario}</p>
                     <div className="flex items-center gap-3 mt-3">
-                      <div className="flex items-center gap-2 cursor-pointer hover:outline outline-teal-500 outline-1 rounded-xl px-2 select-none">
+                      <div
+                        onClick={() => handleSendMyCalification(valoration?.id)}
+                        className="flex items-center gap-2 cursor-pointer hover:outline outline-teal-500 outline-1 rounded-xl px-2 select-none"
+                      >
                         <BsHandThumbsUp />
                         <span>0</span>
                       </div>
