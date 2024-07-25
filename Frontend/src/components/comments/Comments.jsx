@@ -49,62 +49,65 @@ export function Comments() {
     );
 
     try {
-      if (calificationAlreadyExists) {
-        const calificationFound = califications.find(
-          (cal) =>
-            cal.calificacion_id === valoration.id && cal.usuario_id === user?.id
-        );
-
-        const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/venta/calificar",
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              calificacion: calificationFound.positiva
-                ? !calificationFound.positiva
-                : true,
-              calificationId: calificationFound?.id,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Error al obtener datos");
-        }
-        const data = await response.json();
-        handleGetCalificationsProduct();
-        return data;
-      } else {
-        const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/venta/calificar",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              productId: parsedId,
-              calificacionId: valoration.id,
-              positiva: true,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(
-            errorData.message || "Error al enviar la calificación"
+      if (userToken) {
+        if (calificationAlreadyExists) {
+          const calificationFound = califications.find(
+            (cal) =>
+              cal.calificacion_id === valoration.id &&
+              cal.usuario_id === user?.id
           );
+
+          const response = await fetch(
+            "https://backend-mu-three-82.vercel.app/venta/calificar",
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userToken}`,
+              },
+              body: JSON.stringify({
+                calificacion: calificationFound.positiva
+                  ? !calificationFound.positiva
+                  : true,
+                calificationId: calificationFound?.id,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error al obtener datos");
+          }
+          const data = await response.json();
+          handleGetCalificationsProduct();
+          return data;
+        } else {
+          const response = await fetch(
+            "https://backend-mu-three-82.vercel.app/venta/calificar",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userToken}`,
+              },
+              body: JSON.stringify({
+                productId: parsedId,
+                calificacionId: valoration.id,
+                positiva: true,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.message || "Error al enviar la calificación"
+            );
+          }
+          const data = await response.json();
+          handleGetCalificationsProduct();
+          return data;
         }
-        const data = await response.json();
-        handleGetCalificationsProduct();
-        return data;
       }
     } catch (error) {
       console.error(error.message || "Error al enviar calificación");
