@@ -17,6 +17,7 @@ export function Summary() {
     (acc, producto) => acc + producto.precio * producto.cantidad,
     0
   );
+
   useEffect(() => {
     localStorage.setItem("directBuy", JSON.stringify(directBuy));
   }, [directBuy]);
@@ -25,7 +26,7 @@ export function Summary() {
     <div className="">
       <div>
         <h2 className="mb-8">Resumen de compra</h2>
-        <hr  className="mb-5"/>
+        <hr className="mb-5" />
         <div
           className={classNames(
             "mb-5",

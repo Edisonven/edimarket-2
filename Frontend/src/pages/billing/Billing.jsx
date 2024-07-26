@@ -23,6 +23,18 @@ export function Billing() {
     cartValue: [],
     directBuyValue: 0,
   });
+  const [paymentData, setPaymentData] = useState({
+    token: "",
+    url: "",
+  });
+
+  const totalPrecio = cart.reduce(
+    (acc, producto) => acc + producto.precio * producto.cantidad,
+    0
+  );
+  const generateSessionId = () => {
+    return "session_" + Math.random().toString(36).substr(2, 9);
+  };
 
   useEffect(() => {
     const updatedCart = cart.map((product) => ({
@@ -46,6 +58,45 @@ export function Billing() {
       }));
     }
   }, [directBuy]);
+
+  const handleSendToPayInTransbank = async () => {
+    try {
+      if (userToken) {
+        const response = await fetch(
+          "http://localhost:3000/webpayplus/transaction",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({
+              buyOrder: "holasoynose",
+              sessionId: generateSessionId(),
+              amount: totalPrecio,
+              returnUrl: "http://localhost:5173/",
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Error de datos");
+        }
+
+        const data = await response.json();
+        setPaymentData({
+          token: data.token,
+          url: data.url,
+        });
+
+        return data;
+      }
+    } catch (error) {
+      console.error(error.message || "Error al procesar el envío de pago");
+      throw error;
+    }
+  };
 
   const handleUpdateProductStock = async () => {
     try {
@@ -245,7 +296,15 @@ export function Billing() {
                   })}
                   type="primary"
                   onClick={() => {
-                    handleClick();
+                    handleSendToPayInTransbank()
+                      .then(() => {
+                        if (paymentData.url) {
+                          document.getElementById("payment-form").submit();
+                        }
+                      })
+                      .catch((error) =>
+                        console.error("Error en el pago:", error)
+                      );
                   }}
                   disabled={
                     !selectedPaymentMethod ||
@@ -267,6 +326,18 @@ export function Billing() {
                     "Realizar pago"
                   )}
                 </GeneralBtn>
+                <form
+                  id="payment-form"
+                  method="POST"
+                  action={paymentData.url}
+                  style={{ display: "none" }}
+                >
+                  <input
+                    type="hidden"
+                    name="token_ws"
+                    value={paymentData.token}
+                  />
+                </form>
               </div>
             </div>
           </div>
