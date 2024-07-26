@@ -8,6 +8,7 @@ import productRoutes from "./src/routes/productRoutes.js";
 import favoritosRoutes from "./src/routes/favoritosRoutes.js";
 import carritoRoutes from "./src/routes/carritoRoutes.js";
 import ventaRoutes from "./src/routes/ventaRoutes.js";
+import productImgRoutes from "./src/routes/productImgRoutes.js";
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
@@ -24,6 +25,7 @@ app.use("/favoritos", favoritosRoutes);
 app.use("/carrito", carritoRoutes);
 app.use("/venta", ventaRoutes);
 app.use("/preguntas", productRoutes);
+app.use("/multer", productImgRoutes);
 
 app.get("*", (_, res) => {
   res.status(404).send("Ruta no encontrada");

@@ -1,6 +1,5 @@
 import { object, string, number } from "zod";
 import bcrypt from "bcryptjs";
-import format from "pg-format";
 import db from "../config/database.js";
 
 const validarUsuario = object({

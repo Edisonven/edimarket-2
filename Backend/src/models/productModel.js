@@ -1,4 +1,3 @@
-import { query } from "express";
 import db from "../config/database.js";
 import { object, string, number } from "zod";
 
