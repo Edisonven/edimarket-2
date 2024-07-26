@@ -127,7 +127,7 @@ export function Comments() {
           <div className="opiniones__container">
             <h3 className="my-3 font-medium">Opiniones</h3>
             {califications.length === 0 ? (
-              <Loader className="scale-[0.6]" />
+              <Loader className="scale-[0.6] h-full" />
             ) : (
               <div className="opiniones__body flex flex-col">
                 {userValorations.map((valoration) => (

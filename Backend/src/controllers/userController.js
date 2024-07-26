@@ -3,6 +3,28 @@ import { productModel } from "../models/productModel.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
+const verifyTokenByUser = (req, res) => {
+  try {
+    const Authorization = req.header("Authorization");
+    if (!Authorization || !Authorization.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "Token no proporcionado" });
+    }
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        if (err.name === "TokenExpiredError") {
+          return res.status(401).json({ message: "token expirado" });
+        }
+        return res.status(401).json({ message: "Token inválido" });
+      }
+
+      res.json({ message: "Token válido", decoded });
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const getAllUsers = async (req, res) => {
   try {
     const usuarios = await userModel.consultarUsuario();
@@ -44,7 +66,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(
       { email: user.email, id: user.id },
       process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "10s" }
     );
     res.status(200).json({
       token,
@@ -535,4 +557,5 @@ export const userController = {
   modifyPreguntas,
   deletePreguntas,
   consultarVentasParaValorar,
+  verifyTokenByUser,
 };
