@@ -5,3 +5,5 @@ pacakage-lock.json
 node_modules/*
 EdiMarket.sql
 .vercel
+uploads/**
+!.gitkeep

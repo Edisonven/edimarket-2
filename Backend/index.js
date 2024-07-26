@@ -9,6 +9,9 @@ import favoritosRoutes from "./src/routes/favoritosRoutes.js";
 import carritoRoutes from "./src/routes/carritoRoutes.js";
 import ventaRoutes from "./src/routes/ventaRoutes.js";
 const port = process.env.PORT || 3000;
+import multer from "multer";
+
+const upload = multer();
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
