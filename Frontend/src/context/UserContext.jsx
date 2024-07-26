@@ -506,6 +506,28 @@ export function UserProvider({ children }) {
     }
   }, [inputFormError]);
 
+  const handleTokenExpired = async () => {
+    try {
+      if (userToken) {
+        const response = await fetch(
+          "http://localhost:3000/usuarios/verify-data"
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Error de datos");
+        }
+      }
+      await response.json();
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    handleTokenExpired();
+  }, [userToken]);
+
   const logout = () => {
     setUserToken(null);
     setDirectBuy(null);

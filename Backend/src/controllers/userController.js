@@ -9,11 +9,9 @@ const verifyTokenByUser = (req, res) => {
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
+        console.log(err);
         if (err.name === "TokenExpiredError") {
-          const { email } = jwt.decode(token);
-          return res
-            .status(401)
-            .json({ message: `El token del usuario ${email} ha expirado` });
+          return res.status(401).json({ message: "token expirado" });
         }
         return res.status(401).json({ message: "Token inválido" });
       }
