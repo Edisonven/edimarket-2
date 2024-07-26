@@ -527,6 +527,7 @@ export function UserProvider({ children }) {
         if (response.message === "token expirado") {
           alert("Sesión expirada, por favor inicia sesión nuevamente");
           logout();
+          console.log(response.message);
         }
         await response.json();
       }
