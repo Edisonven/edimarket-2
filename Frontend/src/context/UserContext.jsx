@@ -510,7 +510,13 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          "http://localhost:3000/usuarios/verify-data"
+          "http://localhost:3000/usuarios/verify-data",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
         );
 
         if (!response.ok) {
