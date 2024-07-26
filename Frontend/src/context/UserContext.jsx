@@ -529,7 +529,6 @@ export function UserProvider({ children }) {
       if (error.message === "token expirado") {
         alert("Sesión expirada, por favor inicia sesión nuevamente");
         logout();
-        window.location.reload();
       }
     }
   };
