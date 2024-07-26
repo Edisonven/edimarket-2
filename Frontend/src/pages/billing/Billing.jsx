@@ -11,18 +11,15 @@ import { CartContext } from "../../context/CarritoContext";
 import { UserContext } from "../../context/UserContext";
 import { NoPaymentMethodsAdded } from "../../components/noPaymentMethodsAdded/NoPaymentMethodsAdded";
 import { ProductContext } from "../../context/ProductContext";
+import { BillingContext } from "../../context/BillingContex";
 
 export function Billing() {
-  const { userToken, userCreditCards, handleAddedToCart, fetchOrders } =
-    useContext(UserContext);
-  const { selectedPaymentMethod, isLoading, setIsLoading, navigate } =
-    useContext(CheckoutContext);
+  const { userToken, userCreditCards } = useContext(UserContext);
+  const { selectedPaymentMethod, isLoading } = useContext(CheckoutContext);
+  const { handleClick } = useContext(BillingContext);
   const { cart } = useContext(CartContext);
-  const { directBuy, setDirectBuy } = useContext(ProductContext);
-  const [updateLastStock, setUpdateLastStock] = useState({
-    cartValue: [],
-    directBuyValue: 0,
-  });
+  const { directBuy } = useContext(ProductContext);
+
   const [paymentData, setPaymentData] = useState({
     token: "",
     url: "",
@@ -35,29 +32,6 @@ export function Billing() {
   const generateSessionId = () => {
     return "session_" + Math.random().toString(36).substr(2, 9);
   };
-
-  useEffect(() => {
-    const updatedCart = cart.map((product) => ({
-      producto_id: product.producto_id,
-      newStock: product.stock - product.cantidad,
-    }));
-
-    setUpdateLastStock((prevsate) => ({
-      ...prevsate,
-      cartValue: updatedCart,
-    }));
-  }, [cart]);
-
-  useEffect(() => {
-    const updateStock = directBuy?.stock - directBuy?.cantidad;
-
-    if (updateStock) {
-      setUpdateLastStock((prevstock) => ({
-        ...prevstock,
-        directBuyValue: updateStock,
-      }));
-    }
-  }, [directBuy]);
 
   const handleSendToPayInTransbank = async () => {
     try {
@@ -98,184 +72,6 @@ export function Billing() {
     }
   };
 
-  const handleUpdateProductStock = async () => {
-    try {
-      const senDirectBuyStock = async () => {
-        const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/productos/updatestock",
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              productId: directBuy?.producto_id,
-              newStock: updateLastStock?.directBuyValue,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Error al actualizar stock");
-        }
-        const data = await response.json();
-        return data;
-      };
-
-      await senDirectBuyStock();
-
-      const sendProductInCartStock = async (updateProductCart) => {
-        const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/productos/updatestock",
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              productId: updateProductCart?.producto_id,
-              newStock: updateProductCart?.newStock,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Error al actualizar stock");
-        }
-        const data = await response.json();
-        return data;
-      };
-
-      for (const updateProductCart of updateLastStock.cartValue) {
-        await sendProductInCartStock(updateProductCart);
-      }
-    } catch (error) {
-      console.error(error.message || "Error al actualizar stock del producto");
-      throw error;
-    }
-  };
-
-  const handleDeleteUserProducts = async (usuario_id) => {
-    try {
-      if (userToken) {
-        for (const producto of cart) {
-          const response = await fetch(
-            `https://backend-mu-three-82.vercel.app/carrito/${producto?.producto_id}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${userToken}`,
-              },
-              body: JSON.stringify({
-                usuario_id,
-              }),
-            }
-          );
-
-          if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(
-              errorData.message || "Error al eliminar del carrito"
-            );
-          }
-          const data = await response.json();
-        }
-
-        handleAddedToCart();
-      }
-    } catch (error) {
-      console.error("Error al eliminar del carrito:", error);
-    }
-  };
-
-  const handleOrder = async () => {
-    try {
-      const sendProduct = async (producto) => {
-        const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/venta`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              idProducto: producto.producto_id,
-              cantidad: producto.cantidad,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Error en la solicitud");
-        }
-
-        const data = await response.json();
-        return data;
-      };
-
-      const sendSecondProduct = async (producto) => {
-        const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/venta/valorar`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              idProducto: producto.producto_id,
-              cantidad: producto.cantidad,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Error en la segunda solicitud");
-        }
-
-        const data = await response.json();
-        return data;
-      };
-
-      for (const producto of cart) {
-        await sendProduct(producto);
-        await sendSecondProduct(producto);
-      }
-
-      if (directBuy !== null) {
-        await sendProduct(directBuy);
-        await sendSecondProduct(directBuy);
-      }
-
-      handleUpdateProductStock();
-      fetchOrders();
-      setDirectBuy(null);
-      handleDeleteUserProducts();
-      handleAddedToCart();
-    } catch (error) {
-      console.error("Error al realizar la compra:", error);
-    }
-  };
-
-  const handleButtonClickPayment = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      navigate("/compra-exitosa");
-    }, 1500);
-  };
-
-  const handleClick = () => {
-    handleButtonClickPayment();
-    handleOrder();
-  };
-
   return (
     <div className={classNames("pt-10", billing.billing__container)}>
       {userCreditCards.length ? (
@@ -296,7 +92,7 @@ export function Billing() {
                   })}
                   type="primary"
                   onClick={() => {
-                    handleSendToPayInTransbank()
+                    /*      handleSendToPayInTransbank()
                       .then(() => {
                         if (paymentData.url) {
                           document.getElementById("payment-form").submit();
@@ -304,7 +100,8 @@ export function Billing() {
                       })
                       .catch((error) =>
                         console.error("Error en el pago:", error)
-                      );
+                      ); */
+                    handleClick();
                   }}
                   disabled={
                     !selectedPaymentMethod ||
