@@ -523,6 +523,11 @@ export function UserProvider({ children }) {
           const errorData = await response.json();
           throw new Error(errorData.message || "Error de datos");
         }
+
+        if (response.message === "token expirado") {
+          alert("Sesión expirada, por favor inicia sesión nuevamente");
+          logout();
+        }
         await response.json();
       }
     } catch (error) {
