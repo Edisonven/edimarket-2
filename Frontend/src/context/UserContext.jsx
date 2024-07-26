@@ -517,8 +517,8 @@ export function UserProvider({ children }) {
           const errorData = await response.json();
           throw new Error(errorData.message || "Error de datos");
         }
+        await response.json();
       }
-      await response.json();
     } catch (error) {
       console.error(error.message);
     }
