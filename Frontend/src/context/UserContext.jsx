@@ -524,12 +524,12 @@ export function UserProvider({ children }) {
           throw new Error(errorData.message || "Error de datos");
         }
 
-        if (response.message === "token expirado") {
+        const responseData = await response.json();
+
+        if (responseData.message === "token expirado") {
           alert("Sesión expirada, por favor inicia sesión nuevamente");
           logout();
-          console.log(response.message);
         }
-        await response.json();
       }
     } catch (error) {
       console.error(error.message);
@@ -538,7 +538,7 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     handleTokenExpired();
-  }, [userToken]);
+  }, [userToken, navigate]);
 
   const logout = () => {
     setUserToken(null);
