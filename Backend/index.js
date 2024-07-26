@@ -10,8 +10,23 @@ import carritoRoutes from "./src/routes/carritoRoutes.js";
 import ventaRoutes from "./src/routes/ventaRoutes.js";
 const port = process.env.PORT || 3000;
 import multer from "multer";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
-const upload = multer();
+const CURRENT_DIR = dirname(fileURLToPath(import.meta.url));
+
+const upload = multer({
+  dest: join(CURRENT_DIR, "./uploads"),
+  limits: {
+    fileSize: 10000000,
+  },
+});
+
+app.post("/upload-imgs", upload.single("images"), (req, res) => {
+  console.log(req.file);
+
+  res.status(200).json({ message: "archivos subidos exitosamente" });
+});
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
