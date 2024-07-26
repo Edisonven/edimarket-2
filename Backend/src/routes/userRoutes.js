@@ -6,6 +6,7 @@ import { userController } from "../controllers/userController.js";
 import verificarToken from "../middlewares/verificarToken.js";
 
 router.get("/", userController.getAllUsers);
+router.get("/verify-data", verificarToken,userController.verifyTokenByUser);
 router.get("/:id", userController.getUserById);
 router.get("/usuario/productos",verificarToken,userController.consultarProductosPerUser);
 router.post("/registro", userController.registrarUser);
