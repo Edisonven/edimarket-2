@@ -57,11 +57,10 @@ function App() {
   }, [location.pathname]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    if (!userToken) {
       logout();
     }
-  }, []);
+  }, [userToken]);
 
   return (
     <>
