@@ -13,6 +13,9 @@ import multer from "multer";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
+app.use(cors());
+app.use(json());
+
 const CURRENT_DIR = dirname(fileURLToPath(import.meta.url));
 
 const upload = multer({
@@ -31,9 +34,6 @@ app.post("/upload-imgs", upload.single("images"), (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });
-
-app.use(cors());
-app.use(json());
 
 app.use("/usuarios", userRoutes);
 app.use("/categorias", categoriaRoutes);
