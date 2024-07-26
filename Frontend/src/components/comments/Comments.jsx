@@ -167,7 +167,11 @@ export function Comments() {
                       </p>
                       <div className="flex items-center gap-3 mt-3">
                         <div
-                          onClick={() => handleSendMyCalification(valoration)}
+                          onClick={() =>
+                            userToken
+                              ? handleSendMyCalification(valoration)
+                              : null
+                          }
                           className={`flex items-center gap-2 cursor-pointer hover:outline outline-teal-500 outline-1 rounded-xl px-2 py-[1px] select-none ${
                             califications.some(
                               (cal) =>
