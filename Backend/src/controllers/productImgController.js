@@ -1,9 +1,9 @@
 import fs from "node:fs";
 
-const sendLocalImg = (req, res) => {
+const sendLocalImg = async (req, res) => {
   console.log(req.file);
   saveImg(req.file);
-  res.send("holi ");
+  res.send("holi");
 };
 
 const saveImg = (file) => {
@@ -12,6 +12,12 @@ const saveImg = (file) => {
   return newPath;
 };
 
+const sendMultiImgs = async (req, res) => {
+  req.files.map(saveImg);
+  res.send("imágenes subidas");
+};
+
 export const productImgController = {
   sendLocalImg,
+  sendMultiImgs,
 };
