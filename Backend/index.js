@@ -26,7 +26,7 @@ const upload = multer({
   },
 });
 
-app.post("/upload-imgs", upload.single("images"), (req, res) => {
+app.post("/upload-imgs", cors(), upload.single("images"), (req, res) => {
   console.log(req.file);
   res.status(200).json({ message: "Archivos subidos exitosamente" });
 });
