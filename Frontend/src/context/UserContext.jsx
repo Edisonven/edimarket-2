@@ -307,12 +307,15 @@ export function UserProvider({ children }) {
   const handleAddedToCart = async () => {
     try {
       if (userToken) {
-        const response = await fetch("https://backend-mu-three-82.vercel.app/carrito", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
+        const response = await fetch(
+          "https://backend-mu-three-82.vercel.app/carrito",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        );
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(
@@ -383,12 +386,15 @@ export function UserProvider({ children }) {
   const handleGetFavs = async () => {
     try {
       if (userToken) {
-        const response = await fetch("https://backend-mu-three-82.vercel.app/favoritos", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
+        const response = await fetch(
+          "https://backend-mu-three-82.vercel.app/favoritos",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        );
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.message || "Error al obtener favoritos");
@@ -410,16 +416,19 @@ export function UserProvider({ children }) {
   const handleDeleteFav = async (e, id) => {
     e.stopPropagation();
     try {
-      const response = await fetch(`https://backend-mu-three-82.vercel.app/favoritos/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
-        },
-        body: JSON.stringify({
-          usuario_id: addedToFav.usuario_id,
-        }),
-      });
+      const response = await fetch(
+        `https://backend-mu-three-82.vercel.app/favoritos/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({
+            usuario_id: addedToFav.usuario_id,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
