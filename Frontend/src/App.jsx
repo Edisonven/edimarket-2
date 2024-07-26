@@ -40,7 +40,7 @@ import { SendMyValoration } from "./pages/sendMyValoration/SendMyValoration.jsx"
 import { UpdateMyValoration } from "./pages/myValorations/UpdateMyValoration.jsx";
 
 function App() {
-  const { userToken } = useContext(UserContext);
+  const { userToken, logout } = useContext(UserContext);
   const location = useLocation();
   const navbarRef = useRef(null);
 
