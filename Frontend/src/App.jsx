@@ -56,12 +56,6 @@ function App() {
     }
   }, [location.pathname]);
 
-  useEffect(() => {
-    if (!userToken) {
-      logout();
-    }
-  }, [userToken]);
-
   return (
     <>
       <Navbar navbarRef={navbarRef} />
