@@ -506,6 +506,37 @@ export function UserProvider({ children }) {
     }
   }, [inputFormError]);
 
+  const handleTokenExpired = async () => {
+    try {
+      if (userToken) {
+        const response = await fetch(
+          "https://backend-mu-three-82.vercel.app/usuarios/verify-data",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Error de datos");
+        }
+      }
+    } catch (error) {
+      console.error(error.message);
+      if (error.message === "token expirado") {
+        alert("Sesión expirada, por favor inicia sesión nuevamente");
+        logout();
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleTokenExpired();
+  }, [userToken, navigate]);
+
   const logout = () => {
     setUserToken(null);
     setDirectBuy(null);
