@@ -221,6 +221,7 @@ export function UserProvider({ children }) {
   }, [userToken]);
 
   const handleUserCards = async () => {
+    setLoading(true);
     try {
       if (userToken) {
         const response = await fetch(
@@ -341,6 +342,7 @@ export function UserProvider({ children }) {
   }, [userToken]);
 
   const handleUserAddress = async () => {
+    setLoading(true);
     try {
       if (userToken) {
         const response = await fetch(

@@ -10,12 +10,13 @@ import { UserContext } from "../../context/UserContext";
 import { NoAddressAdded } from "../../components/noAddressAdded/NoAddressAdded";
 import { CartContext } from "../../context/CarritoContext";
 import { ProductContext } from "../../context/ProductContext";
+import { Loader } from "../../components/loader/Loader";
 
 export function Shipping() {
   const { userAddress } = useContext(UserContext);
   const { selectedAddress, navigate } = useContext(CheckoutContext);
   const { cart } = useContext(CartContext);
-  const { directBuy } = useContext(ProductContext);
+  const { directBuy, loading } = useContext(ProductContext);
 
   const handleButtonClickAdress = () => {
     navigate("/billing");
@@ -23,7 +24,9 @@ export function Shipping() {
 
   return (
     <div className={classNames("pt-10", shipping.shipping_container)}>
-      {userAddress.length ? (
+      {loading ? (
+        <Loader />
+      ) : userAddress.length > 0 ? (
         <div>
           <h1 className="ml-5 mb-10">Elige dónde quieres recibir tu compra:</h1>
           <div className="shipping__container flex lg:mx-28 flex-col md:flex-row gap-6 md:gap-0">
