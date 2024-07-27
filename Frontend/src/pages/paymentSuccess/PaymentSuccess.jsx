@@ -6,15 +6,18 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Loader } from "../../components/loader/Loader";
 import ediTriste from "/imgs/aplication/edi-triste.png";
+import ghost from "/imgs/aplication/ghost.png";
+import { BillingContext } from "../../context/BillingContex";
 
 export function PaymentSuccess() {
   const navigate = useNavigate();
   const urlParams = new URLSearchParams(window.location.search);
   const { userToken } = useContext(UserContext);
   const tokenWs = urlParams.get("token_ws");
-
+  const { handleClick } = useContext(BillingContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [canceled, setCanceled] = useState("");
 
   const handleConfirmTransaction = async () => {
     if (tokenWs) {
@@ -37,6 +40,11 @@ export function PaymentSuccess() {
         }
 
         const data = await response.json();
+
+        if (data.status === "TRANSACTION FAILED") {
+          setCanceled("Transacción cancelada");
+        }
+        // handleClick()
       } catch (error) {
         setError(error.message || "Error al confirmar la transacción");
       } finally {
@@ -74,6 +82,14 @@ export function PaymentSuccess() {
           </h3>
           <GeneralBtn onClick={() => handleTryAgain()} type="primary">
             Reintentar
+          </GeneralBtn>
+        </div>
+      ) : canceled ? (
+        <div className="flex flex-col items-center justify-center gap-[20px]">
+          <img className="w-full max-w-[130px]" src={ghost} alt="logo" />
+          <h2 className="font-medium text-center">{canceled}</h2>
+          <GeneralBtn onClick={() => navigate("/")} type="primary">
+            Continuar
           </GeneralBtn>
         </div>
       ) : (

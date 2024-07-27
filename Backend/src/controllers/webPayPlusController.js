@@ -44,6 +44,8 @@ const confirmTransaction = async (req, res) => {
     console.log(response);
     if (response.response_code === 0 && response.status === "AUTHORIZED") {
       return res.json({ status: "AUTHORIZED" });
+    } else if (response.response_code === -1 && response.status === "FAILED") {
+      return res.json({ status: "TRANSACTION FAILED" });
     } else {
       return res.json({ status: "NOT_AUTHORIZED" });
     }

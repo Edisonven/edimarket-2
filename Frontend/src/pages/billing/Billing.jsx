@@ -11,12 +11,11 @@ import { CartContext } from "../../context/CarritoContext";
 import { UserContext } from "../../context/UserContext";
 import { NoPaymentMethodsAdded } from "../../components/noPaymentMethodsAdded/NoPaymentMethodsAdded";
 import { ProductContext } from "../../context/ProductContext";
-import { BillingContext } from "../../context/BillingContex";
 
 export function Billing() {
   const { userToken, userCreditCards } = useContext(UserContext);
   const { selectedPaymentMethod, isLoading } = useContext(CheckoutContext);
-  const { handleClick } = useContext(BillingContext);
+
   const { cart } = useContext(CartContext);
   const { directBuy } = useContext(ProductContext);
   const formRef = useRef(null);
