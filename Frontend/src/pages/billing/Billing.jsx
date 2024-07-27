@@ -96,7 +96,7 @@ export function Billing() {
   return (
     <div className={classNames("pt-10", billing.billing__container)}>
       {loading ? (
-        <Loader></Loader>
+        <Loader />
       ) : (
         <div>
           {userCreditCards.length ? (

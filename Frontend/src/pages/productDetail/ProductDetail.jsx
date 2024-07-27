@@ -17,6 +17,7 @@ import masterCard from "/imgs/aplication/mastercard.png";
 import cash from "/imgs/aplication/cash.png";
 import { Comments } from "../../components/comments/Comments";
 import { Questions } from "../../components/questions/Questions";
+import { ThreeDots } from "react-loader-spinner";
 
 const ModalIcon = forwardRef((props, ref) => (
   <div ref={ref}>
@@ -57,12 +58,14 @@ export function ProductDetail() {
   const heartIconRef = useRef(null);
   const cartBtnRef = useRef(null);
   const [changeHeartColor, setChangeHeartColor] = useState(false);
+  const [loadingAddedToCart, setLoadingAddedToCart] = useState(false);
 
   useEffect(() => {
     handleGetProduct(id);
   }, [id, navigate]);
 
   const handleAddToCart = async (idUsuario, idProducto, cantidad) => {
+    setLoadingAddedToCart(true);
     try {
       const productAdded = cart.find(
         (producto) => producto.producto_id === idProducto
@@ -114,6 +117,8 @@ export function ProductDetail() {
       }
     } catch (error) {
       console.error("Error al agregar al carrito:", error);
+    } finally {
+      setLoadingAddedToCart(false);
     }
   };
 
@@ -443,7 +448,24 @@ export function ProductDetail() {
                             : false
                         }
                       >
-                        Agregar al carrito
+                        <div className="flex items-center justify-center">
+                          {loadingAddedToCart ? (
+                            <div>
+                              <ThreeDots
+                                visible={true}
+                                height="25"
+                                width="100"
+                                color="#FFFFFF"
+                                radius="9"
+                                ariaLabel="three-dots-loading"
+                                wrapperStyle={{}}
+                                wrapperClass=""
+                              />
+                            </div>
+                          ) : (
+                            "Agregar al carrito"
+                          )}
+                        </div>
                       </GeneralBtn>
                     </div>
                   )}

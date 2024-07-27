@@ -390,7 +390,6 @@ export function UserProvider({ children }) {
   }, [userToken]);
 
   const handleGetFavs = async () => {
-    setLoading(true);
     try {
       if (userToken) {
         const response = await fetch(
