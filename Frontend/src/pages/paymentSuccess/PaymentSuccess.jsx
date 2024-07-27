@@ -4,6 +4,8 @@ import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
 import "../paymentSuccess/paymentSuccess.css";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
+import { Loader } from "../../components/loader/Loader";
+import ediTriste from "/imgs/aplication/edi-triste.png";
 
 export function PaymentSuccess() {
   const navigate = useNavigate();
@@ -35,10 +37,8 @@ export function PaymentSuccess() {
         }
 
         const data = await response.json();
-        console.log("Transacción confirmada:", data);
       } catch (error) {
         setError(error.message || "Error al confirmar la transacción");
-        console.error("Error al confirmar la transacción:", error);
       } finally {
         setLoading(false);
       }
@@ -52,33 +52,55 @@ export function PaymentSuccess() {
     handleConfirmTransaction();
   }, []);
 
-  if (loading) {
-    return <p>Confirmando transacción...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  const handleTryAgain = () => {
+    navigate("/billing");
+  };
 
   return (
     <div className="paymentsucces__container py-10 flex flex-col items-center justify-center">
-      <div>
-        <h1 className="text-center">Compra Exitosa</h1>
-        <h3 className="text-center mt-3">¡Muchas gracias por tu compra!</h3>
-      </div>
-      <div>
-        <img src={ediFeliz} alt="Compra Exitosa" className="h-64 mt-8 mb-10" />
-      </div>
-      <div>
-        <GeneralBtn
-          onClick={() => {
-            navigate("/");
-          }}
-          type="primary"
-        >
-          Seguir comprando
-        </GeneralBtn>
-      </div>
+      {loading ? (
+        <div>
+          <h3 className="font-medium">Confirmando transacción...</h3>
+          <Loader />
+        </div>
+      ) : error ? (
+        <div className="flex items-center justify-center flex-col gap-[20px]">
+          <h2 className="font-medium text-center">
+            Ha ocurrido un error en la transacción.
+          </h2>
+          <img className="w-full max-w-[150px]" src={ediTriste} alt="logo" />
+          <h3 className="font-medium text-center">
+            Por favor, inténtalo nuevamente
+          </h3>
+          <GeneralBtn onClick={() => handleTryAgain()} type="primary">
+            Reintentar
+          </GeneralBtn>
+        </div>
+      ) : (
+        <div className="flex flex-col justify-center items-center">
+          <div>
+            <h1 className="text-center">Compra Exitosa</h1>
+            <h3 className="text-center mt-3">¡Muchas gracias por tu compra!</h3>
+          </div>
+          <div>
+            <img
+              src={ediFeliz}
+              alt="Compra Exitosa"
+              className="mt-8 mb-10 w-full max-w-[150px]"
+            />
+          </div>
+          <div>
+            <GeneralBtn
+              onClick={() => {
+                navigate("/");
+              }}
+              type="primary"
+            >
+              Seguir comprando
+            </GeneralBtn>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

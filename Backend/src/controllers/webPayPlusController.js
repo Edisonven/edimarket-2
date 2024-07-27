@@ -36,7 +36,6 @@ const sendTransactionCreated = async (req, res) => {
 const confirmTransaction = async (req, res) => {
   try {
     const { token_ws } = req.body;
-    console.log(token_ws);
     if (!token_ws) {
       return res.status(400).json({ message: "Token no proporcionado" });
     }
