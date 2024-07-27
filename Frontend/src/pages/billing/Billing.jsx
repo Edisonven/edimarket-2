@@ -43,7 +43,7 @@ export function Billing() {
     try {
       if (userToken) {
         const response = await fetch(
-          "http://localhost:3000/webpayplus/transaction",
+          "https://backend-mu-three-82.vercel.app/webpayplus/transaction",
           {
             method: "POST",
             headers: {
