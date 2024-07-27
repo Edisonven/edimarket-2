@@ -15,6 +15,7 @@ import { ProductContext } from "../../context/ProductContext";
 export function Billing() {
   const { userToken, userCreditCards } = useContext(UserContext);
   const { selectedPaymentMethod, isLoading } = useContext(CheckoutContext);
+  const [loading, setLoading] = useState(null);
 
   const { cart } = useContext(CartContext);
   const { directBuy } = useContext(ProductContext);
@@ -40,6 +41,7 @@ export function Billing() {
   };
 
   const handleSendToPayInTransbank = async () => {
+    setLoading(true);
     try {
       if (userToken) {
         const response = await fetch(
@@ -75,6 +77,8 @@ export function Billing() {
     } catch (error) {
       console.error(error.message || "Error al procesar el envío de pago");
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,7 +118,22 @@ export function Billing() {
                     (cart.length === 0 && directBuy === null)
                   }
                 >
-                  Ir a pagar
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <ThreeDots
+                        visible={true}
+                        height="25"
+                        width="100"
+                        color="#FFFFFF"
+                        radius="9"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                      />
+                    </div>
+                  ) : (
+                    "Ir a pagar"
+                  )}
                 </GeneralBtn>
                 <form
                   ref={formRef}
