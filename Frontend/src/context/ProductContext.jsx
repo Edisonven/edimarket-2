@@ -6,8 +6,8 @@ export const ProductContext = createContext();
 const initialStateProduct = localStorage.getItem("directBuy")
   ? JSON.parse(localStorage.getItem("directBuy"))
   : null;
-const initialStateProductToRate = localStorage.getItem("product")
-  ? JSON.parse(localStorage.getItem("product"))
+const initialStateProductToRate = localStorage.getItem("productToRate")
+  ? JSON.parse(localStorage.getItem("productToRate"))
   : null;
 
 const initialStateScore = initialStateProductToRate
@@ -240,6 +240,14 @@ export function ProductProvider({ children }) {
   const handleProductQuantity = (e) => {
     setProductQuantity(Number(e.target.value));
   };
+
+  useEffect(() => {
+    if (productToRate) {
+      localStorage.setItem("productToRate", productToRate);
+    } else {
+      localStorage.removeItem("productToRate");
+    }
+  }, [productToRate]);
 
   return (
     <ProductContext.Provider

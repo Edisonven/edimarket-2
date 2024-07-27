@@ -23,17 +23,20 @@ export function SendMyValoration() {
 
   const handleUpdateProductValorated = async () => {
     try {
-      const response = await fetch("https://backend-mu-three-82.vercel.app/venta/valorar", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
-        },
-        body: JSON.stringify({
-          orderId: productToRate.orderValorate_id,
-          score: productToRate.score,
-        }),
-      });
+      const response = await fetch(
+        "https://backend-mu-three-82.vercel.app/venta/valorar",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({
+            orderId: productToRate.orderValorate_id,
+            score: productToRate.score,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -126,7 +129,12 @@ export function SendMyValoration() {
   useEffect(() => {
     if (productToRate) {
       localStorage.setItem(
-        "product",
+        "productToRate",
+        JSON.stringify({ ...productToRate, score })
+      );
+    } else {
+      localStorage.removeItem(
+        "productToRate",
         JSON.stringify({ ...productToRate, score })
       );
     }

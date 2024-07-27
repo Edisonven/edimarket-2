@@ -82,16 +82,6 @@ export function EditUserData() {
         ...prevErrors,
         errorNombre: "Ingresa tu nombre completo.",
       }));
-    } else if (userData.email.trim() === "") {
-      setInputFormError((prevErrors) => ({
-        ...prevErrors,
-        errorEmail: "Ingresa tu correo electrónico.",
-      }));
-    } else if (!emailRegex.test(userData.email.trim())) {
-      setInputFormError((prevErrors) => ({
-        ...prevErrors,
-        errorEmail: "Ingresa un correo electrónico válido.",
-      }));
     } else if (userData.contraseña.trim() === "") {
       setInputFormError((prevErrors) => ({
         ...prevErrors,
@@ -152,17 +142,14 @@ export function EditUserData() {
   }, [navigate]);
 
   useEffect(() => {
-    if (user) {
-      setUserData((prevData) => ({
-        ...prevData,
-        nombre: user.nombre,
-        email: user.email,
-      }));
-    }
+    setUserData((prevData) => ({
+      ...prevData,
+      nombre: user?.nombre,
+    }));
 
     inputRefs.nombre.current.focus();
   }, [user]);
-
+  console.log(userData);
   return (
     <section className="edituserdata__container ">
       <h1 className="text-2xl font-semibold mb-5">Edita y guarda tus datos</h1>
@@ -190,28 +177,6 @@ export function EditUserData() {
             {inputFormError.errorNombre && (
               <p className="text-red-600 font-semibold text-sm ml-7">
                 {inputFormError.errorNombre}
-              </p>
-            )}
-          </div>
-          <div className="user__input__container">
-            <label className="font-semibold" htmlFor="email">
-              Email
-            </label>
-            <input
-              ref={inputRefs.email}
-              value={userData.email}
-              onChange={handleChange}
-              className={`data__input ${
-                inputFormError.errorEmail
-                  ? "focus: outline-2 outline outline-red-600"
-                  : "focus: outline-2 outline-green-300"
-              }`}
-              name="email"
-              type="text"
-            />
-            {inputFormError.errorEmail && (
-              <p className="text-red-600 font-semibold text-sm ml-7">
-                {inputFormError.errorEmail}
               </p>
             )}
           </div>

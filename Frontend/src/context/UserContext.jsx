@@ -595,13 +595,7 @@ export function UserProvider({ children }) {
     } else {
       localStorage.removeItem("token");
     }
-
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    } else {
-      localStorage.removeItem("user");
-    }
-  }, [userToken, user]);
+  }, [userToken]);
 
   return (
     <UserContext.Provider
