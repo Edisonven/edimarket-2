@@ -25,6 +25,7 @@ export function MyQuestions() {
   const [questionsDeleted, setQuestionsDeleted] = useState("");
   const handleGetProductWithQuestions = async () => {
     try {
+      setLoading(true);
       if (userToken) {
         const response = await fetch(
           `https://backend-mu-three-82.vercel.app/productos/producto/${user.id}`,

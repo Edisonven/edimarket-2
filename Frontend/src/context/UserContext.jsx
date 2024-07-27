@@ -126,6 +126,7 @@ export function UserProvider({ children }) {
   }, [navigate]);
 
   const fetchOrders = async () => {
+    setLoading(true);
     try {
       if (userToken) {
         const handleOrders = async () => {
@@ -386,6 +387,7 @@ export function UserProvider({ children }) {
   }, [userToken]);
 
   const handleGetFavs = async () => {
+    setLoading(true);
     try {
       if (userToken) {
         const response = await fetch(
