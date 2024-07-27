@@ -189,6 +189,7 @@ export function UserProvider({ children }) {
   }, [userToken]);
 
   const handleGetQuestionsByUser = async () => {
+    setLoading(true);
     try {
       if (userToken) {
         const response = await fetch(
@@ -214,6 +215,8 @@ export function UserProvider({ children }) {
       }
     } catch (error) {
       console.error("Error:", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 

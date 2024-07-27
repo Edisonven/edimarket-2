@@ -44,6 +44,7 @@ export function ProductProvider({ children }) {
   });
 
   const handleGetUserValorations = async () => {
+    setLoading(true);
     try {
       if (productById) {
         const response = await fetch(
