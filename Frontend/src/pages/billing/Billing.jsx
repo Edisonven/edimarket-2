@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import summary from "../../components/summary/summary.module.css";
 import billing from "./billing.module.css";
 import classNames from "classnames";
@@ -19,6 +19,7 @@ export function Billing() {
   const { handleClick } = useContext(BillingContext);
   const { cart } = useContext(CartContext);
   const { directBuy } = useContext(ProductContext);
+  const formRef = useRef(null);
 
   const [paymentData, setPaymentData] = useState({
     token: "",
@@ -72,6 +73,17 @@ export function Billing() {
     }
   };
 
+  useEffect(() => {
+    if (paymentData.url && paymentData.token) {
+      const form = formRef.current;
+      if (form) {
+        form.action = paymentData.url;
+        form.elements["token_ws"].value = paymentData.token;
+        form.submit();
+      }
+    }
+  }, [paymentData]);
+
   return (
     <div className={classNames("pt-10", billing.billing__container)}>
       {userCreditCards.length ? (
@@ -91,39 +103,16 @@ export function Billing() {
                       (cart.length === 0 && directBuy === null),
                   })}
                   type="primary"
-                  onClick={() => {
-                    /*      handleSendToPayInTransbank()
-                      .then(() => {
-                        if (paymentData.url) {
-                          document.getElementById("payment-form").submit();
-                        }
-                      })
-                      .catch((error) =>
-                        console.error("Error en el pago:", error)
-                      ); */
-                    handleClick();
-                  }}
+                  onClick={handleSendToPayInTransbank}
                   disabled={
                     !selectedPaymentMethod ||
                     (cart.length === 0 && directBuy === null)
                   }
                 >
-                  {isLoading ? (
-                    <ThreeDots
-                      visible={true}
-                      height="25"
-                      width="100"
-                      color="#FFFFFF"
-                      radius="9"
-                      ariaLabel="three-dots-loading"
-                      wrapperStyle={{}}
-                      wrapperClass=""
-                    />
-                  ) : (
-                    "Realizar pago"
-                  )}
+                  Ir a pagar
                 </GeneralBtn>
                 <form
+                  ref={formRef}
                   id="payment-form"
                   method="POST"
                   action={paymentData.url}
