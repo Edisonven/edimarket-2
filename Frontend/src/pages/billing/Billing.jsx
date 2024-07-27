@@ -116,7 +116,11 @@ export function Billing() {
                           (cart.length === 0 && directBuy === null),
                       })}
                       type="primary"
-                      onClick={handleSendToPayInTransbank}
+                      onClick={
+                        selectedPaymentMethod === "webpay"
+                          ? handleSendToPayInTransbank
+                          : null
+                      }
                       disabled={
                         !selectedPaymentMethod ||
                         (cart.length === 0 && directBuy === null)
