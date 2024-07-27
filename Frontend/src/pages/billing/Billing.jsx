@@ -30,6 +30,8 @@ export function Billing() {
     (acc, producto) => acc + producto.precio * producto.cantidad,
     0
   );
+  const totalPrecioDirectBuy = directBuy?.precio * directBuy?.cantidad;
+
   const generateSessionId = () => {
     return "session_" + Math.random().toString(36).substr(2, 9);
   };
@@ -48,7 +50,7 @@ export function Billing() {
             body: JSON.stringify({
               buyOrder: "holasoynose",
               sessionId: generateSessionId(),
-              amount: totalPrecio,
+              amount: totalPrecio || totalPrecioDirectBuy,
               returnUrl: "http://localhost:5173/",
             }),
           }
