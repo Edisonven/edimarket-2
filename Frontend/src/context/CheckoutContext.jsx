@@ -19,15 +19,15 @@ export function CheckoutProvider({ children }) {
   };
 
   const handlePickupChange = () => {
-    setSelectedAddress('pickup');
+    setSelectedAddress("pickup");
   };
 
-  const handleCheckboxChange = (id) => {
-    setSelectedPaymentMethod(id);
+  const handleCheckboxChange = () => {
+    setSelectedPaymentMethod("webpay");
   };
 
   const handleEfectivoChange = () => {
-    setSelectedPaymentMethod('efectivo');
+    setSelectedPaymentMethod("efectivo");
   };
 
   const capitalizeFirstLetter = (string) => {
