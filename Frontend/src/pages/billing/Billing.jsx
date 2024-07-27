@@ -135,6 +135,10 @@ export function Billing() {
                             wrapperClass=""
                           />
                         </div>
+                      ) : selectedPaymentMethod === "webpay" ? (
+                        "Ir a pagar"
+                      ) : selectedPaymentMethod === "efectivo" ? (
+                        "Realizar pedido"
                       ) : (
                         "Ir a pagar"
                       )}
