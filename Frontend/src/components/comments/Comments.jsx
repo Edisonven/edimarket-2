@@ -126,7 +126,7 @@ export function Comments() {
         {productId?.producto_id === productById?.producto_id ? (
           <div className="opiniones__container">
             <h3 className="my-3 font-medium">Opiniones</h3>
-            {califications.length === 0 ? (
+            {califications.length === 0 && loading ? (
               <Loader className="scale-[0.6] h-full" />
             ) : (
               <div className="opiniones__body flex flex-col">
