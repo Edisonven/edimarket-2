@@ -44,6 +44,19 @@ const getUserById = async (req, res) => {
   }
 };
 
+const getUserByTokenRegistered = async (req, res) => {
+  try {
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, process.env.JWT_SECRET);
+    const { id } = jwt.decode(token);
+    const user = await productModel.userByTokenRegistered(id);
+    res.status(200).json({ message: "usuario encontrado", user });
+  } catch (error) {
+    res.status(500).json({ message: "error al obtener usuario resgistrado" });
+  }
+};
+
 const registrarUser = async (req, res) => {
   try {
     const usuario = req.body;
@@ -558,4 +571,5 @@ export const userController = {
   deletePreguntas,
   consultarVentasParaValorar,
   verifyTokenByUser,
+  getUserByTokenRegistered,
 };

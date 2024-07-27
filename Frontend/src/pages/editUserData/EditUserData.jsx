@@ -21,7 +21,7 @@ export function EditUserData() {
     userToken,
     logout,
   } = useContext(UserContext);
-  const { setLoading } = useContext(ProductContext);
+  const { setLoading, loading } = useContext(ProductContext);
   const [userDataIcon, setUserDataIcon] = useState(false);
   const navigate = useNavigate();
   const [editSuccess, setEditSuccess] = useState({
@@ -34,16 +34,19 @@ export function EditUserData() {
   };
 
   const handleUpdateUserData = async (nombre, email, contraseña) => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const response = await fetch("https://backend-mu-three-82.vercel.app/usuarios", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
-        },
-        body: JSON.stringify({ nombre, email, contraseña }),
-      });
+      const response = await fetch(
+        "https://backend-mu-three-82.vercel.app/usuarios",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({ nombre, email, contraseña }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -113,7 +116,7 @@ export function EditUserData() {
       }));
     } else {
       try {
-        const res = await handleUpdateUserData(
+        await handleUpdateUserData(
           userData.nombre,
           userData.email,
           userData.contraseña
@@ -149,14 +152,16 @@ export function EditUserData() {
   }, [navigate]);
 
   useEffect(() => {
-    setUserData((prevData) => ({
-      ...prevData,
-      nombre: user?.nombre,
-      email: user?.email,
-    }));
+    if (user) {
+      setUserData((prevData) => ({
+        ...prevData,
+        nombre: user.nombre,
+        email: user.email,
+      }));
+    }
 
     inputRefs.nombre.current.focus();
-  }, []);
+  }, [user]);
 
   return (
     <section className="edituserdata__container ">

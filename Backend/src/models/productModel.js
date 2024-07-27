@@ -35,6 +35,15 @@ const consultarProductoById = async (id) => {
   return products[0];
 };
 
+const userByTokenRegistered = async (id) => {
+  const values = [id];
+  const query =
+    "SELECT nombre ,email FROM usuarios WHERE id = $1";
+
+  const { rows: userFinded } = await db.query(query, values);
+  return userFinded;
+};
+
 const venta = async (IdUsuario, IdProducto, cantidad) => {
   const producto = await consultarProductoById(IdProducto);
   const valor_total = producto.precio * cantidad;
@@ -266,4 +275,5 @@ export const productModel = {
   calificationOfValorate,
   calificationOfValorateObtained,
   calificationOfValorateUpdated,
+  userByTokenRegistered,
 };

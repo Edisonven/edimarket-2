@@ -56,7 +56,6 @@ const initialFormError = {
 };
 
 const initialStateToken = localStorage.getItem("token") || null;
-const initialStateUser = JSON.parse(localStorage.getItem("user")) || null;
 
 export function UserProvider({ children }) {
   const [userToken, setUserToken] = useState(initialStateToken);
@@ -67,7 +66,7 @@ export function UserProvider({ children }) {
   const image_url_regex = /\bhttps?:\/\/\S+\.(?:png|jpe?g|gif|webp)\b/;
   const regexMalasPalabras = /\b(palabra1|palabra2|palabra3)\b/gi;
   const [userData, setUserData] = useState(initialUserData);
-  const [user, setUser] = useState(initialStateUser);
+  const [user, setUser] = useState({});
   const [userAddress, setUserAddress] = useState([]);
   const [userCreditCards, setUserCreditCards] = useState([]);
   const [inputFormError, setInputFormError] = useState(initialFormError);
@@ -124,6 +123,44 @@ export function UserProvider({ children }) {
       error: "",
     });
   }, [navigate]);
+
+  const handleGetUserRegistered = async () => {
+    setLoading(true);
+    try {
+      if (userToken) {
+        const response = await fetch(
+          "http://localhost:3000/usuarios/usuario-token",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Error de datos");
+        }
+
+        const data = await response.json();
+
+        const newUserModel = data.user[0];
+
+        setUser(newUserModel);
+        return data;
+      }
+    } catch (error) {
+      console.error(error.message || "Error al obtener usuario");
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    handleGetUserRegistered();
+  }, [userToken]);
 
   const fetchOrders = async () => {
     setLoading(true);

@@ -12,18 +12,20 @@ import { UserContext } from "../../context/UserContext";
 
 export function MiPerfil() {
   const { user } = useContext(UserContext);
+  
+  let nombres = user?.nombre.split(" ");
 
-  let nombres = user.nombre.split(" ");
-
-  let nameToUpperCase = user.nombre.split(" ");
+  let nameToUpperCase = user?.nombre.split(" ");
   let newName = nameToUpperCase.map(
     (word) => word.charAt(0).toUpperCase() + word.slice(1)
   );
   let updateName = (nameToUpperCase = newName.join(" "));
+ 
+
 
   return (
     <section className="miperfil__container ">
-      <div className="miperfil__userinfo__container bg-white shadow-sm ">
+       <div className="miperfil__userinfo__container bg-white shadow-sm ">
         <div className="miperfill__userinfo__initials">
           <h1 className="text-6xl rounded-full">
             {nombres[0].charAt(0).toUpperCase() +
@@ -35,7 +37,7 @@ export function MiPerfil() {
             {updateName}
           </p>
           <p className="miperfill__userinfo__paragraph text-sm mt-3">
-            {user.email}
+            {user?.email}
           </p>
         </div>
       </div>
