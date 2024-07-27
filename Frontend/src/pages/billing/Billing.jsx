@@ -36,6 +36,10 @@ export function Billing() {
     return "session_" + Math.random().toString(36).substr(2, 9);
   };
 
+  const generateUniqueBuyOrder = () => {
+    return `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  };
+
   const handleSendToPayInTransbank = async () => {
     try {
       if (userToken) {
@@ -48,10 +52,10 @@ export function Billing() {
               Authorization: `Bearer ${userToken}`,
             },
             body: JSON.stringify({
-              buyOrder: "holasoynose",
+              buyOrder: generateUniqueBuyOrder(),
               sessionId: generateSessionId(),
               amount: totalPrecio || totalPrecioDirectBuy,
-              returnUrl: "http://localhost:5173/",
+              returnUrl: "http://localhost:5173/compra-exitosa",
             }),
           }
         );

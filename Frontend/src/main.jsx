@@ -10,7 +10,7 @@ import { CheckoutProvider } from "./context/CheckoutContext.jsx";
 import { BillingProvider } from "./context/BillingContex.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+ /*  <React.StrictMode> */
     <BrowserRouter>
       <CheckoutProvider>
         <ProductProvider>
@@ -24,5 +24,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </ProductProvider>
       </CheckoutProvider>
     </BrowserRouter>
-  </React.StrictMode>
+/*   </React.StrictMode> */
 );

@@ -7,11 +7,6 @@ const {
   IntegrationCommerceCodes,
 } = pkg;
 
-WebpayPlus.commerceCode = 597055555532;
-WebpayPlus.apiKey =
-  "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C";
-WebpayPlus.environment = Environment.Integration;
-
 const tx = new WebpayPlus.Transaction(
   new Options(
     IntegrationCommerceCodes.WEBPAY_PLUS,
@@ -38,6 +33,31 @@ const sendTransactionCreated = async (req, res) => {
   }
 };
 
+const confirmTransaction = async (req, res) => {
+  try {
+    const { token_ws } = req.body;
+    console.log(token_ws);
+    if (!token_ws) {
+      return res.status(400).json({ message: "Token no proporcionado" });
+    }
+
+    const response = await tx.commit(token_ws);
+    console.log(response);
+    if (response.response_code === 0 && response.status === "AUTHORIZED") {
+      return res.json({ status: "AUTHORIZED" });
+    } else {
+      return res.json({ status: "NOT_AUTHORIZED" });
+    }
+  } catch (error) {
+    console.error("Error al confirmar la transacción:", error);
+
+    res.status(500).json({
+      message: error.message || "Error desconocido",
+    });
+  }
+};
+
 export const webPayPlusController = {
   sendTransactionCreated,
+  confirmTransaction,
 };
