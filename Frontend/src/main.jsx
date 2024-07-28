@@ -10,19 +10,19 @@ import { CheckoutProvider } from "./context/CheckoutContext.jsx";
 import { BillingProvider } from "./context/BillingContex.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
- /*  <React.StrictMode> */
-    <BrowserRouter>
-      <CheckoutProvider>
-        <ProductProvider>
+  /*  <React.StrictMode> */
+  <BrowserRouter>
+    <CheckoutProvider>
+      <ProductProvider>
+        <UserProvider>
           <CartProvider>
-            <UserProvider>
-              <BillingProvider>
-                <App />
-              </BillingProvider>
-            </UserProvider>
+            <BillingProvider>
+              <App />
+            </BillingProvider>
           </CartProvider>
-        </ProductProvider>
-      </CheckoutProvider>
-    </BrowserRouter>
-/*   </React.StrictMode> */
+        </UserProvider>
+      </ProductProvider>
+    </CheckoutProvider>
+  </BrowserRouter>
+  /*   </React.StrictMode> */
 );

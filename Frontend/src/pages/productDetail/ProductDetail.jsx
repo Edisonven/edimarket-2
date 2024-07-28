@@ -44,10 +44,9 @@ export function ProductDetail() {
     seller,
     handleDirectBuy,
   } = useContext(ProductContext);
-  const { openModalCart, cart } = useContext(CartContext);
+  const { openModalCart, cart, handleAddedToCart } = useContext(CartContext);
 
-  const { userToken, handleGetFavs, inputRefs, user, handleAddedToCart } =
-    useContext(UserContext);
+  const { userToken, handleGetFavs, inputRefs, user } = useContext(UserContext);
 
   const [visible, setVisible] = useState(productAlert.errorFav ? true : false);
   const formatedSellerName = seller?.nombre?.split(" ").slice(0, 1);

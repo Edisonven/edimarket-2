@@ -89,7 +89,6 @@ export function UserProvider({ children }) {
     setProductToRate,
     setScore,
   } = useContext(ProductContext);
-  const { setCart, cart } = useContext(CartContext);
 
   const inputRefs = {
     nombre: useRef(null),
@@ -346,42 +345,6 @@ export function UserProvider({ children }) {
     getProductBySeller();
   }, [userToken]);
 
-  const handleAddedToCart = async () => {
-    try {
-      if (userToken) {
-        const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/carrito",
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(
-            errorData.message || "Error al obtener datos del carro"
-          );
-        }
-
-        const data = await response.json();
-        setCart(data);
-        return data;
-      } else {
-        return;
-      }
-    } catch (error) {
-      console.error("Error:", error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    handleAddedToCart();
-  }, [userToken]);
-
   const handleUserAddress = async () => {
     setLoading(true);
     try {
@@ -625,7 +588,6 @@ export function UserProvider({ children }) {
         AddAddressSuccess,
         setAddAddressSuccess,
         handleUserAddress,
-        handleAddedToCart,
         getProductBySeller,
         setMyProducts,
         myProducts,

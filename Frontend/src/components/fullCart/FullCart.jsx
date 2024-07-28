@@ -14,8 +14,9 @@ import { IoAlertCircleOutline } from "react-icons/io5";
 import summary from "../../components/summary/summary.module.css";
 
 export function FullCart() {
-  const { cart, setCart, formatearPrecio } = useContext(CartContext);
-  const { user, userToken, handleAddedToCart } = useContext(UserContext);
+  const { cart, setCart, formatearPrecio, handleAddedToCart } =
+    useContext(CartContext);
+  const { user, userToken } = useContext(UserContext);
   const navigate = useNavigate();
   const [stockAlert, setStockAlert] = useState("");
 
