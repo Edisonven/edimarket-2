@@ -106,7 +106,7 @@ export function ProductDetail() {
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
-
+  console.log(product);
   return (
     <section className="productdetail__container">
       {loading ? (

@@ -30,7 +30,7 @@ const allProducts = async (limits, page, order_by) => {
 
 const consultarProductoById = async (id) => {
   const consulta =
-    "select * from productos inner join producto_categoria on productos.id=producto_categoria.producto_id inner join categorias on categorias.id=producto_categoria.categoria_id where productos.id=$1";
+    "SELECT productos.*, nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id WHERE productos.id=$1";
   const { rows: products } = await db.query(consulta, [id]);
   return products[0];
 };
