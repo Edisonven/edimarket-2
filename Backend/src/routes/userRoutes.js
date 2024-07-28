@@ -18,7 +18,7 @@ router.put("/domicilio", verificarToken, userController.modificarDomicilio);
 router.post("/metodosPago",verificarToken,userController.agregarPaymentMethod);
 router.get("/usuario/metodosPago",verificarToken,userController.consultarPaymentMethods);
 router.delete("/", verificarToken, userController.deleteUser);
-router.put("/", verificarToken, userController.ModifyUser);
+router.patch("/", verificarToken, userController.ModifyUser);
 router.delete("/:idProducto",verificarToken,userController.deleteProductoDelUsuario);
 router.delete("/usuario/metodosPago/:idMetodoDePago",verificarToken,userController.deletePaymentMethod);
 router.delete("/usuario/domicilio/:idDomicilio",verificarToken,userController.deleteDomicilio);

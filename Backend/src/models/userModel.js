@@ -47,23 +47,16 @@ const consultarUsuarioById = async (id) => {
 const userByTokenRegistered = async (id) => {
   const values = [id];
   const query = "SELECT nombre ,email,id FROM usuarios WHERE id = $1";
-
   const { rows: userFinded } = await db.query(query, values);
   return userFinded;
 };
 
 const modificarUsuario = async (id, usuario) => {
-  let { nombre, email, contraseña } = usuario;
-  const databaseUser = await consultarUsuario();
-  if (databaseUser.find((user) => user.email == email)) {
-    throw new Error("El usuario ya existe");
-  }
-  validarUsuario.parse(usuario);
+  let { nombre, contraseña } = usuario;
   const hashedPassword = bcrypt.hashSync(contraseña);
   contraseña = hashedPassword;
-  const values = [nombre, email, hashedPassword, id];
-  const consulta =
-    "UPDATE usuarios SET nombre=$1,email=$2,contraseña=$3 WHERE id=$4";
+  const values = [id, nombre, hashedPassword];
+  const consulta = "UPDATE usuarios SET nombre=$2, contraseña=$3 WHERE id=$1";
   await db.query(consulta, values);
   return console.log("Usuario modificado");
 };

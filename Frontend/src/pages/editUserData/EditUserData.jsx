@@ -33,18 +33,18 @@ export function EditUserData() {
     setUserDataIcon(!userDataIcon);
   };
 
-  const handleUpdateUserData = async (nombre, email, contraseña) => {
+  const handleUpdateUserData = async (nombre, contraseña) => {
     setLoading(true);
     try {
       const response = await fetch(
         "https://backend-mu-three-82.vercel.app/usuarios",
         {
-          method: "PUT",
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${userToken}`,
           },
-          body: JSON.stringify({ nombre, email, contraseña }),
+          body: JSON.stringify({ nombre, contraseña }),
         }
       );
 
@@ -67,7 +67,6 @@ export function EditUserData() {
 
     setInputFormError({
       errorNombre: "",
-      errorEmail: "",
       errorContraseña: "",
       errorConfirmContraseña: "",
     });
@@ -106,11 +105,7 @@ export function EditUserData() {
       }));
     } else {
       try {
-        await handleUpdateUserData(
-          userData.nombre,
-          userData.email,
-          userData.contraseña
-        );
+        await handleUpdateUserData(userData.nombre, userData.contraseña);
         setEditSuccess({
           success: "Datos actualizados con éxito.",
           error: "",
@@ -149,7 +144,7 @@ export function EditUserData() {
 
     inputRefs.nombre.current.focus();
   }, [user]);
-  console.log(userData);
+
   return (
     <section className="edituserdata__container ">
       <h1 className="text-2xl font-semibold mb-5">Edita y guarda tus datos</h1>

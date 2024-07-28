@@ -93,6 +93,7 @@ const loginUser = async (req, res) => {
 const ModifyUser = async (req, res) => {
   try {
     const usuario = req.body;
+    console.log(usuario)
     const Authorization = req.header("Authorization");
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET);
