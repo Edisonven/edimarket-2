@@ -7,12 +7,15 @@ import { settings } from "../reactslick/ReactSlickSlider.jsx";
 import Slider from "react-slick";
 import { ProductContext } from "../../context/ProductContext.jsx";
 import config from "../../config/config.js";
+import { Loader } from "../loader/Loader.jsx";
 
 export function ProductsInOfert() {
   const [products, setProducts] = useState([]);
-  const { handleProductDetail } = useContext(ProductContext);
+  const { handleProductDetail, setLoading, loading } =
+    useContext(ProductContext);
 
   const handleGetProductInOfert = async () => {
+    setLoading(true);
     try {
       const response = await fetch(
         `${config.backendUrl}/productos/productos/oferts`
@@ -26,6 +29,8 @@ export function ProductsInOfert() {
       return data;
     } catch (error) {
       console.error(error.message || "Error al obtener productos en oferta");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -36,17 +41,21 @@ export function ProductsInOfert() {
   return (
     <section className="productsinofert__container bg-white shadow-sm rounded-md">
       <h1 className="text-2xl font-semibold my-7">productos en oferta</h1>
-      <div className="productsinofert__body ">
-        <Slider {...settings}>
-          {products?.map((product) => (
-            <ProductCard
-              onClick={() => handleProductDetail(product?.id)}
-              key={product?.id}
-              product={product}
-            />
-          ))}
-        </Slider>
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="productsinofert__body ">
+          <Slider {...settings}>
+            {products?.map((product) => (
+              <ProductCard
+                onClick={() => handleProductDetail(product?.id)}
+                key={product?.id}
+                product={product}
+              />
+            ))}
+          </Slider>
+        </div>
+      )}
     </section>
   );
 }
