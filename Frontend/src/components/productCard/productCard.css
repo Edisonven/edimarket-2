@@ -9,5 +9,8 @@
   min-height: 416px;
   width: 100%;
   max-width: 280px;
-  margin: 0 auto;
+}
+
+.products__card:hover {
+  filter: brightness(90%);
 }

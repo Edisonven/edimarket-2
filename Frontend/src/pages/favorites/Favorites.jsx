@@ -23,7 +23,7 @@ export function Favorites() {
               {addedToFav.length > 0 ? (
                 addedToFav.map((product) => {
                   return (
-                    <ProductCard
+                    <div
                       onClick={() => handleProductDetail(product?.producto_id)}
                       key={product?.id}
                       className="max-w-[800px] mx-auto w-full"
@@ -54,7 +54,7 @@ export function Favorites() {
                           </button>
                         </div>
                       </div>
-                    </ProductCard>
+                    </div>
                   );
                 })
               ) : (

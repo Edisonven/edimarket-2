@@ -129,7 +129,7 @@ export function MyPosts() {
         <div className="myposts__body flex flex-col gap-5 h-full bg-white shadow-sm p-3 rounded-md min-h-[500px]">
           {myProducts.length > 0 ? (
             myProducts.map((product) => (
-              <ProductCard
+              <div
                 className="mypost__card__body border p-5 rounded-md flex flex-col gap-4"
                 key={product?.productoId}
               >
@@ -246,7 +246,7 @@ export function MyPosts() {
                     <FaTrashCan className="btn__trash" />
                   </GeneralBtn>
                 </div>
-              </ProductCard>
+              </div>
             ))
           ) : (
             <div className="grid items-center justify-items-center gap-7">

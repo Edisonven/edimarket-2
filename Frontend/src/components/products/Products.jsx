@@ -58,6 +58,7 @@ export function Products() {
                     <ProductCard
                       onClick={() => handleProductDetail(product?.id)}
                       key={product.id}
+                      product={product}
                     />
                   ))}
                 </Slider>

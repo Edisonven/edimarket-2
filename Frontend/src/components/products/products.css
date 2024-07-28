@@ -47,9 +47,7 @@
   text-align: center;
   margin: 15px 0;
 }
-.products__card:hover {
-  filter: brightness(90%);
-}
+
 .product__star__container {
   padding: 7px;
   width: 100%;
