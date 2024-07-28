@@ -10,7 +10,6 @@ import { CartAlert } from "../../components/cartAlert/CartAlert";
 
 export function EditUserData() {
   const {
-    emailRegex,
     userData,
     setUserData,
     handleChange,
@@ -19,7 +18,7 @@ export function EditUserData() {
     setInputFormError,
     user,
     userToken,
-    logout,
+    handleGetUserRegistered,
   } = useContext(UserContext);
   const { setLoading, loading } = useContext(ProductContext);
   const [userDataIcon, setUserDataIcon] = useState(false);
@@ -53,6 +52,7 @@ export function EditUserData() {
         throw new Error(errorData.message || "Error al editar usuario");
       }
       const data = await response.json();
+      handleGetUserRegistered();
       return data;
     } catch (error) {
       console.error("Error:", error.message);
@@ -111,7 +111,7 @@ export function EditUserData() {
           error: "",
         });
         setTimeout(() => {
-          logout();
+          navigate("/user-data");
         }, 1500);
       } catch (error) {
         setEditSuccess({

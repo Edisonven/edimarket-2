@@ -328,8 +328,10 @@ export function Navbar({ navbarRef }) {
               >
                 <div className="navbar__user__menu bg-gray-50 shadow-md">
                   <div className="flex flex-col ">
-                    <span className="font-semibold">{user.nombre}</span>
-                    <span className="text-xs text-gray-600">{user.email}</span>
+                    <span className="font-semibold">
+                      {user?.nombre.split(" ").slice(0, 2).join(" ")}
+                    </span>
+                    <span className="text-xs text-gray-600">{user?.email}</span>
                   </div>
                   <hr className="w-full my-2" />
                   <Link to="miperfil" className="navbar__user__menu__link">

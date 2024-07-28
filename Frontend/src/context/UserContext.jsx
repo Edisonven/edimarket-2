@@ -511,6 +511,7 @@ export function UserProvider({ children }) {
         fetchOrders,
         ordersToValorate,
         setOrdersToValorate,
+        handleGetUserRegistered,
       }}
     >
       {children}
