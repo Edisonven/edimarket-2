@@ -33,7 +33,6 @@ const HeartIcon = forwardRef((props, ref) => (
 
 export function ProductDetail() {
   const {
-    addedToFav,
     productQuantity,
     handleProductQuantity,
     loading,
@@ -45,8 +44,8 @@ export function ProductDetail() {
     handleDirectBuy,
   } = useContext(ProductContext);
   const { cart, handleAddToCart, loadingAddedToCart } = useContext(CartContext);
-  const { userToken, handleGetFavs, inputRefs, user } = useContext(UserContext);
-  const { changeHeartColor, handleAddToFav } = useContext(FavoritesContext);
+  const { userToken, user } = useContext(UserContext);
+  const { handleAddToFav, addedToFav } = useContext(FavoritesContext);
 
   const [visible, setVisible] = useState(productAlert.errorFav ? true : false);
   const formatedSellerName = seller?.nombre?.split(" ").slice(0, 1);
@@ -164,7 +163,7 @@ export function ProductDetail() {
                         className={`card__info__like__icon ${
                           addedToFav?.some(
                             (p) => p?.producto_id === product?.producto_id
-                          ) || changeHeartColor
+                          )
                             ? "text-red-600 transition duration-300"
                             : "text-gray-400 transition duration-300"
                         }`}

@@ -5,7 +5,7 @@ import { ProductContext } from "./ProductContext";
 export const FavoritesContext = createContext();
 
 export function FavoritesProvider({ children }) {
-  const [changeHeartColor, setChangeHeartColor] = useState(false);
+  const [changeHeartColor, setChangeHeartColor] = useState("");
   const [addedToFav, setAddedToFav] = useState([]);
   const { userToken, inputRefs } = useContext(UserContext);
   const { setLoading, productById, setProductAlert } =
@@ -96,13 +96,13 @@ export function FavoritesProvider({ children }) {
     }
   }, [userToken]);
 
-  const handleAddToFav = async () => {
+  const handleAddToFav = async (id) => {
     try {
       const productFinded = addedToFav.find(
         (product) => product.producto_id === productById.producto_id
       );
       if (!productFinded) {
-        setChangeHeartColor(true);
+        setChangeHeartColor(id);
         const response = await fetch(
           `https://backend-mu-three-82.vercel.app/favoritos/${productById.producto_id}`,
           {
@@ -138,7 +138,7 @@ export function FavoritesProvider({ children }) {
 
         return data;
       } else {
-        setChangeHeartColor(false);
+        setChangeHeartColor("");
         const response = await fetch(
           `https://backend-mu-three-82.vercel.app/favoritos/${productFinded.id}`,
           {
