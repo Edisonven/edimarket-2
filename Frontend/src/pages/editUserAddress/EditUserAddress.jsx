@@ -142,20 +142,26 @@ export function EditUserAddress() {
     }
   };
 
-  useEffect(() => {
-    const newData = userAddress.find(
-      (address) => address.id === selectedAddressId
-    );
-    setUserData((prevData) => ({
-      ...prevData,
-      direccion: newData?.direccion,
-      region: newData?.region,
-      comuna: newData?.comuna,
-      codigoPostal: newData?.codigo_postal,
-      numero: newData?.numero_casa,
-    }));
+  const newData = userAddress.find(
+    (address) => address.id === selectedAddressId
+  );
 
-    inputRefs.direccion.current.focus();
+  useEffect(() => {
+    if (newData) {
+      setUserData((prevData) => ({
+        ...prevData,
+        direccion: newData?.direccion,
+        region: newData?.region,
+        comuna: newData?.comuna,
+        codigoPostal: newData?.codigo_postal,
+        numero: newData?.numero_casa,
+      }));
+      inputRefs.direccion.current.focus();
+    }
+  }, [userAddress]);
+
+  useEffect(() => {
+    handleUserAddress();
   }, []);
 
   return (
