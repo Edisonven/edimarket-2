@@ -87,6 +87,7 @@ export function ProductProvider({ children }) {
         }
 
         const data = await response.json();
+        console.log(data);
         setQuestionsByProductId(data.preguntas);
       }
     } catch (error) {
@@ -194,6 +195,10 @@ export function ProductProvider({ children }) {
           style: "currency",
           currency: "CLP",
         }).format(product.precio),
+        precio_oferta: new Intl.NumberFormat("es-CL", {
+          style: "currency",
+          currency: "CLP",
+        }).format(product.precio),
       }));
 
       setProducts(formattedProducts);
@@ -223,6 +228,7 @@ export function ProductProvider({ children }) {
       }
       const data = await response.json();
       setProduct(data);
+
       setProductById(data);
     } catch (error) {
       console.error("Error al obtener productos:", error);
