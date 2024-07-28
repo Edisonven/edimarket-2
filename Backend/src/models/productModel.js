@@ -268,12 +268,10 @@ const calificationOfValorateUpdated = async (
   return calificationUpdated;
 };
 
-const productsInOfert = async (id) => {
-  console.log(id);
-  const values = [id];
+const productsInOfert = async () => {
   const query =
-    "SELECT productos.*, ofertas.precioOferta AS precio_oferta, producto_categoria.categoria_id FROM productos INNER JOIN ofertas ON productos.id = ofertas.producto_id JOIN producto_categoria ON productos.id = producto_categoria.producto_id WHERE producto_categoria.categoria_id = $1";
-  const { rows: products } = await db.query(query, values);
+    "SELECT productos.*, ofertas.precioOferta AS precio_oferta, producto_categoria.categoria_id FROM productos INNER JOIN ofertas ON productos.id = ofertas.producto_id JOIN producto_categoria ON productos.id = producto_categoria.producto_id WHERE ofertas.precioOferta IS NOT NULL";
+  const { rows: products } = await db.query(query);
   return products;
 };
 
@@ -298,5 +296,5 @@ export const productModel = {
   calificationOfValorateObtained,
   calificationOfValorateUpdated,
   productsInOfert,
-  consultarProductos
+  consultarProductos,
 };

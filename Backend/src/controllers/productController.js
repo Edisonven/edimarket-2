@@ -18,7 +18,7 @@ const getProductos = async (req, res) => {
       productos.productsAll
     );
     res.send(hateoas);
-  } catch (error) { 
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
@@ -454,8 +454,7 @@ const updateCalificationOfValorate = async (req, res) => {
 };
 const getProductsInOfert = async (req, res) => {
   try {
-    const { id } = req.params;
-    const products = await productModel.productsInOfert(id);
+    const products = await productModel.productsInOfert();
     const formattedProducts = products.map((product) => {
       return {
         ...product,

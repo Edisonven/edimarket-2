@@ -12,14 +12,13 @@ import config from "../../config/config.js";
 
 export function ProductsInOfert() {
   const [products, setProducts] = useState([]);
-  const telephoneCategory = 5;
   const { user } = useContext(UserContext);
   const { handleProductDetail } = useContext(ProductContext);
 
   const handleGetProductInOfert = async () => {
     try {
       const response = await fetch(
-        `${config.backendUrl}/productos/ofert/${telephoneCategory}`
+        `${config.backendUrl}/productos/productos/oferts`
       );
       if (!response.ok) {
         const errorData = await response.json();
