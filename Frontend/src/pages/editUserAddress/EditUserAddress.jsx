@@ -6,6 +6,7 @@ import { ProductContext } from "../../context/ProductContext";
 import { useNavigate } from "react-router-dom";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
 import config from "../../config/config";
+import { Loader } from "../../components/loader/Loader";
 
 export function EditUserAddress() {
   const {
@@ -24,7 +25,7 @@ export function EditUserAddress() {
     handleUserAddress,
     selectedAddressId,
   } = useContext(UserContext);
-  const { setLoading } = useContext(ProductContext);
+  const { setLoading, loading } = useContext(ProductContext);
   const navigate = useNavigate();
 
   const handleEditUserAddress = async (
@@ -168,145 +169,151 @@ export function EditUserAddress() {
     <section className="edituseraddress__container ">
       <h1 className="mb-5">Editar dirección</h1>
       <div className="edituseraddress__body bg-white shadow-sm rounded-md flex p-3">
-        <form
-          onSubmit={handleAddressSubmit}
-          className="edituseraddress__form border rounded-md shadow-sm my-8 m-auto"
-        >
-          <div className="nombre">
-            <label htmlFor="">Dirección</label>
-            <input
-              onChange={handleChange}
-              value={userData.direccion}
-              className={`address__input ${
-                inputFormError.errorDireccion
-                  ? "focus: outline-2 outline outline-red-600"
-                  : "focus: outline-2 outline-green-300"
-              }`}
-              type="text"
-              name="direccion"
-              ref={inputRefs.direccion}
-            />
-            {inputFormError.errorDireccion ? (
-              <p className="text-red-600 font-semibold text-sm ml-7">
-                {inputFormError.errorDireccion}
-              </p>
-            ) : (
-              ""
-            )}
+        {loading ? (
+          <div className="flex justify-center items-center w-full">
+            <Loader />
           </div>
-          <div className="flex items-center gap-3">
-            <div className="region w-full">
-              <label htmlFor="">Region</label>
-              <select
-                ref={inputRefs.region}
-                onChange={handleChange}
-                value={userData.region}
-                className={`address__input ${
-                  inputFormError.errorRegion
-                    ? "focus: outline-2 outline outline-red-600"
-                    : "focus: outline-2 outline-green-300"
-                }`}
-                name="region"
-                id=""
-              >
-                <option value="">Selecciona</option>
-                <option value="metropolitana">Metropolitana</option>
-              </select>
-              {inputFormError.errorRegion ? (
-                <p className="text-red-600 font-semibold text-sm ml-7">
-                  {inputFormError.errorRegion}
-                </p>
-              ) : (
-                ""
-              )}
-            </div>
-            <div className="comuna w-full">
-              <label htmlFor="">Comuna</label>
-              <select
-                ref={inputRefs.comuna}
-                onChange={handleChange}
-                value={userData.comuna}
-                className={`address__input ${
-                  inputFormError.errorComuna
-                    ? "focus: outline-2 outline outline-red-600"
-                    : "focus: outline-2 outline-green-300"
-                }`}
-                name="comuna"
-                id=""
-              >
-                <option value="">Selecciona</option>
-                <option value="san-miguel">San miguel</option>
-                <option value="san-joaquin">San Joaquin</option>
-                <option value="ñuñoa">Ñuñoa</option>
-                <option value="maipu">Maipu</option>
-                <option value="santiago-centro">Santiago centro</option>
-                <option value="renca">Renca</option>
-                <option value="pudahuel">Pudahuel</option>
-                <option value="puente-alto">Puente alto</option>
-                <option value="independencia">Independencia</option>
-              </select>
-              {inputFormError.errorComuna ? (
-                <p className="text-red-600 font-semibold text-sm ml-7">
-                  {inputFormError.errorComuna}
-                </p>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="region">
-              <label htmlFor="">Código postal</label>
-              <input
-                ref={inputRefs.codigoPostal}
-                onChange={handleChange}
-                value={userData.codigoPostal}
-                className={`address__input ${
-                  inputFormError.errorCodigoPostal
-                    ? "focus: outline-2 outline outline-red-600"
-                    : "focus: outline-2 outline-green-300"
-                }`}
-                type="text"
-                name="codigoPostal"
-              />
-              {inputFormError.errorCodigoPostal ? (
-                <p className="text-red-600 font-semibold text-sm ml-7">
-                  {inputFormError.errorCodigoPostal}
-                </p>
-              ) : (
-                ""
-              )}
-            </div>
-            <div className="comuna">
-              <label htmlFor="">Número</label>
-              <input
-                ref={inputRefs.numero}
-                onChange={handleChange}
-                value={userData.numero}
-                className={`address__input ${
-                  inputFormError.errorNumero
-                    ? "focus: outline-2 outline outline-red-600"
-                    : "focus: outline-2 outline-green-300"
-                }`}
-                type="text"
-                name="numero"
-              />
-              {inputFormError.errorNumero ? (
-                <p className="text-red-600 font-semibold text-sm ml-7">
-                  {inputFormError.errorNumero}
-                </p>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-          <GeneralBtn
-            type="secondary"
-            className="adress__btn self-end justify-self-end"
+        ) : (
+          <form
+            onSubmit={handleAddressSubmit}
+            className="edituseraddress__form border rounded-md shadow-sm my-8 m-auto"
           >
-            Guardar
-          </GeneralBtn>
-        </form>
+            <div className="nombre">
+              <label htmlFor="">Dirección</label>
+              <input
+                onChange={handleChange}
+                value={userData.direccion}
+                className={`address__input ${
+                  inputFormError.errorDireccion
+                    ? "focus: outline-2 outline outline-red-600"
+                    : "focus: outline-2 outline-green-300"
+                }`}
+                type="text"
+                name="direccion"
+                ref={inputRefs.direccion}
+              />
+              {inputFormError.errorDireccion ? (
+                <p className="text-red-600 font-semibold text-sm ml-7">
+                  {inputFormError.errorDireccion}
+                </p>
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="region w-full">
+                <label htmlFor="">Region</label>
+                <select
+                  ref={inputRefs.region}
+                  onChange={handleChange}
+                  value={userData.region}
+                  className={`address__input ${
+                    inputFormError.errorRegion
+                      ? "focus: outline-2 outline outline-red-600"
+                      : "focus: outline-2 outline-green-300"
+                  }`}
+                  name="region"
+                  id=""
+                >
+                  <option value="">Selecciona</option>
+                  <option value="metropolitana">Metropolitana</option>
+                </select>
+                {inputFormError.errorRegion ? (
+                  <p className="text-red-600 font-semibold text-sm ml-7">
+                    {inputFormError.errorRegion}
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="comuna w-full">
+                <label htmlFor="">Comuna</label>
+                <select
+                  ref={inputRefs.comuna}
+                  onChange={handleChange}
+                  value={userData.comuna}
+                  className={`address__input ${
+                    inputFormError.errorComuna
+                      ? "focus: outline-2 outline outline-red-600"
+                      : "focus: outline-2 outline-green-300"
+                  }`}
+                  name="comuna"
+                  id=""
+                >
+                  <option value="">Selecciona</option>
+                  <option value="san-miguel">San miguel</option>
+                  <option value="san-joaquin">San Joaquin</option>
+                  <option value="ñuñoa">Ñuñoa</option>
+                  <option value="maipu">Maipu</option>
+                  <option value="santiago-centro">Santiago centro</option>
+                  <option value="renca">Renca</option>
+                  <option value="pudahuel">Pudahuel</option>
+                  <option value="puente-alto">Puente alto</option>
+                  <option value="independencia">Independencia</option>
+                </select>
+                {inputFormError.errorComuna ? (
+                  <p className="text-red-600 font-semibold text-sm ml-7">
+                    {inputFormError.errorComuna}
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="region">
+                <label htmlFor="">Código postal</label>
+                <input
+                  ref={inputRefs.codigoPostal}
+                  onChange={handleChange}
+                  value={userData.codigoPostal}
+                  className={`address__input ${
+                    inputFormError.errorCodigoPostal
+                      ? "focus: outline-2 outline outline-red-600"
+                      : "focus: outline-2 outline-green-300"
+                  }`}
+                  type="text"
+                  name="codigoPostal"
+                />
+                {inputFormError.errorCodigoPostal ? (
+                  <p className="text-red-600 font-semibold text-sm ml-7">
+                    {inputFormError.errorCodigoPostal}
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="comuna">
+                <label htmlFor="">Número</label>
+                <input
+                  ref={inputRefs.numero}
+                  onChange={handleChange}
+                  value={userData.numero}
+                  className={`address__input ${
+                    inputFormError.errorNumero
+                      ? "focus: outline-2 outline outline-red-600"
+                      : "focus: outline-2 outline-green-300"
+                  }`}
+                  type="text"
+                  name="numero"
+                />
+                {inputFormError.errorNumero ? (
+                  <p className="text-red-600 font-semibold text-sm ml-7">
+                    {inputFormError.errorNumero}
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+            <GeneralBtn
+              type="secondary"
+              className="adress__btn self-end justify-self-end"
+            >
+              Guardar
+            </GeneralBtn>
+          </form>
+        )}
         {AddAddressSuccess.success && (
           <CartAlert>
             <p className="card__perfil__alert shadow-md rounded-md bg-green-600">
