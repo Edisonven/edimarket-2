@@ -1,8 +1,6 @@
 import "../productsInOfert/productsInOfert.css";
 import { useContext, useEffect, useState } from "react";
 import { ProductCard } from "../productCard/ProductCard";
-import { UserContext } from "../../context/UserContext";
-import star from "/imgs/aplication/estrella.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { settings } from "../reactslick/ReactSlickSlider.jsx";
@@ -12,7 +10,6 @@ import config from "../../config/config.js";
 
 export function ProductsInOfert() {
   const [products, setProducts] = useState([]);
-  const { user } = useContext(UserContext);
   const { handleProductDetail } = useContext(ProductContext);
 
   const handleGetProductInOfert = async () => {
@@ -45,36 +42,8 @@ export function ProductsInOfert() {
             <ProductCard
               onClick={() => handleProductDetail(product?.id)}
               key={product?.id}
-              className="products__card shadow-md bg-white"
-            >
-              <div className="products__card__img__container">
-                {user?.id === product?.vendedor_id ? (
-                  <figure className="product__star__container">
-                    <span className="font-semibold">Mi producto</span>
-                    <img className="product__star__icon" src={star} alt="" />
-                  </figure>
-                ) : (
-                  ""
-                )}
-                <img
-                  className="products__card__img"
-                  src={
-                    product?.imagen
-                      ? product?.imagen
-                      : "/imgs/aplication/img-notfound.png"
-                  }
-                  alt={product?.nombre}
-                />
-                <div className="products__card__desc__container px-4">
-                  <p className="products__card__paragraph pt-8 text-left">
-                    {product?.nombre}
-                  </p>
-                  <h6 className="products__card__paragraph pb-8 text-left">
-                    {product?.precio_oferta}
-                  </h6>
-                </div>
-              </div>
-            </ProductCard>
+              product={product}
+            />
           ))}
         </Slider>
       </div>

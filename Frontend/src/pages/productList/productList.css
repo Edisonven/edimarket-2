@@ -10,18 +10,7 @@
 .products__filter {
   cursor: pointer;
 }
-.products__card__list {
-  position: relative;
-  transition: 0.2s ease-out;
-  cursor: pointer;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  min-height: 416px;
-  width: 100%;
-  max-width: 300px;
-}
+
 .products__card__allproducts:hover {
   filter: brightness(90%);
 }
