@@ -87,7 +87,6 @@ export function ProductProvider({ children }) {
         }
 
         const data = await response.json();
-        console.log(data);
         setQuestionsByProductId(data.preguntas);
       }
     } catch (error) {

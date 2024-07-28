@@ -7,11 +7,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { settings } from "../reactslick/ReactSlickSlider.jsx";
 import Slider from "react-slick";
+import { ProductContext } from "../../context/ProductContext.jsx";
 
 export function ProductsInOfert() {
   const [products, setProducts] = useState([]);
   const telephoneCategory = 5;
   const { user } = useContext(UserContext);
+  const { handleProductDetail } = useContext(ProductContext);
 
   const handleGetProductInOfert = async () => {
     try {
