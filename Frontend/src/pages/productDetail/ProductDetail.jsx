@@ -18,6 +18,7 @@ import cash from "/imgs/aplication/cash.png";
 import { Comments } from "../../components/comments/Comments";
 import { Questions } from "../../components/questions/Questions";
 import { ThreeDots } from "react-loader-spinner";
+import { FavoritesContext } from "../../context/FavoritesContext";
 
 const ModalIcon = forwardRef((props, ref) => (
   <div ref={ref}>
@@ -32,7 +33,6 @@ const HeartIcon = forwardRef((props, ref) => (
 
 export function ProductDetail() {
   const {
-    productById,
     addedToFav,
     productQuantity,
     handleProductQuantity,
@@ -45,8 +45,8 @@ export function ProductDetail() {
     handleDirectBuy,
   } = useContext(ProductContext);
   const { cart, handleAddToCart, loadingAddedToCart } = useContext(CartContext);
-
   const { userToken, handleGetFavs, inputRefs, user } = useContext(UserContext);
+  const { changeHeartColor, handleAddToFav } = useContext(FavoritesContext);
 
   const [visible, setVisible] = useState(productAlert.errorFav ? true : false);
   const formatedSellerName = seller?.nombre?.split(" ").slice(0, 1);
@@ -56,95 +56,10 @@ export function ProductDetail() {
   const modalIconRef = useRef(null);
   const heartIconRef = useRef(null);
   const cartBtnRef = useRef(null);
-  const [changeHeartColor, setChangeHeartColor] = useState(false);
 
   useEffect(() => {
     handleGetProduct(id);
   }, [id, navigate]);
-
-  const handleAddToFav = async () => {
-    try {
-      const productFinded = addedToFav.find(
-        (product) => product.producto_id === productById.producto_id
-      );
-      if (!productFinded) {
-        setChangeHeartColor(true);
-        const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/favoritos/${productById.producto_id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              usuario_id: productById.vendedor_id,
-            }),
-          }
-        );
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Error al eliminar el favorito");
-        }
-        handleGetFavs();
-        setProductAlert({
-          success: "¡Producto añadido a favoritos!.",
-          error: "",
-        });
-
-        inputRefs.timeoutRef.current = setTimeout(() => {
-          setProductAlert((prevState) => ({
-            ...prevState,
-            success: "",
-          }));
-          inputRefs.timeoutRef.current = null;
-        }, 2400);
-
-        const data = response.json();
-
-        return data;
-      } else {
-        setChangeHeartColor(false);
-        const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/favoritos/${productFinded.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              usuario_id: addedToFav.usuario_id,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Error al eliminar favorito");
-        }
-
-        const data = await response.json();
-        handleGetFavs();
-        setProductAlert({
-          success: "",
-          error: "Producto eliminado de favoritos.",
-        });
-
-        inputRefs.timeoutRef.current = setTimeout(() => {
-          setProductAlert((prevState) => ({
-            ...prevState,
-            error: "",
-          }));
-          inputRefs.timeoutRef.current = null;
-        }, 2400);
-
-        return data;
-      }
-    } catch (error) {
-      console.error("Error al eliminar favorito:", error);
-    }
-  };
 
   const handleNavigateToLogin = async () => {
     if (!userToken) {

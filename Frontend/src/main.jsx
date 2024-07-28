@@ -8,6 +8,7 @@ import { CartProvider } from "./context/CarritoContext.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 import { CheckoutProvider } from "./context/CheckoutContext.jsx";
 import { BillingProvider } from "./context/BillingContex.jsx";
+import { FavoritesProvider } from "./context/FavoritesContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   /*  <React.StrictMode> */
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <UserProvider>
           <CartProvider>
             <BillingProvider>
-              <App />
+              <FavoritesProvider>
+                <App />
+              </FavoritesProvider>
             </BillingProvider>
           </CartProvider>
         </UserProvider>

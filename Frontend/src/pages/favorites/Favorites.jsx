@@ -1,16 +1,15 @@
-import { useContext, useEffect, useState } from "react";
 import "../favorites/favorites.css";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../context/ProductContext";
 import { ProductCard } from "../../components/productCard/ProductCard";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
-import { UserContext } from "../../context/UserContext";
 import { Loader } from "../../components/loader/Loader";
+import { FavoritesContext } from "../../context/FavoritesContext";
 
 export function Favorites() {
-  const { handleProductDetail, addedToFav, loading, productAlert } =
+  const { handleProductDetail, loading, productAlert } =
     useContext(ProductContext);
-
-  const { handleDeleteFav } = useContext(UserContext);
+  const { handleDeleteFav, addedToFav } = useContext(FavoritesContext);
 
   return (
     <section className="favorites__container ">
@@ -26,13 +25,13 @@ export function Favorites() {
                   return (
                     <ProductCard
                       onClick={() => handleProductDetail(product?.producto_id)}
-                      key={product.id}
+                      key={product?.id}
                       className="max-w-[800px] mx-auto w-full"
                     >
                       <div className="favorites__card__body">
                         <img
                           className="favorites__card__img shadow-md w-full"
-                          src={product.imagen}
+                          src={product?.imagen}
                           alt=""
                         />
                         <div className="favorites__card__info">
@@ -40,7 +39,7 @@ export function Favorites() {
                             {product.nombre}
                           </p>
                           <p className="favorites__card__info">
-                            {product.precio
+                            {product?.precio
                               ? Number(product.precio).toLocaleString("es-CL", {
                                   style: "currency",
                                   currency: "CLP",

@@ -19,7 +19,6 @@ export function ProductProvider({ children }) {
   const [productById, setProductById] = useState(null);
   const [addedProducts, setAddedProducts] = useState([]);
   const [openCategories, setOpenCategories] = useState(false);
-  const [addedToFav, setAddedToFav] = useState([]);
   const [productQuantity, setProductQuantity] = useState(1);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -261,8 +260,6 @@ export function ProductProvider({ children }) {
         openCategories,
         setOpenCategories,
         handleProductDetail,
-        addedToFav,
-        setAddedToFav,
         productQuantity,
         setProductQuantity,
         handleProductQuantity,
