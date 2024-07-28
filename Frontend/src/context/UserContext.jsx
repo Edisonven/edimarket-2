@@ -125,7 +125,7 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          "http://localhost:3000/usuarios/usuario-token",
+          "https://backend-mu-three-82.vercel.app/usuarios/usuario-token",
           {
             headers: {
               "Content-Type": "application/json",
