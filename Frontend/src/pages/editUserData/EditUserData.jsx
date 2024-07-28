@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ProductContext } from "../../context/ProductContext";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
 import config from "../../config/config";
+import { Loader } from "../../components/loader/Loader";
 
 export function EditUserData() {
   const {
@@ -36,17 +37,14 @@ export function EditUserData() {
   const handleUpdateUserData = async (nombre, contraseña) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `${config.backendUrl}/usuarios`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-          body: JSON.stringify({ nombre, contraseña }),
-        }
-      );
+      const response = await fetch(`${config.backendUrl}/usuarios`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({ nombre, contraseña }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -145,6 +143,10 @@ export function EditUserData() {
 
     inputRefs.nombre.current.focus();
   }, [user]);
+
+  useEffect(() => {
+    handleGetUserRegistered();
+  }, []);
 
   return (
     <section className="edituserdata__container ">
