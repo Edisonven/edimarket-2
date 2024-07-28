@@ -44,7 +44,7 @@ export function ProductDetail() {
     seller,
     handleDirectBuy,
   } = useContext(ProductContext);
-  const { openModalCart, cart, handleAddedToCart } = useContext(CartContext);
+  const { cart, handleAddToCart, loadingAddedToCart } = useContext(CartContext);
 
   const { userToken, handleGetFavs, inputRefs, user } = useContext(UserContext);
 
@@ -57,69 +57,10 @@ export function ProductDetail() {
   const heartIconRef = useRef(null);
   const cartBtnRef = useRef(null);
   const [changeHeartColor, setChangeHeartColor] = useState(false);
-  const [loadingAddedToCart, setLoadingAddedToCart] = useState(false);
 
   useEffect(() => {
     handleGetProduct(id);
   }, [id, navigate]);
-
-  const handleAddToCart = async (idUsuario, idProducto, cantidad) => {
-    setLoadingAddedToCart(true);
-    try {
-      const productAdded = cart.find(
-        (producto) => producto.producto_id === idProducto
-      );
-      if (productAdded) {
-        setProductAlert({
-          success: "",
-          error: "Ya añadiste este producto al carrito.",
-        });
-        openModalCart();
-        inputRefs.timeoutRef.current = setTimeout(() => {
-          setProductAlert((prevState) => ({
-            ...prevState,
-            error: "",
-          }));
-          inputRefs.timeoutRef.current = null;
-        }, 2400);
-      } else {
-        if (userToken) {
-          const response = await fetch(
-            "https://backend-mu-three-82.vercel.app/carrito",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${userToken}`,
-              },
-              body: JSON.stringify({
-                idUsuario,
-                idProducto,
-                cantidad,
-              }),
-            }
-          );
-          if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || "Error al agregar al carrito");
-          }
-          const data = response.json();
-          openModalCart();
-          handleAddedToCart();
-          return data;
-        } else {
-          setProductAlert((prevState) => ({
-            ...prevState,
-            errorFav: "Para agregar al carrito ingresa a tu cuenta.",
-          }));
-        }
-      }
-    } catch (error) {
-      console.error("Error al agregar al carrito:", error);
-    } finally {
-      setLoadingAddedToCart(false);
-    }
-  };
 
   const handleAddToFav = async () => {
     try {
