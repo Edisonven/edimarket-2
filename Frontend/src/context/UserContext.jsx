@@ -1,7 +1,6 @@
 import { createContext, useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "./ProductContext";
-import { CartContext } from "./CarritoContext";
 
 export const UserContext = createContext();
 
@@ -67,6 +66,7 @@ export function UserProvider({ children }) {
   const regexMalasPalabras = /\b(palabra1|palabra2|palabra3)\b/gi;
   const [userData, setUserData] = useState(initialUserData);
   const [user, setUser] = useState({});
+  const [formatedUser, setFormatedUser] = useState("");
   const [userAddress, setUserAddress] = useState([]);
   const [userCreditCards, setUserCreditCards] = useState([]);
   const [inputFormError, setInputFormError] = useState(initialFormError);
@@ -142,7 +142,11 @@ export function UserProvider({ children }) {
         const data = await response.json();
 
         const newUserModel = data.user[0];
-
+        const newFormatedUser = data.user[0].nombre
+          .split(" ")
+          .slice(0, 2)
+          .join(" ");
+        setFormatedUser(newFormatedUser);
         setUser(newUserModel);
         return data;
       }
@@ -512,6 +516,7 @@ export function UserProvider({ children }) {
         ordersToValorate,
         setOrdersToValorate,
         handleGetUserRegistered,
+        formatedUser,
       }}
     >
       {children}

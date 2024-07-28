@@ -45,7 +45,7 @@ export function Navbar({ navbarRef }) {
   const searchBarIconRef = useRef(null);
   const { setOpenCategories, setPage } = useContext(ProductContext);
   const categoriesBtnRef = useRef(null);
-  const { userToken, logout, user } = useContext(UserContext);
+  const { userToken, logout, user, formatedUser } = useContext(UserContext);
   const { cart } = useContext(CartContext);
 
   useEffect(() => {
@@ -328,9 +328,7 @@ export function Navbar({ navbarRef }) {
               >
                 <div className="navbar__user__menu bg-gray-50 shadow-md">
                   <div className="flex flex-col ">
-                    <span className="font-semibold">
-                       {user?.nombre.split(" ").slice(0, 2).join(" ")}
-                    </span>
+                    <span className="font-semibold">{formatedUser}</span>
                     <span className="text-xs text-gray-600">{user?.email}</span>
                   </div>
                   <hr className="w-full my-2" />
