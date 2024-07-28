@@ -79,7 +79,7 @@ export function CarritoModal() {
           </h1>
           <div className="cart__cards__container">
             {cart.map((element) => (
-              <ProductCard key={element.carro_id}>
+              <div key={element.carro_id}>
                 <div className="cart__card__body">
                   <img
                     className="cart__card__img shadow-md"
@@ -96,7 +96,7 @@ export function CarritoModal() {
                     className="cartmodal__trash__icon"
                   />
                 </div>
-              </ProductCard>
+              </div>
             ))}
           </div>
           <div className="card__button__container">

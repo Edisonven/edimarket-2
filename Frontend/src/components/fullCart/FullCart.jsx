@@ -114,7 +114,7 @@ export function FullCart() {
           <div className="">
             <h1 className="ml-5 mb-10">Tus productos</h1>
             {cart.map((element) => (
-              <ProductCard key={element?.carro_id}>
+              <div key={element?.carro_id}>
                 <div
                   className={classNames(
                     "product__body__cart overflow-hidden border-t border-gray-400 py-5",
@@ -189,7 +189,7 @@ export function FullCart() {
                     </div>
                   </div>
                 </div>
-              </ProductCard>
+              </div>
             ))}
           </div>
         </div>
