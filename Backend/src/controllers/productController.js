@@ -453,6 +453,19 @@ const updateCalificationOfValorate = async (req, res) => {
   }
 };
 
+const getProductsInOfert = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id)
+    const products = await productModel.productsInOfert(id);
+    res.status(200).json(products);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error al obterner productos con descuento" });
+  }
+};
+
 export const productController = {
   getProductos,
   getProductoById,
@@ -475,4 +488,5 @@ export const productController = {
   sendCalificationOfValorate,
   getCalificationOfValorate,
   updateCalificationOfValorate,
+  getProductsInOfert,
 };

@@ -14,5 +14,6 @@ router.post("/valoracion",verificarToken, productController.sendProductValoratio
 router.get("/valoracion/:productId", productController.getProductValoration);
 router.patch("/updatestock", verificarToken,productController.updateStockInProduct);
 router.patch("/update-valoracion",verificarToken, productController.sendProductValorationEdited);
+router.get("/ofert/:id", productController.getProductsInOfert);
 
 export default router;

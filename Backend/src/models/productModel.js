@@ -246,6 +246,15 @@ const calificationOfValorateUpdated = async (
   return calificationUpdated;
 };
 
+const productsInOfert = async (id) => {
+  console.log(id);
+  const values = [id];
+  const query =
+    "SELECT productos.*, ofertas.precioOferta AS precio_oferta, producto_categoria.categoria_id FROM productos INNER JOIN ofertas ON productos.id = ofertas.producto_id JOIN producto_categoria ON productos.id = producto_categoria.producto_id WHERE producto_categoria.categoria_id = $1";
+  const { rows: products } = await db.query(query, values);
+  return products;
+};
+
 export const productModel = {
   modificarProducto,
   venta,
@@ -266,4 +275,5 @@ export const productModel = {
   calificationOfValorate,
   calificationOfValorateObtained,
   calificationOfValorateUpdated,
+  productsInOfert,
 };
