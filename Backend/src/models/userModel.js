@@ -44,6 +44,14 @@ const consultarUsuarioById = async (id) => {
   return users[0];
 };
 
+const userByTokenRegistered = async (id) => {
+  const values = [id];
+  const query = "SELECT nombre ,email,id FROM usuarios WHERE id = $1";
+
+  const { rows: userFinded } = await db.query(query, values);
+  return userFinded;
+};
+
 const modificarUsuario = async (id, usuario) => {
   let { nombre, email, contraseña } = usuario;
   const databaseUser = await consultarUsuario();
@@ -405,4 +413,5 @@ export const userModel = {
   modifyPreguntasByUser,
   deletePreguntasByUser,
   consultarVentasUsuarioParaValorar,
+  userByTokenRegistered,
 };
