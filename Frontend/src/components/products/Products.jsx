@@ -40,11 +40,11 @@ export function Products() {
                   {products?.map((product) => (
                     <ProductCard
                       onClick={() => handleProductDetail(product?.id)}
-                      key={product.id}
+                      key={product?.id}
                       className="products__card shadow-md bg-white"
                     >
                       <div className="products__card__img__container">
-                        {user.id === product?.vendedor ? (
+                        {user?.id === product?.vendedor ? (
                           <figure className="product__star__container">
                             <span className="font-semibold">Mi producto</span>
                             <img
