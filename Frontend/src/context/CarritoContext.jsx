@@ -11,21 +11,18 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
   const { userToken } = useContext(UserContext);
-  const { setLoading } = useContext(ProductContext);
+  const { setLoading, setProductAlert } = useContext(ProductContext);
   const [loadingAddedToCart, setLoadingAddedToCart] = useState(false);
 
   const handleAddedToCart = async () => {
     try {
       if (userToken) {
-        const response = await fetch(
-          `${config.backendUrl}/carrito`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        );
+        const response = await fetch(`${config.backendUrl}/carrito`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(
@@ -71,21 +68,18 @@ export function CartProvider({ children }) {
         }, 2400);
       } else {
         if (userToken) {
-          const response = await fetch(
-            `${config.backendUrl}/carrito`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${userToken}`,
-              },
-              body: JSON.stringify({
-                idUsuario,
-                idProducto,
-                cantidad,
-              }),
-            }
-          );
+          const response = await fetch(`${config.backendUrl}/carrito`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({
+              idUsuario,
+              idProducto,
+              cantidad,
+            }),
+          });
           if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || "Error al agregar al carrito");
