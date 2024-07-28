@@ -5,6 +5,7 @@ import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
 import { ProductContext } from "../../context/ProductContext";
+import config from "../../config/config";
 
 export function AddUserCards() {
   const {
@@ -36,7 +37,7 @@ export function AddUserCards() {
   ) => {
     try {
       const response = await fetch(
-        "https://backend-mu-three-82.vercel.app/usuarios/metodosPago",
+        `${config.backendUrl}/usuarios/metodosPago`,
         {
           method: "POST",
           headers: {

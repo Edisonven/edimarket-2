@@ -6,6 +6,7 @@ import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
 import { UserContext } from "../../context/UserContext";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
 import { useNavigate } from "react-router-dom";
+import config from "../../config/config";
 
 export function SendMyValoration() {
   const { productToRate, setProductToRate, score } = useContext(ProductContext);
@@ -24,7 +25,7 @@ export function SendMyValoration() {
   const handleUpdateProductValorated = async () => {
     try {
       const response = await fetch(
-        "https://backend-mu-three-82.vercel.app/venta/valorar",
+        `${config.backendUrl}/venta/valorar`,
         {
           method: "PUT",
           headers: {
@@ -83,7 +84,7 @@ export function SendMyValoration() {
     if (userToken) {
       try {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/productos/valoracion",
+          `${config.backendUrl}/productos/valoracion`,
           {
             method: "POST",
             headers: {

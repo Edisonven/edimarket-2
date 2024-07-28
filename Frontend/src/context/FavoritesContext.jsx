@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
 import { ProductContext } from "./ProductContext";
+import config from "../config/config";
 
 export const FavoritesContext = createContext();
 
@@ -15,7 +16,7 @@ export function FavoritesProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/favoritos",
+          `${config.backendUrl}/favoritos`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -45,7 +46,7 @@ export function FavoritesProvider({ children }) {
     e.stopPropagation();
     try {
       const response = await fetch(
-        `https://backend-mu-three-82.vercel.app/favoritos/${id}`,
+        `${config.backendUrl}/favoritos/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -104,7 +105,7 @@ export function FavoritesProvider({ children }) {
       if (!productFinded) {
         setChangeHeartColor(id);
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/favoritos/${productById.producto_id}`,
+          `${config.backendUrl}/favoritos/${productById.producto_id}`,
           {
             method: "POST",
             headers: {
@@ -140,7 +141,7 @@ export function FavoritesProvider({ children }) {
       } else {
         setChangeHeartColor("");
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/favoritos/${productFinded.id}`,
+          `${config.backendUrl}/favoritos/${productFinded.id}`,
           {
             method: "DELETE",
             headers: {

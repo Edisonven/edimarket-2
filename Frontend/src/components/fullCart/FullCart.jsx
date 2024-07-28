@@ -1,4 +1,5 @@
 import "../fullCart/fullCart.css";
+import summary from "../../components/summary/summary.module.css";
 import { useContext, useEffect, useState } from "react";
 import { ProductCard } from "../../components/productCard/ProductCard";
 import { CartContext } from "../../context/CarritoContext";
@@ -11,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { CgMathPlus } from "react-icons/cg";
 import { CgMathMinus } from "react-icons/cg";
 import { IoAlertCircleOutline } from "react-icons/io5";
-import summary from "../../components/summary/summary.module.css";
+import config from "../../config/config";
 
 export function FullCart() {
   const { cart, setCart, formatearPrecio, handleAddedToCart } =
@@ -24,7 +25,7 @@ export function FullCart() {
     try {
       if (userToken) {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/carrito/${product_id}`,
+          `${config.backendUrl}/carrito/${product_id}`,
           {
             method: "DELETE",
             headers: {

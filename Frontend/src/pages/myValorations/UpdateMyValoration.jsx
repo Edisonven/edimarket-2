@@ -7,6 +7,7 @@ import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { ProductContext } from "../../context/ProductContext";
+import config from "../../config/config";
 
 export function UpdateMyValoration() {
   const { ordersToValorate, userToken, fetchOrders } = useContext(UserContext);
@@ -36,7 +37,7 @@ export function UpdateMyValoration() {
     try {
       if (productFindedById) {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/productos/valoracion/${productFindedById?.producto_id}`
+          `${config.backendUrl}/productos/valoracion/${productFindedById?.producto_id}`
         );
 
         if (!response.ok) {
@@ -72,7 +73,7 @@ export function UpdateMyValoration() {
   const handleUpdateProductAndCommentSended = async () => {
     try {
       const response = await fetch(
-        "https://backend-mu-three-82.vercel.app/productos/update-valoracion",
+        `${config.backendUrl}/productos/update-valoracion`,
         {
           method: "PATCH",
           headers: {
@@ -129,7 +130,7 @@ export function UpdateMyValoration() {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://backend-mu-three-82.vercel.app/venta/valorar",
+        `${config.backendUrl}/venta/valorar`,
         {
           method: "PUT",
           headers: {

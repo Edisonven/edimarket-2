@@ -12,6 +12,7 @@ import postImg from "/imgs/aplication/posts.png";
 import { ConfirmDelete } from "../../components/confirmDelete/ConfirmDelete";
 import { IoIosClose } from "react-icons/io";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
+import config from "../../config/config";
 
 const ModalIcon = forwardRef((props, ref) => (
   <div ref={ref}>
@@ -42,7 +43,7 @@ export function MyPosts() {
   const handleDeleteMyProducts = async (id) => {
     try {
       const response = await fetch(
-        `https://backend-mu-three-82.vercel.app/usuarios/${id}`,
+        `${config.backendUrl}/usuarios/${id}`,
         {
           method: "DELETE",
           headers: {

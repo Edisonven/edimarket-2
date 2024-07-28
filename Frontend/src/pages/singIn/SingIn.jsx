@@ -5,6 +5,7 @@ import { useState, useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { HiEye } from "react-icons/hi";
 import { HiEyeOff } from "react-icons/hi";
+import config from "../../config/config";
 
 export function SingIn() {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
@@ -33,14 +34,11 @@ export function SingIn() {
   };
 
   const LoginWithCredentials = async (email, contraseña) => {
-    const response = await fetch(
-      "https://backend-mu-three-82.vercel.app/usuarios/login",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, contraseña }),
-      }
-    );
+    const response = await fetch(`${config.backendUrl}/usuarios/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, contraseña }),
+    });
 
     if (!response.ok) {
       const errorData = await response.json();

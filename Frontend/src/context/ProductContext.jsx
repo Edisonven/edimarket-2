@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import config from "../config/config";
 
 export const ProductContext = createContext();
 
@@ -47,7 +48,7 @@ export function ProductProvider({ children }) {
     try {
       if (productById) {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/productos/valoracion/${productById?.producto_id}`
+          `${config.backendUrl}/productos/valoracion/${productById?.producto_id}`
         );
 
         if (!response.ok) {
@@ -78,7 +79,7 @@ export function ProductProvider({ children }) {
     try {
       if (productById) {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/productos/preguntas/${productById?.producto_id}`
+          `${config.backendUrl}/productos/preguntas/${productById?.producto_id}`
         );
 
         if (!response.ok) {
@@ -145,7 +146,7 @@ export function ProductProvider({ children }) {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://backend-mu-three-82.vercel.app/usuarios/${vendedor_id}`
+        `${config.backendUrl}/usuarios/${vendedor_id}`
       );
 
       if (!response.ok) {
@@ -172,7 +173,7 @@ export function ProductProvider({ children }) {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://backend-mu-three-82.vercel.app/productos?page=${page}&limits=${limit}&order_by=${order_by}`
+        `${config.backendUrl}/productos?page=${page}&limits=${limit}&order_by=${order_by}`
       );
       if (!response.ok) {
         const errorData = await response.json();
@@ -220,7 +221,7 @@ export function ProductProvider({ children }) {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://backend-mu-three-82.vercel.app/productos/${id}`
+        `${config.backendUrl}/productos/${id}`
       );
       if (!response.ok) {
         throw new Error("Producto no encontrado");

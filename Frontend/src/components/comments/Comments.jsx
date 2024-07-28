@@ -9,6 +9,7 @@ import { GoStar } from "react-icons/go";
 import { UserContext } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 import { Loader } from "../loader/Loader";
+import config from "../../config/config";
 
 export function Comments() {
   const { userValorations, productById, setLoading, loading } =
@@ -25,7 +26,7 @@ export function Comments() {
   const handleGetCalificationsProduct = async () => {
     try {
       const response = await fetch(
-        `https://backend-mu-three-82.vercel.app/venta/calificar/${parsedId}`
+        `${config.backendUrl}/venta/calificar/${parsedId}`
       );
       if (!response.ok) {
         const errorData = await response.json();
@@ -60,7 +61,7 @@ export function Comments() {
         );
 
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/venta/calificar",
+          `${config.backendUrl}/venta/calificar`,
           {
             method: "PATCH",
             headers: {
@@ -85,7 +86,7 @@ export function Comments() {
         return data;
       } else {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/venta/calificar",
+          `${config.backendUrl}/venta/calificar`,
           {
             method: "POST",
             headers: {

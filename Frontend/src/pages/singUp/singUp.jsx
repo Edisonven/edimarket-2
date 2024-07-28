@@ -6,6 +6,7 @@ import { UserContext } from "../../context/UserContext";
 import { HiEye } from "react-icons/hi";
 import { HiEyeOff } from "react-icons/hi";
 import google from "/imgs/aplication/google.png";
+import config from "../../config/config";
 
 export function SingUp() {
   const {
@@ -33,7 +34,7 @@ export function SingUp() {
   };
 
   const registerNewUser = async (nombre, email, contraseña) => {
-    const response = await fetch("https://backend-mu-three-82.vercel.app/usuarios/registro", {
+    const response = await fetch(`${config.backendUrl}/usuarios/registro`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nombre, email, contraseña }),
@@ -139,7 +140,7 @@ export function SingUp() {
 
   const handleGoogleAuth = async () => {
     try {
-      const response = await fetch("https://backend-mu-three-82.vercel.app/auth/google");
+      const response = await fetch(`${config.backendUrl}/auth/google`);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -310,7 +311,7 @@ export function SingUp() {
             </NavLink>
           </div>
         </form>
-       {/*  <hr className="w-full my-4" />
+        {/*  <hr className="w-full my-4" />
         <h4 className="text-center mt-3 font-medium text-md text-gray-800">
           También puedes crear tu cuenta con
         </h4>

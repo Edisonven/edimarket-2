@@ -5,6 +5,7 @@ import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
 import { ProductContext } from "../../context/ProductContext";
 import { useNavigate } from "react-router-dom";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
+import config from "../../config/config";
 
 export function EditUserAddress() {
   const {
@@ -36,7 +37,7 @@ export function EditUserAddress() {
     idUsuario
   ) => {
     try {
-      const response = await fetch("https://backend-mu-three-82.vercel.app/usuarios/domicilio", {
+      const response = await fetch(`${config.backendUrl}/usuarios/domicilio`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

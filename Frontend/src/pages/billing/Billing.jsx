@@ -12,6 +12,7 @@ import { UserContext } from "../../context/UserContext";
 import { NoPaymentMethodsAdded } from "../../components/noPaymentMethodsAdded/NoPaymentMethodsAdded";
 import { ProductContext } from "../../context/ProductContext";
 import { Loader } from "../../components/loader/Loader";
+import config from "../../config/config";
 
 export function Billing() {
   const { userToken, userCreditCards } = useContext(UserContext);
@@ -45,7 +46,7 @@ export function Billing() {
     try {
       if (userToken) {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/webpayplus/transaction",
+          `${config.backendUrl}/webpayplus/transaction`,
           {
             method: "POST",
             headers: {

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ProductContext } from "../../context/ProductContext";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
 import profile from "/imgs/aplication/profile.png";
+import config from "../../config/config";
 
 export function EditMyPost() {
   const {
@@ -44,7 +45,7 @@ export function EditMyPost() {
   ) => {
     try {
       const response = await fetch(
-        `https://backend-mu-three-82.vercel.app/productos/${id}`,
+        `${config.backendUrl}/productos/${id}`,
         {
           method: "PUT",
           headers: {

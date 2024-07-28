@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { ProductContext } from "./ProductContext";
+import config from "../config/config";
 
 export const CartContext = createContext();
 
@@ -17,7 +18,7 @@ export function CartProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/carrito",
+          `${config.backendUrl}/carrito`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -71,7 +72,7 @@ export function CartProvider({ children }) {
       } else {
         if (userToken) {
           const response = await fetch(
-            "https://backend-mu-three-82.vercel.app/carrito",
+            `${config.backendUrl}/carrito`,
             {
               method: "POST",
               headers: {

@@ -7,6 +7,7 @@ import { QuestionModal } from "../../components/questionModal/QuestionModal";
 import { BsDot } from "react-icons/bs";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
 import { Loader } from "../../components/loader/Loader";
+import config from "../../config/config";
 
 const DeleteIcon = forwardRef((props, ref) => (
   <div ref={ref}>
@@ -28,7 +29,7 @@ export function MyQuestions() {
       setLoading(true);
       if (userToken) {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/productos/producto/${user.id}`,
+          `${config.backendUrl}/productos/producto/${user.id}`,
           {
             headers: {
               "Content-Type": "application/json",

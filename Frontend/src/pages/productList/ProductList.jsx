@@ -7,6 +7,7 @@ import { Loader } from "../../components/loader/Loader";
 import { UserContext } from "../../context/UserContext";
 import { PaginationCategory } from "../../components/pagination/PaginationCategory";
 import star from "/imgs/aplication/estrella.png";
+import config from "../../config/config";
 
 export function ProductList() {
   const { categoria } = useParams();
@@ -25,7 +26,7 @@ export function ProductList() {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://backend-mu-three-82.vercel.app/categorias/${categoria}?page=${page}&limits=${limit}`
+        `${config.backendUrl}/categorias/${categoria}?page=${page}&limits=${limit}`
       );
       if (!response.ok) {
         throw new Error("Producto no encontrado");

@@ -4,6 +4,7 @@ import { ConfirmDelete } from "../confirmDelete/ConfirmDelete";
 import { IoIosClose } from "react-icons/io";
 import { GeneralBtn } from "../generalBtn/GeneralBtn";
 import { ProductContext } from "../../context/ProductContext";
+import config from "../../config/config";
 
 const ModalIcon = forwardRef((props, ref) => (
   <div ref={ref}>
@@ -30,7 +31,7 @@ export const QuestionModal = forwardRef(
     const handleDeleteQuestions = async () => {
       try {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/usuarios/preguntas/${productId}`,
+          `${config.backendUrl}/usuarios/preguntas/${productId}`,
           {
             method: "DELETE",
             headers: {

@@ -7,6 +7,7 @@ import { HiEyeOff } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "../../context/ProductContext";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
+import config from "../../config/config";
 
 export function EditUserData() {
   const {
@@ -36,7 +37,7 @@ export function EditUserData() {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://backend-mu-three-82.vercel.app/usuarios",
+        `${config.backendUrl}/usuarios`,
         {
           method: "PATCH",
           headers: {

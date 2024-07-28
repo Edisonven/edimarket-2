@@ -4,8 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../context/ProductContext";
 import { UserContext } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
-import { Loader } from "../loader/Loader";
 import { CartAlert } from "../cartAlert/CartAlert";
+import config from "../../config/config";
 
 export function Questions({ vendedor_id }) {
   const {
@@ -36,20 +36,17 @@ export function Questions({ vendedor_id }) {
 
   const handleSendQuestion = async () => {
     try {
-      const response = await fetch(
-        "https://backend-mu-three-82.vercel.app/usuarios/preguntas",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-          body: JSON.stringify({
-            idProducto: id,
-            pregunta: userData.preguntas,
-          }),
-        }
-      );
+      const response = await fetch(`${config.backendUrl}/usuarios/preguntas`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({
+          idProducto: id,
+          pregunta: userData.preguntas,
+        }),
+      });
 
       if (!response) {
         const errorData = await response.json();

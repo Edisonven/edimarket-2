@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { settings } from "../reactslick/ReactSlickSlider.jsx";
 import Slider from "react-slick";
 import { ProductContext } from "../../context/ProductContext.jsx";
+import config from "../../config/config.js";
 
 export function ProductsInOfert() {
   const [products, setProducts] = useState([]);
@@ -18,7 +19,7 @@ export function ProductsInOfert() {
   const handleGetProductInOfert = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/productos/ofert/${telephoneCategory}`
+        `${config.backendUrl}/productos/ofert/${telephoneCategory}`
       );
       if (!response.ok) {
         const errorData = await response.json();

@@ -1,6 +1,7 @@
 import { createContext, useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "./ProductContext";
+import config from "../config/config";
 
 export const UserContext = createContext();
 
@@ -125,7 +126,7 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/usuarios/usuario-token",
+          `${config.backendUrl}/usuarios/usuario-token`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -168,7 +169,7 @@ export function UserProvider({ children }) {
       if (userToken) {
         const handleOrders = async () => {
           const response = await fetch(
-            `https://backend-mu-three-82.vercel.app/usuarios/usuario/ventas/?idUsuario=${user.id}`,
+            `${config.backendUrl}/usuarios/usuario/ventas/?idUsuario=${user.id}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -189,7 +190,7 @@ export function UserProvider({ children }) {
 
         const handleOrdersToValorate = async () => {
           const response = await fetch(
-            `https://backend-mu-three-82.vercel.app/usuarios/usuario/valorar/?idUsuario=${user.id}`,
+            `${config.backendUrl}/usuarios/usuario/valorar/?idUsuario=${user.id}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -230,7 +231,7 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/usuarios/preguntas/${user.id}`,
+          `${config.backendUrl}/usuarios/preguntas/${user.id}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -266,7 +267,7 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/usuarios/usuario/metodosPago/?idUsuario=${user.id}`,
+          `${config.backendUrl}/usuarios/usuario/metodosPago/?idUsuario=${user.id}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -309,7 +310,7 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/usuarios/usuario/productos",
+          `${config.backendUrl}/usuarios/usuario/productos`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -351,7 +352,7 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/usuarios/usuario/domicilio?userId=${user.id}`,
+          `${config.backendUrl}/usuarios/usuario/domicilio?userId=${user.id}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -432,7 +433,7 @@ export function UserProvider({ children }) {
     try {
       if (userToken) {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/usuarios/verify-data",
+          `${config.backendUrl}/usuarios/verify-data`,
           {
             headers: {
               "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import { CartContext } from "./CarritoContext";
 import { ProductContext } from "./ProductContext";
 import { UserContext } from "./UserContext";
 import { CheckoutContext } from "./CheckoutContext";
+import config from "../config/config";
 
 export const BillingContext = createContext();
 
@@ -45,7 +46,7 @@ export function BillingProvider({ children }) {
       if (userToken) {
         for (const producto of cart) {
           const response = await fetch(
-            `https://backend-mu-three-82.vercel.app/carrito/${producto?.producto_id}`,
+            `${config.backendUrl}/carrito/${producto?.producto_id}`,
             {
               method: "DELETE",
               headers: {
@@ -78,7 +79,7 @@ export function BillingProvider({ children }) {
     try {
       const sendProduct = async (producto) => {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/venta`,
+          `${config.backendUrl}/venta`,
           {
             method: "POST",
             headers: {
@@ -102,7 +103,7 @@ export function BillingProvider({ children }) {
 
       const sendSecondProduct = async (producto) => {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/venta/valorar`,
+          `${config.backendUrl}/venta/valorar`,
           {
             method: "POST",
             headers: {
@@ -148,7 +149,7 @@ export function BillingProvider({ children }) {
     try {
       const senDirectBuyStock = async () => {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/productos/updatestock",
+          `${config.backendUrl}/productos/updatestock`,
           {
             method: "PATCH",
             headers: {
@@ -174,7 +175,7 @@ export function BillingProvider({ children }) {
 
       const sendProductInCartStock = async (updateProductCart) => {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/productos/updatestock",
+          `${config.backendUrl}/productos/updatestock`,
           {
             method: "PATCH",
             headers: {

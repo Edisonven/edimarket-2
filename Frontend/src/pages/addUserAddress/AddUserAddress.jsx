@@ -1,10 +1,11 @@
+import "../addUserAddress/addUserAddress.css";
 import { useContext, useEffect, useState } from "react";
 import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
-import "../addUserAddress/addUserAddress.css";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "../../context/ProductContext";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
+import config from "../../config/config";
 
 export function AddUserAdress() {
   const {
@@ -35,7 +36,7 @@ export function AddUserAdress() {
     try {
       if (userToken) {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/usuarios/domicilio",
+          `${config.backendUrl}/usuarios/domicilio`,
           {
             method: "POST",
             headers: {

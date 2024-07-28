@@ -23,7 +23,7 @@ export function PaymentSuccess() {
     if (tokenWs) {
       try {
         const response = await fetch(
-          "https://backend-mu-three-82.vercel.app/webpayplus/transaction-confirm",
+          `${config.backendUrl}/webpayplus/transaction-confirm`,
           {
             method: "POST",
             headers: {

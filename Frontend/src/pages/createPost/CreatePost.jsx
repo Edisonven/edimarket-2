@@ -50,7 +50,7 @@ export function CreatePost() {
     categoria
   ) => {
     try {
-      const response = await fetch("https://backend-mu-three-82.vercel.app/productos", {
+      const response = await fetch(`${config.backendUrl}/productos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -183,9 +183,7 @@ export function CreatePost() {
 
   return (
     <section className="createpost__container ">
-      <h1 className="text-2xl font-semibold mb-5">
-        Nueva publicación
-      </h1>
+      <h1 className="text-2xl font-semibold mb-5">Nueva publicación</h1>
       <div className="createpost__card__container bg-white shadow-sm rounded-md p-3">
         <form
           onSubmit={handlePostSubmit}

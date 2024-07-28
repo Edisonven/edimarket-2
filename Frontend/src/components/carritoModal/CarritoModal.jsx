@@ -7,6 +7,7 @@ import { GeneralBtn } from "../generalBtn/GeneralBtn";
 import { useNavigate } from "react-router-dom";
 import { TbTrashXFilled } from "react-icons/tb";
 import { UserContext } from "../../context/UserContext";
+import config from "../../config/config";
 
 export function CarritoModal() {
   const { cartModal, setCartModal, cart } = useContext(CartContext);
@@ -16,7 +17,7 @@ export function CarritoModal() {
     try {
       if (userToken) {
         const response = await fetch(
-          `https://backend-mu-three-82.vercel.app/carrito/${product_id}`,
+          `${config.backendUrl}/carrito/${product_id}`,
           {
             method: "DELETE",
             headers: {

@@ -9,6 +9,7 @@ import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
 import { Loader } from "../../components/loader/Loader";
 import { ProductContext } from "../../context/ProductContext";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
+import config from "../../config/config";
 
 const EditIcon = forwardRef((props, ref) => (
   <div ref={ref}>
@@ -41,7 +42,7 @@ export function UserAddress() {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://backend-mu-three-82.vercel.app/usuarios/usuario/domicilio/${id}`,
+        `${config.backendUrl}/usuarios/usuario/domicilio/${id}`,
         {
           method: "DELETE",
           headers: {

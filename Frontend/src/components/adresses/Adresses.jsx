@@ -3,6 +3,7 @@ import classNames from "classnames";
 import shipping from "/src/pages/shipping/shipping.module.css";
 import { UserContext } from "../../context/UserContext";
 import { CheckoutContext } from "../../context/CheckoutContext";
+import config from "../../config/config";
 
 export function Adresses() {
   const {
@@ -19,7 +20,7 @@ export function Adresses() {
       try {
         if (userToken) {
           const response = await fetch(
-            `https://backend-mu-three-82.vercel.app/usuarios/usuario/domicilio?idUsuario=${userData.id}`,
+            `${config.backendUrl}/usuarios/usuario/domicilio?idUsuario=${userData.id}`,
             {
               headers: {
                 "Content-Type": "application/json",

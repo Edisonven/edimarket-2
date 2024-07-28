@@ -5,6 +5,7 @@ import { useContext, useEffect, useRef, forwardRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "../../context/ProductContext";
 import { IoMdClose } from "react-icons/io";
+import config from "../../config/config";
 
 export const SearchBar = forwardRef(({ className, openSearchBar }, ref) => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export const SearchBar = forwardRef(({ className, openSearchBar }, ref) => {
   const handleSearchProduct = async () => {
     try {
       const response = await fetch(
-        "https://backend-mu-three-82.vercel.app/productos/productos/all"
+        `${config.backendUrl}/productos/productos/all`
       );
 
       if (!response.ok) {

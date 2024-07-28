@@ -1,13 +1,10 @@
 import { useContext, useEffect } from "react";
 import classNames from "classnames";
 import shipping from "/src/pages/shipping/shipping.module.css";
-import { UserContext } from "../../context/UserContext";
 import { CheckoutContext } from "../../context/CheckoutContext";
 import webPayMethod from "/imgs/aplication/webpay-logo.png";
 
 export function PaymentMethods() {
-  const { user, userCreditCards, userToken, setUserCreditCards } =
-    useContext(UserContext);
   const { selectedPaymentMethod, handleCheckboxChange, handleEfectivoChange } =
     useContext(CheckoutContext);
 
