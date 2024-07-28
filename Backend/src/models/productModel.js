@@ -28,6 +28,28 @@ const allProducts = async (limits, page, order_by) => {
   return products;
 };
 
+const consultarProductos = async (limits, page, order_by) => {
+  let querys = "";
+  if (order_by) {
+    const [campo, ordenamiention] = order_by.split("_");
+    querys += ` ORDER BY ${campo} ${ordenamiention}`;
+  }
+  if (limits) {
+    querys += ` LIMIT ${limits}`;
+  }
+  if (page && limits) {
+    const offset = page * limits - limits;
+    querys += ` OFFSET ${offset}`;
+  }
+  const consultaAllProducts =
+    "SELECT productos.*, nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id";
+
+  const consulta = `SELECT productos.*, nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id ${querys}`;
+  const { rows: products } = await db.query(consulta);
+  const { rows: productsAll } = await db.query(consultaAllProducts);
+  return { products, productsAll };
+};
+
 const consultarProductoById = async (id) => {
   const consulta =
     "SELECT productos.*,productos.id AS producto_id ,nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id WHERE productos.id=$1";
@@ -276,4 +298,5 @@ export const productModel = {
   calificationOfValorateObtained,
   calificationOfValorateUpdated,
   productsInOfert,
+  consultarProductos
 };

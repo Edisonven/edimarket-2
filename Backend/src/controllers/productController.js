@@ -7,7 +7,7 @@ import "dotenv/config";
 const getProductos = async (req, res) => {
   try {
     const { limits = 12, page = 1, order_by = "fecha_DESC" } = req.query;
-    const productos = await userModel.consultarProductos(
+    const productos = await productModel.consultarProductos(
       limits,
       page,
       order_by

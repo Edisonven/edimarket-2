@@ -123,27 +123,6 @@ const verificarUsuario = async (email, contraseña, isGoogleAuth = false) => {
     throw error;
   }
 };
-const consultarProductos = async (limits, page, order_by) => {
-  let querys = "";
-  if (order_by) {
-    const [campo, ordenamiention] = order_by.split("_");
-    querys += ` ORDER BY ${campo} ${ordenamiention}`;
-  }
-  if (limits) {
-    querys += ` LIMIT ${limits}`;
-  }
-  if (page && limits) {
-    const offset = page * limits - limits;
-    querys += ` OFFSET ${offset}`;
-  }
-  const consultaAllProducts =
-    "SELECT productos.*, nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id";
-
-  const consulta = `SELECT productos.*, nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id ${querys}`;
-  const { rows: products } = await db.query(consulta);
-  const { rows: productsAll } = await db.query(consultaAllProducts);
-  return { products, productsAll };
-};
 
 const consultarProductosByCategoria = async (
   categoria,
@@ -383,7 +362,6 @@ export const userModel = {
   consultarUsuarioById,
   registrarUsuario,
   consultarCategorias,
-  consultarProductos,
   verificarUsuario,
   agregarDirreccion,
   consultarDirreccion,
