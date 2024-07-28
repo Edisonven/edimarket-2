@@ -1,4 +1,4 @@
-import emptyCart from "/imgs/aplication/empty-cart.png";
+import emptyCart from "/imgs/aplication/empty-cart-2.png";
 import { GeneralBtn } from "../generalBtn/GeneralBtn";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../emptyCart/emptyCart.css";
@@ -16,7 +16,7 @@ export function EmptyCart() {
           <img
             src={emptyCart}
             alt="empty cart"
-            className="w-[130px]"
+            className="w-[150px]"
           />
           <h1 className="text-center">¡Tu carro está vacío!</h1>
           <p className="pb-[50px]">
