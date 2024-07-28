@@ -24,37 +24,8 @@ export function SearchProduct() {
             <ProductCard
               onClick={() => handleProductDetail(product?.producto_id)}
               key={product?.producto_id}
-              className="products__card__list shadow-md bg-white"
-            >
-              <div className="products__card__img__container">
-                {user?.id === product?.vendedor_id ? (
-                  <div className="product__star__container">
-                    <span className="font-semibold">Mi producto</span>
-                    <img className="product__star__icon" src={star} alt="" />
-                  </div>
-                ) : (
-                  ""
-                )}
-                <img
-                  className="products__card__img"
-                  src={product?.imagen}
-                  alt={product?.nombre}
-                />
-                <div className="products__card__desc__container px-4">
-                  <p className="products__card__paragraph text-slate-700 font-semibold text-lg">
-                    {product?.nombre}
-                  </p>
-                  <p className="products__card__paragraph font-semibold text-2xl">
-                    {product?.precio
-                      ? Number(product.precio).toLocaleString("es-CL", {
-                          style: "currency",
-                          currency: "CLP",
-                        })
-                      : null}
-                  </p>
-                </div>
-              </div>
-            </ProductCard>
+              product={product}
+            />
           ))
         ) : (
           <div className="min-h-[420px]">

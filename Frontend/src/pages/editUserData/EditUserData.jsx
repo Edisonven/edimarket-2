@@ -1,6 +1,6 @@
+import "../editUserData/editUserData.css";
 import { useContext, useEffect, useState } from "react";
 import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
-import "../editUserData/editUserData.css";
 import { UserContext } from "../../context/UserContext";
 import { HiEye } from "react-icons/hi";
 import { HiEyeOff } from "react-icons/hi";
