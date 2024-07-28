@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 export function Products() {
   const { products, handleProductDetail, loading } = useContext(ProductContext);
   const { userToken, user } = useContext(UserContext);
-
+  console.log(products);
   return (
     <section>
       <div className="products__container">

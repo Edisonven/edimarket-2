@@ -3,15 +3,7 @@ const prepHateoasProductos = (data, page, allProducts) => {
   const results = data.map((item) => {
     const fecha = item.fecha.toISOString().split("T")[0];
     return {
-      nombre: item.nombre,
-      vendedor: item.vendedor_id,
-      precio: item.precio,
-      stock: item.stock,
-      categoria: item.nombre_categoria,
-      imagen: item.imagen,
-      id: item.producto_id,
-      descripcion: item.descripcion,
-      estado: item.estado,
+      ...item,
       fecha: fecha,
     };
   });
@@ -45,17 +37,9 @@ const prepHateoasCategorias = (data, page, categoria, allProducts) => {
   page = parseInt(page);
 
   const results = data.map((item) => {
-   const fecha = item.fecha.toISOString().split("T")[0];
+    const fecha = item.fecha.toISOString().split("T")[0];
     return {
-      nombre: item.nombre,
-      vendedor: item.vendedor_id,
-      precio: item.precio,
-      stock: item.stock,
-      categoria: item.nombre_categoria,
-      imagen: item.imagen,
-      id: item.producto_id,
-      descripcion: item.descripcion,
-      estado: item.estado,
+      ...item,
       fecha: fecha,
     };
   });

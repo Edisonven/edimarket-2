@@ -23,7 +23,6 @@ export function ProductsInOfert() {
         throw new Error(errorData.message || "Error al obtener los datos");
       }
       const data = await response.json();
-      console.log(data);
       setProducts(data);
       return data;
     } catch (error) {

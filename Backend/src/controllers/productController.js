@@ -18,7 +18,7 @@ const getProductos = async (req, res) => {
       productos.productsAll
     );
     res.send(hateoas);
-  } catch (error) {
+  } catch (error) { 
     res.status(500).json({ error: error.message });
   }
 };
@@ -452,13 +452,21 @@ const updateCalificationOfValorate = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 const getProductsInOfert = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id)
     const products = await productModel.productsInOfert(id);
-    res.status(200).json(products);
+    const formattedProducts = products.map((product) => {
+      return {
+        ...product,
+        precio_oferta: product.precio_oferta.toLocaleString("es-CL", {
+          style: "currency",
+          currency: "CLP",
+        }),
+      };
+    });
+
+    res.status(200).json(formattedProducts);
   } catch (error) {
     res
       .status(500)
