@@ -281,7 +281,7 @@ export function ProductDetail() {
                       <option value="4">4 unidades</option>
                       <option value="5">5 unidades</option>
                     </select>
-                    {product?.stock < productQuantity ? (
+                    {product?.stock < productQuantity && product?.stock > 0 ? (
                       <div className="flex items-center gap-1 text-red-600">
                         <IoAlertCircleOutline className="text-xl" />
                         <span className="text-sm font-semibold">
