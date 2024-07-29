@@ -2,16 +2,11 @@ import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import star from "/imgs/aplication/estrella.png";
 import "../../components/productCard/productCard.css";
+import { ProductContext } from "../../context/ProductContext";
 
 export function ProductCard({ className, onClick, product }) {
   const { user } = useContext(UserContext);
-
-  const formatearPrecio = (precio) => {
-    return new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: "CLP",
-    }).format(precio);
-  };
+  const { formatearPrecio } = useContext(ProductContext);
 
   return (
     <div
@@ -39,9 +34,26 @@ export function ProductCard({ className, onClick, product }) {
         <p className="products__card__paragraph pt-8 text-left">
           {product?.nombre}
         </p>
-        <h6 className="products__card__paragraph pb-8 text-left">
-          {formatearPrecio(product?.precio)}
-        </h6>
+        <div className="flex flex-col items-center">
+          <span
+            className={`${
+              product?.precio_oferta
+                ? "line-through text-sm text-gray-400"
+                : "font-medium text-xl"
+            } `}
+          >
+            {" "}
+            {formatearPrecio(product?.precio)}
+          </span>
+          {product?.precio_oferta ? (
+            <span className="font-medium text-xl">
+              {" "}
+              {formatearPrecio(product.precio_oferta)}
+            </span>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );

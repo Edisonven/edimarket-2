@@ -27,8 +27,13 @@ export function ProductCardDetail({
   id,
   setProductAlert,
 }) {
-  const { product, productQuantity, handleProductQuantity, handleDirectBuy } =
-    useContext(ProductContext);
+  const {
+    product,
+    productQuantity,
+    handleProductQuantity,
+    handleDirectBuy,
+    formatearPrecio,
+  } = useContext(ProductContext);
   const { user, userToken } = useContext(UserContext);
   const { handleAddToFav, addedToFav } = useContext(FavoritesContext);
   const { cart, handleAddToCart, loadingAddedToCart } = useContext(CartContext);
@@ -71,14 +76,24 @@ export function ProductCardDetail({
             </p>
             <hr className="mb-5" />
             <div className="card__info__price__details">
-              <p className="card__paragraph card__paragraph__price">
-                {product?.precio
-                  ? Number(product.precio).toLocaleString("es-CL", {
-                      style: "currency",
-                      currency: "CLP",
-                    })
-                  : null}
-              </p>
+              <div className="flex flex-col">
+                <span
+                  className={`${
+                    product?.precio_oferta
+                      ? "line-through text-sm text-gray-400"
+                      : "font-medium text-3xl"
+                  } `}
+                >
+                  {formatearPrecio(product?.precio)}
+                </span>
+                {product?.precio_oferta ? (
+                  <span className="font-medium text-3xl">
+                    {formatearPrecio(product.precio_oferta)}
+                  </span>
+                ) : (
+                  ""
+                )}
+              </div>
               {user?.id === product?.vendedor_id && userToken ? (
                 ""
               ) : (

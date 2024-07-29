@@ -239,6 +239,13 @@ export function ProductProvider({ children }) {
     }
   }, [productToRate]);
 
+  const formatearPrecio = (precio) => {
+    return new Intl.NumberFormat("es-CL", {
+      style: "currency",
+      currency: "CLP",
+    }).format(precio);
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -293,6 +300,7 @@ export function ProductProvider({ children }) {
         setScore,
         userValorations,
         setUserValorations,
+        formatearPrecio,
       }}
     >
       {children}
