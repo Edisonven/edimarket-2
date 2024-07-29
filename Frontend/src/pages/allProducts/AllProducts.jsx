@@ -5,7 +5,6 @@ import { ProductCard } from "../../components/productCard/ProductCard";
 import { Loader } from "../../components/loader/Loader";
 import { UserContext } from "../../context/UserContext";
 import { Pagination } from "../../components/pagination/Pagination.jsx";
-import star from "/imgs/aplication/estrella.png";
 import "../allProducts/allProducts.css";
 
 export function AllProducts() {
@@ -19,7 +18,6 @@ export function AllProducts() {
   } = useContext(ProductContext);
 
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
 
   const handleSortChange = (event) => {
     setOrder_by(event.target.value);

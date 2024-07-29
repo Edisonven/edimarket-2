@@ -188,20 +188,7 @@ export function ProductProvider({ children }) {
         productos_total,
       } = await response.json();
 
-      // Formatear el precio a peso chileno
-      const formattedProducts = results.map((product) => ({
-        ...product,
-        precio: new Intl.NumberFormat("es-CL", {
-          style: "currency",
-          currency: "CLP",
-        }).format(product.precio),
-        precio_oferta: new Intl.NumberFormat("es-CL", {
-          style: "currency",
-          currency: "CLP",
-        }).format(product.precio),
-      }));
-
-      setProducts(formattedProducts);
+      setProducts(results);
       setTotalPage(productos_total_pagina);
       setNextPage(siguiente_pagina);
       setPrevPage(anterior_pagina);
@@ -220,9 +207,7 @@ export function ProductProvider({ children }) {
   const handleGetProduct = async (id) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `${config.backendUrl}/productos/${id}`
-      );
+      const response = await fetch(`${config.backendUrl}/productos/${id}`);
       if (!response.ok) {
         throw new Error("Producto no encontrado");
       }
