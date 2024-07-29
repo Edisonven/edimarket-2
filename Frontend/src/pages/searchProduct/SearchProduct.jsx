@@ -1,14 +1,11 @@
-import { useContext } from "react";
 import "../searchProduct/searchProduct.css";
+import { useContext } from "react";
 import { ProductContext } from "../../context/ProductContext";
 import { ProductCard } from "../../components/productCard/ProductCard";
-import { UserContext } from "../../context/UserContext";
-import star from "/imgs/aplication/estrella.png";
 
 export function SearchProduct() {
   const { findedProduct, handleProductDetail, searchProduct } =
     useContext(ProductContext);
-  const { user } = useContext(UserContext);
 
   return (
     <section className="searchproduct__container">

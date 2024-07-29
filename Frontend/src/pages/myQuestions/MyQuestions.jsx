@@ -24,6 +24,7 @@ export function MyQuestions() {
   const iconRef = useRef(null);
   const modalRef = useRef(null);
   const [questionsDeleted, setQuestionsDeleted] = useState("");
+
   const handleGetProductWithQuestions = async () => {
     try {
       setLoading(true);
@@ -102,21 +103,25 @@ export function MyQuestions() {
                     className="border rounded-md shadow w-full max-w-[800px] mx-auto"
                     key={element?.producto_id}
                   >
-                    <div
-                      onClick={() => handleProductDetail(element?.producto_id)}
-                      className="flex items-center gap-2 relative cursor-pointer p-[15px]"
-                    >
-                      <figure className="border p-2 rounded-md shadow">
-                        <img
-                          className="w-[80px] h-[65px] object-cover "
-                          src={element?.imagen}
-                          alt=""
-                        />
-                      </figure>
-                      <div className="flex items-center justify-between w-full overflow-hidden h-[40px]">
+                    <div className="flex items-center gap-2 relative p-[15px]">
+                      <div
+                        onClick={() =>
+                          handleProductDetail(element?.producto_id)
+                        }
+                        className="flex items-center gap-4 w-full cursor-pointer"
+                      >
+                        <figure className="border p-2 rounded-md shadow">
+                          <img
+                            className="w-[80px] h-[65px] object-contain "
+                            src={element?.imagen}
+                            alt=""
+                          />
+                        </figure>
                         <p className="text-ellipsis overflow-hidden whitespace-nowrap max-w-[150px] md:max-w-full ">
                           {element?.titulo}
                         </p>
+                      </div>
+                      <div className="flex items-center justify-end overflow-hidden h-[40px]">
                         <DeleteIcon
                           ref={
                             element?.producto_id === productId ? iconRef : null
@@ -124,7 +129,7 @@ export function MyQuestions() {
                           onClick={(e) =>
                             handleOpenModal(element?.producto_id, e)
                           }
-                          className="cursor-pointer scale-[2] select-none hover:bg-slate-200 rounded-full mr-3 p-[3px]"
+                          className="cursor-pointer scale-[2] select-none hover:bg-slate-200 rounded-full  mx-4 p-[3px]"
                         />
                         {element?.producto_id === productId ? (
                           <QuestionModal
