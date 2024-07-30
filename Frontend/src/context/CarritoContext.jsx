@@ -122,6 +122,35 @@ export function CartProvider({ children }) {
     }).format(precio);
   };
 
+  const handleUpdateQuantity = async (id, cantidad) => {
+    try {
+      if (userToken) {
+        const response = await fetch(
+          `${config.backendUrl}/carrito/update-quantity`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({
+              quantity: cantidad,
+              idProducto: id,
+            }),
+          }
+        );
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Error de datos");
+        }
+        const data = response.json();
+        handleAddedToCart();
+        return data;
+      }
+    } catch (error) {
+      console.error(error.message || "Error al actualizar cantidad");
+    }
+  };
   return (
     <CartContext.Provider
       value={{
@@ -135,6 +164,7 @@ export function CartProvider({ children }) {
         handleAddToCart,
         loadingAddedToCart,
         setLoadingAddedToCart,
+        handleUpdateQuantity,
       }}
     >
       {children}
