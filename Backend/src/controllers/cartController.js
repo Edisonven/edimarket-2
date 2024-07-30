@@ -53,8 +53,26 @@ const deleteProductoCarrito = async (req, res) => {
   }
 };
 
+const modifyQuantityOfProductAdded = async (req, res) => {
+  try {
+    const { idProducto, quantity } = req.body;
+    if (!quantity || !idProducto) {
+      throw new Error("Uno o más parámetros no proporcionados");
+    }
+    const authorization = req.header("Authorization");
+    const token = authorization.split("Bearer ")[1];
+    jwt.verify(token, process.env.JWT_SECRET);
+    const { id } = jwt.decode(token);
+    await cartModel.quantityOfProductAddedModified(id, idProducto, quantity);
+    res.status(200).json({ message: "Cantidad modificada" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const cartController = {
   getCarrito,
   añadirProductoCarrito,
   deleteProductoCarrito,
+  modifyQuantityOfProductAdded,
 };

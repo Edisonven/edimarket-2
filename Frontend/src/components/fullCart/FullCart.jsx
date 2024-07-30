@@ -24,6 +24,36 @@ export function FullCart() {
   const navigate = useNavigate();
   const [stockAlert, setStockAlert] = useState("");
 
+  const handleUpdateQuantity = async (id, cantidad) => {
+    try {
+      if (userToken) {
+        const response = await fetch(
+          `${config.backendUrl}/carrito/update-quantity`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({
+              quantity: cantidad,
+              idProducto: id,
+            }),
+          }
+        );
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Error de datos");
+        }
+        const data = response.json();
+        handleAddedToCart();
+        return data;
+      }
+    } catch (error) {
+      console.error(error.message || "Error al actualizar cantidad");
+    }
+  };
+
   const handleDeleteProduct = async (product_id, usuario_id) => {
     try {
       if (userToken) {
@@ -72,6 +102,7 @@ export function FullCart() {
         product.producto_id === id ? updatedProduct : product
       );
 
+      handleUpdateQuantity(id, updatedProduct.cantidad);
       setCart(updatedCart);
     }
   };
@@ -89,6 +120,7 @@ export function FullCart() {
         product.producto_id === id ? updatedProduct : product
       );
 
+      handleUpdateQuantity(id, updatedProduct.cantidad);
       setCart(updatedCart);
     }
   };

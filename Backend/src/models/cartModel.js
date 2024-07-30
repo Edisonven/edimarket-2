@@ -29,8 +29,17 @@ const eliminarProducto = async (idUsuario, idProducto) => {
   return console.log("Producto eliminado del carrito");
 };
 
+const quantityOfProductAddedModified = async (id, idProducto, quantity) => {
+  const values = [id, idProducto, quantity];
+  const query =
+    "UPDATE carrito SET cantidad = $3 WHERE producto_id = $2 AND usuario_id = $1";
+  const { rows: newValue } = await db.query(query, values);
+  return newValue;
+};
+
 export const cartModel = {
   agregarCarrito,
   eliminarProducto,
   consultarCarrito,
+  quantityOfProductAddedModified,
 };
