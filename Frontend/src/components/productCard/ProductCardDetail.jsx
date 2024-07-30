@@ -87,9 +87,13 @@ export function ProductCardDetail({
                   {formatearPrecio(product?.precio)}
                 </span>
                 {product?.precio_oferta ? (
-                  <span className="font-medium text-3xl">
-                    {formatearPrecio(product.precio_oferta)}
-                  </span>
+                  <div className="font-medium text-3xl flex items-center gap-2">
+                    <span>{formatearPrecio(product.precio_oferta)}</span>
+                    <span className="text-[18px] text-teal-600 font-medium">
+                      {parseFloat(product.descuento_aplicado) + "%"}{" "}
+                      OFF
+                    </span>
+                  </div>
                 ) : (
                   ""
                 )}
