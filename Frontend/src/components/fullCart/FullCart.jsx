@@ -15,6 +15,7 @@ import { EmptyCart } from "../emptyCart/EmptyCart.jsx";
 import config from "../../config/config";
 import { ProductContext } from "../../context/ProductContext";
 import { Loader } from "../loader/Loader";
+import { RotatingLines } from "react-loader-spinner";
 
 export function FullCart() {
   const {
@@ -23,6 +24,7 @@ export function FullCart() {
     formatearPrecio,
     handleAddedToCart,
     handleUpdateQuantity,
+    loadingModalCart,
   } = useContext(CartContext);
   const { user, userToken } = useContext(UserContext);
   const { loading, handleProductDetail } = useContext(ProductContext);
@@ -151,7 +153,7 @@ export function FullCart() {
                                   }
                                   className="cursor-pointer"
                                 >
-                                  <p className="card__card__paragraph text-l text-ellipsis whitespace-nowrap overflow-hidden mb-2 w-[450px] md:mb-0">
+                                  <p className="card__card__paragraph w-[250px] text-l text-ellipsis whitespace-nowrap overflow-hidden mb-2 sm:w-[450px] md:mb-0">
                                     {element?.nombre}
                                   </p>
                                 </div>
@@ -159,7 +161,7 @@ export function FullCart() {
                                 <div className="flex items-center gap-4 mb-5 md:w-[200px] md:mb-0 ">
                                   <div>
                                     <div className="flex items-center gap-4">
-                                      <div className="cart__product__add flex items-center rounded bg-gray-100 p-1 relative shadow select-none">
+                                      <div className="cart__product__add w-[95px] flex items-center justify-between rounded bg-gray-100 p-1 relative shadow select-none">
                                         <CgMathMinus
                                           onClick={() =>
                                             handleRestQuantity(
@@ -168,9 +170,22 @@ export function FullCart() {
                                           }
                                           className="icon text-2xl cursor-pointer hover:bg-slate-200 rounded"
                                         />
-                                        <span className="px-3">
-                                          {element?.cantidad}
-                                        </span>
+                                        {loadingModalCart ? (
+                                          <div className="">
+                                            <RotatingLines
+                                              visible={true}
+                                              width="20"
+                                              color="grey"
+                                              strokeWidth="5"
+                                              animationDuration="0.75"
+                                              ariaLabel="rotating-lines-loading"
+                                            />
+                                          </div>
+                                        ) : (
+                                          <span className="px-3">
+                                            {element?.cantidad}
+                                          </span>
+                                        )}
                                         <CgMathPlus
                                           onClick={() => {
                                             element?.cantidad > element?.stock

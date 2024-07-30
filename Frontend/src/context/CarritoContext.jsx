@@ -13,9 +13,10 @@ export function CartProvider({ children }) {
   const { userToken, inputRefs } = useContext(UserContext);
   const { setLoading, setProductAlert } = useContext(ProductContext);
   const [loadingAddedToCart, setLoadingAddedToCart] = useState(false);
+  const [loadingModalCart, setLoadingModalCart] = useState(false);
 
   const handleAddedToCart = async () => {
-    setLoading(true);
+    setLoadingModalCart(true);
     try {
       if (userToken) {
         const response = await fetch(`${config.backendUrl}/carrito`, {
@@ -40,7 +41,7 @@ export function CartProvider({ children }) {
     } catch (error) {
       console.error("Error:", error.message);
     } finally {
-      setLoading(false);
+      setLoadingModalCart(false);
     }
   };
 
@@ -165,6 +166,7 @@ export function CartProvider({ children }) {
         loadingAddedToCart,
         setLoadingAddedToCart,
         handleUpdateQuantity,
+        loadingModalCart,
       }}
     >
       {children}

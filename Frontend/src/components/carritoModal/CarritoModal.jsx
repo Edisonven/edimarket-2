@@ -2,15 +2,15 @@ import "../carritoModal/carritoModal.css";
 import { useContext, useEffect } from "react";
 import { CartContext } from "../../context/CarritoContext";
 import { IoCloseOutline } from "react-icons/io5";
-import { ProductCard } from "../productCard/ProductCard";
 import { GeneralBtn } from "../generalBtn/GeneralBtn";
 import { useNavigate } from "react-router-dom";
 import { TbTrashXFilled } from "react-icons/tb";
 import { UserContext } from "../../context/UserContext";
 import config from "../../config/config";
+import { Loader } from "../loader/Loader";
 
 export function CarritoModal() {
-  const { cartModal, setCartModal, cart, handleAddedToCart } =
+  const { cartModal, setCartModal, cart, handleAddedToCart, loadingModalCart } =
     useContext(CartContext);
   const { user, userToken } = useContext(UserContext);
 
@@ -78,28 +78,32 @@ export function CarritoModal() {
               ({cart.length} Productos)
             </span>
           </h1>
-          <div className="cart__cards__container">
-            {cart.map((element) => (
-              <div key={element.carro_id}>
-                <div className="cart__card__body">
-                  <img
-                    className="cart__card__img shadow-md"
-                    src={element.imagen}
-                    alt=""
-                  />
-                  <p className="card__card__paragraph text-md font-light">
-                    {element.nombre}
-                  </p>
-                  <TbTrashXFilled
-                    onClick={() =>
-                      handleDeleteProduct(element?.producto_id, user?.id)
-                    }
-                    className="cartmodal__trash__icon"
-                  />
+          {loadingModalCart ? (
+            <Loader />
+          ) : (
+            <div className="cart__cards__container">
+              {cart.map((element) => (
+                <div key={element.carro_id}>
+                  <div className="cart__card__body">
+                    <img
+                      className="cart__card__img shadow-md"
+                      src={element.imagen}
+                      alt=""
+                    />
+                    <p className="card__card__paragraph text-md font-light">
+                      {element.nombre}
+                    </p>
+                    <TbTrashXFilled
+                      onClick={() =>
+                        handleDeleteProduct(element?.producto_id, user?.id)
+                      }
+                      className="cartmodal__trash__icon"
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
           <div className="card__button__container">
             <GeneralBtn onClick={handleNavigateToCart}>
               <div className="card__button">Ir al carrito</div>
