@@ -42,16 +42,13 @@ export function MyPosts() {
 
   const handleDeleteMyProducts = async (id) => {
     try {
-      const response = await fetch(
-        `${config.backendUrl}/usuarios/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
-      );
+      const response = await fetch(`${config.backendUrl}/usuarios/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
       if (!response.ok) {
         const errorData = await response.json();
         setPostDeleted((prevState) => ({
@@ -126,7 +123,7 @@ export function MyPosts() {
       ) : serverError.myPostGetError ? (
         <p>{serverError.myPostGetError}</p>
       ) : (
-        <div className="myposts__body flex flex-col gap-5 h-full bg-white shadow-sm p-3 rounded-md min-h-[500px]">
+        <div className="myposts__body flex flex-col gap-5  bg-white shadow-sm p-3 rounded-md">
           {myProducts.length > 0 ? (
             myProducts.map((product) => (
               <div

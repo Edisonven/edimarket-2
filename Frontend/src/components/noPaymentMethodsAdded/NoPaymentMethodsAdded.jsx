@@ -11,7 +11,7 @@ export function NoPaymentMethodsAdded() {
   }
 
   return (
-<section className="flex flex-col align-center justify-center max-w-[1000px] mx-auto min-h-[480px] bg-white shadow-sm rounded-md">
+<section className="flex flex-col align-center justify-center max-w-[1000px] mx-auto  bg-white shadow-sm rounded-md">
       <div className="flex flex-col justify-center items-center gap-6">
         <h1 className="text-center">No has añadido ningún método de pago</h1>
         <figure>

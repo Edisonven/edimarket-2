@@ -25,7 +25,7 @@ export function SearchProduct() {
             />
           ))
         ) : (
-          <div className="min-h-[420px]">
+          <div className="">
             <h1>No hay resultados para tu búsqueda</h1>
             <div className="flex flex-col mt-5">
               <ul className="flex flex-col gap-1">

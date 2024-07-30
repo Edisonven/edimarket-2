@@ -31,7 +31,7 @@ export function MyValorations() {
           Realizadas
         </NavLink>
       </div>
-      <div className="myvalorations__body bg-white shadow-sm rounded-md p-5 min-h-[480px]">
+      <div className="myvalorations__body bg-white shadow-sm rounded-md p-5">
         {loading ? (
           <Loader />
         ) : (

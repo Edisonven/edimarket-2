@@ -8,6 +8,7 @@ import Slider from "react-slick";
 import { ProductContext } from "../../context/ProductContext.jsx";
 import config from "../../config/config.js";
 import { Loader } from "../loader/Loader.jsx";
+import { Link } from "react-router-dom";
 
 export function ProductsInOfert() {
   const [products, setProducts] = useState([]);
@@ -45,11 +46,17 @@ export function ProductsInOfert() {
         <Loader />
       ) : (
         <div className="productsinofert__body ">
+          <Link
+            to=""
+            className="block w-[160px] ml-auto mb-3 font-semibold text-base hover:text-teal-500 hover:underline"
+          >
+            Ver Todos
+          </Link>
           <Slider {...settings}>
             {products?.map((product) => (
               <ProductCard
                 onClick={() => handleProductDetail(product?.id)}
-                key={product?.id}
+                key={product.id}
                 product={product}
               />
             ))}

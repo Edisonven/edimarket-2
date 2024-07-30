@@ -117,7 +117,7 @@ export function UserAddress() {
   }, [navigate]);
 
   return (
-    <section className="useraddress__container ">
+    <section className="useraddress__container flex flex-col">
       <h1 className="text-2xl font-semibold mb-5">Direcciones</h1>
       {loading ? (
         <Loader />
