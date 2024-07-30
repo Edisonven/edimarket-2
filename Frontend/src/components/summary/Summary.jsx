@@ -54,7 +54,13 @@ export function Summary() {
           {cart.length > 0 ? (
             <p>{formatearPrecio(totalPrecio)}</p>
           ) : directBuy !== null ? (
-            <p>{formatearPrecio(directBuy.precio * directBuy.cantidad)}</p>
+            <p>
+              {formatearPrecio(
+                (directBuy.precio_oferta
+                  ? directBuy.precio_oferta
+                  : directBuy.precio) * directBuy.cantidad
+              )}
+            </p>
           ) : (
             <p>0</p>
           )}

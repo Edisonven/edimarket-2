@@ -35,7 +35,9 @@ export function Billing() {
     0
   );
 
-  const totalPrecioDirectBuy = directBuy?.precio * directBuy?.cantidad;
+  const totalPrecioDirectBuy =
+    (directBuy?.precio_oferta ? directBuy.precio_oferta : directBuy.precio) *
+    directBuy?.cantidad;
 
   const generateSessionId = () => {
     return "session_" + Math.random().toString(36).substr(2, 9);
@@ -60,7 +62,7 @@ export function Billing() {
             body: JSON.stringify({
               buyOrder: generateUniqueBuyOrder(),
               sessionId: generateSessionId(),
-              amount: parseInt(totalPrecio) || totalPrecioDirectBuy,
+              amount: parseInt(totalPrecio) || parseInt(totalPrecioDirectBuy),
               returnUrl: "http://localhost:5173/compra-exitosa",
             }),
           }
