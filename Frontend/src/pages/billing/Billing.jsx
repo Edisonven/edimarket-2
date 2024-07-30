@@ -16,9 +16,9 @@ import config from "../../config/config";
 
 export function Billing() {
   const { userToken, userCreditCards } = useContext(UserContext);
-  const { selectedPaymentMethod, isLoading } = useContext(CheckoutContext);
-  const { cart, formatearPrecio } = useContext(CartContext);
-  const { directBuy, loading, setLoading } = useContext(ProductContext);
+  const { selectedPaymentMethod } = useContext(CheckoutContext);
+  const { cart } = useContext(CartContext);
+  const { directBuy, loading } = useContext(ProductContext);
   const formRef = useRef(null);
   const [paymentLoading, setPaymentLoading] = useState(null);
 

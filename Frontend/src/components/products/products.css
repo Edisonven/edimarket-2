@@ -69,6 +69,7 @@
 }
 .slick-list {
   height: 450px;
+  margin-left: 20px !important;
 }
 
 /*MODO DESKTOP*/
