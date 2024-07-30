@@ -10,8 +10,9 @@ import { UserContext } from "../../context/UserContext";
 import config from "../../config/config";
 
 export function CarritoModal() {
-  const { cartModal, setCartModal, cart } = useContext(CartContext);
-  const { user, userToken, handleAddedToCart } = useContext(UserContext);
+  const { cartModal, setCartModal, cart, handleAddedToCart } =
+    useContext(CartContext);
+  const { user, userToken } = useContext(UserContext);
 
   const handleDeleteProduct = async (product_id, usuario_id) => {
     try {
@@ -91,7 +92,7 @@ export function CarritoModal() {
                   </p>
                   <TbTrashXFilled
                     onClick={() =>
-                      handleDeleteProduct(element.producto_id, user.id)
+                      handleDeleteProduct(element?.producto_id, user?.id)
                     }
                     className="cartmodal__trash__icon"
                   />

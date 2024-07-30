@@ -29,7 +29,7 @@
 .cart__card__body {
   width: 100%;
   display: flex;
-  gap: 30px;
+  gap: 20px;
   align-items: center;
   justify-content: flex-start;
   padding-bottom: 20px;
@@ -38,7 +38,7 @@
 }
 
 .cart__card__img {
-  object-fit: cover;
+  object-fit: contain;
   width: 80px;
   height: 80px;
   border-radius: 50%;

@@ -144,8 +144,8 @@ const consultarProductosByCategoria = async (
   }
   const values = [categoria];
   const consultaAllProductsPerCategory =
-    "SELECT productos.*,productos.id AS producto_id, nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id where categorias.nombre_categoria=$1";
-  const consulta = `SELECT productos.*,productos.id AS producto_id, nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id where categorias.nombre_categoria=$1 ${querys}`;
+    "SELECT productos.*,productos.id AS producto_id, nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta, ofertas.descuentoporcentaje AS descuento_aplicado FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id where categorias.nombre_categoria=$1";
+  const consulta = `SELECT productos.*,productos.id AS producto_id, nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta, ofertas.descuentoporcentaje AS descuento_aplicado FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id where categorias.nombre_categoria=$1 ${querys}`;
   const { rows: products } = await db.query(consulta, values);
   const { rows: productsAll } = await db.query(
     consultaAllProductsPerCategory,
@@ -157,7 +157,7 @@ const consultarProductosByCategoria = async (
 const consultarProductosPorUsuario = async (idUsuario) => {
   const values = [idUsuario];
   const consulta =
-    "SELECT productos.*,productos.id AS producto_id, nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id where vendedor_id=$1";
+    "SELECT productos.*,productos.id AS producto_id, nombre_categoria, categorias.id AS categoria_id, ofertas.precioOferta AS precio_oferta, ofertas.descuentoporcentaje AS descuento_aplicado FROM productos INNER JOIN producto_categoria ON productos.id=producto_categoria.producto_id INNER JOIN categorias ON producto_categoria.categoria_id=categorias.id LEFT JOIN ofertas ON productos.id = ofertas.producto_id where vendedor_id=$1";
   const { rows: products } = await db.query(consulta, values);
   return products;
 };
@@ -294,7 +294,7 @@ const agregarCarrito = async (idUsuario, producto) => {
 const consultarCarrito = async (idUsuario) => {
   const values = [idUsuario];
   const consulta =
-    "select carrito.id as carro_id, carrito.usuario_id,carrito.producto_id,carrito.cantidad,carrito.comprado, productos.id as producto_id, productos.nombre,productos.descripcion,productos.precio,productos.stock,productos.imagen,productos.vendedor_id,productos.estado from carrito inner join productos on carrito.producto_id=productos.id where carrito.usuario_id=$1";
+    "SELECT carrito.id AS carro_id, carrito.usuario_id, carrito.producto_id, carrito.cantidad, carrito.comprado, productos.id AS producto_id, productos.nombre, productos.descripcion, productos.precio, productos.stock, productos.imagen, productos.vendedor_id, productos.estado, ofertas.id AS ofertas_id, ofertas.preciooferta AS precio_oferta, ofertas.descuentoporcentaje AS descuento_aplicado FROM carrito INNER JOIN productos ON carrito.producto_id = productos.id LEFT JOIN ofertas ON carrito.producto_id = ofertas.producto_id WHERE carrito.usuario_id=$1";
   const { rows: carrito } = await db.query(consulta, values);
   return carrito;
 };

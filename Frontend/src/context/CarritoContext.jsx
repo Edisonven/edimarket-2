@@ -10,7 +10,7 @@ export function CartProvider({ children }) {
   const [cartModal, setCartModal] = useState(false);
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
-  const { userToken } = useContext(UserContext);
+  const { userToken, inputRefs } = useContext(UserContext);
   const { setLoading, setProductAlert } = useContext(ProductContext);
   const [loadingAddedToCart, setLoadingAddedToCart] = useState(false);
 
