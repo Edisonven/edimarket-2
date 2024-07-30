@@ -20,7 +20,7 @@ export function FullCart() {
   const { cart, setCart, formatearPrecio, handleAddedToCart } =
     useContext(CartContext);
   const { user, userToken } = useContext(UserContext);
-  const { loading } = useContext(ProductContext);
+  const { loading, handleProductDetail } = useContext(ProductContext);
   const navigate = useNavigate();
   const [stockAlert, setStockAlert] = useState("");
 
@@ -138,9 +138,17 @@ export function FullCart() {
                             />
                             <div className="overflow-hidden w-full">
                               <div className="flex gap-0 lg:gap-[70px] w-full flex-wrap">
-                                <p className="card__card__paragraph text-l text-ellipsis whitespace-nowrap overflow-hidden mb-2 w-[450px] md:mb-0">
-                                  {element?.nombre}
-                                </p>
+                                <div
+                                  onClick={() =>
+                                    handleProductDetail(element?.producto_id)
+                                  }
+                                  className="cursor-pointer"
+                                >
+                                  <p className="card__card__paragraph text-l text-ellipsis whitespace-nowrap overflow-hidden mb-2 w-[450px] md:mb-0">
+                                    {element?.nombre}
+                                  </p>
+                                </div>
+
                                 <div className="flex items-center gap-4 mb-5 md:w-[200px] md:mb-0 ">
                                   <div>
                                     <div className="flex items-center gap-4">
