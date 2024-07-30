@@ -167,48 +167,52 @@ export function FullCart() {
                                           className="icon text-2xl cursor-pointer hover:bg-slate-200 rounded"
                                         />
                                       </div>
+                                      {element.precio_oferta ? (
+                                        <div className="flex flex-col items-center">
+                                          {element.precio_oferta ? (
+                                            <div className="flex items-center gap-2">
+                                              <span className="text-sm text-teal-600 font-medium">
+                                                {parseFloat(
+                                                  element.descuento_aplicado
+                                                ) + "%"}
+                                              </span>
+                                              <span
+                                                className={`${
+                                                  element?.precio_oferta
+                                                    ? "line-through text-sm text-gray-400"
+                                                    : "font-medium text-xl"
+                                                } `}
+                                              >
+                                                <div className=" flex items-center gap-2">
+                                                  {formatearPrecio(
+                                                    element.precio *
+                                                      element.cantidad
+                                                  )}
+                                                </div>
+                                              </span>
+                                            </div>
+                                          ) : (
+                                            ""
+                                          )}
 
-                                      <div className="flex flex-col items-center">
-                                        <div></div>
-                                        {element.precio_oferta ? (
-                                          <div className="flex items-center gap-2">
-                                            <span className="text-sm text-teal-600 font-medium">
-                                              {parseFloat(
-                                                element.descuento_aplicado
-                                              ) + "%"}
-                                            </span>
-                                            <span
-                                              className={`${
-                                                element?.precio_oferta
-                                                  ? "line-through text-sm text-gray-400"
-                                                  : "font-medium text-xl"
-                                              } `}
-                                            >
-                                              <div className=" flex items-center gap-2">
+                                          {element?.precio_oferta ? (
+                                            <div className="font-medium text-xl flex flex-col items-center gap-2">
+                                              <span>
                                                 {formatearPrecio(
-                                                  element.precio *
+                                                  element.precio_oferta *
                                                     element.cantidad
                                                 )}
-                                              </div>
-                                            </span>
-                                          </div>
-                                        ) : (
-                                          ""
-                                        )}
-
-                                        {element?.precio_oferta ? (
-                                          <div className="font-medium text-xl flex flex-col items-center gap-2">
-                                            <span>
-                                              {formatearPrecio(
-                                                element.precio_oferta *
-                                                  element.cantidad
-                                              )}
-                                            </span>
-                                          </div>
-                                        ) : (
-                                          ""
-                                        )}
-                                      </div>
+                                              </span>
+                                            </div>
+                                          ) : (
+                                            ""
+                                          )}
+                                        </div>
+                                      ) : (
+                                        <span className="font-medium text-xl">
+                                          {formatearPrecio(element?.precio)}
+                                        </span>
+                                      )}
                                     </div>
                                     {element?.cantidad > element?.stock ? (
                                       <div className="flex items-center gap-1 absolute text-red-600">

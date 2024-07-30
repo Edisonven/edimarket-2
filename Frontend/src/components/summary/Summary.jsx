@@ -14,7 +14,10 @@ export function Summary() {
   );
 
   const totalPrecio = cart.reduce(
-    (acc, producto) => acc + producto.precio * producto.cantidad,
+    (acc, producto) =>
+      acc +
+      (producto.precio_oferta ? producto.precio_oferta : producto.precio) *
+        producto.cantidad,
     0
   );
 

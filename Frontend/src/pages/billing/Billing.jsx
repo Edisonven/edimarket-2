@@ -17,7 +17,7 @@ import config from "../../config/config";
 export function Billing() {
   const { userToken, userCreditCards } = useContext(UserContext);
   const { selectedPaymentMethod, isLoading } = useContext(CheckoutContext);
-  const { cart } = useContext(CartContext);
+  const { cart, formatearPrecio } = useContext(CartContext);
   const { directBuy, loading, setLoading } = useContext(ProductContext);
   const formRef = useRef(null);
   const [paymentLoading, setPaymentLoading] = useState(null);
@@ -28,9 +28,13 @@ export function Billing() {
   });
 
   const totalPrecio = cart.reduce(
-    (acc, producto) => acc + producto.precio * producto.cantidad,
+    (acc, producto) =>
+      acc +
+      (producto.precio_oferta ? producto.precio_oferta : producto.precio) *
+        producto.cantidad,
     0
   );
+
   const totalPrecioDirectBuy = directBuy?.precio * directBuy?.cantidad;
 
   const generateSessionId = () => {
@@ -56,7 +60,7 @@ export function Billing() {
             body: JSON.stringify({
               buyOrder: generateUniqueBuyOrder(),
               sessionId: generateSessionId(),
-              amount: totalPrecio || totalPrecioDirectBuy,
+              amount: parseInt(totalPrecio) || totalPrecioDirectBuy,
               returnUrl: "http://localhost:5173/compra-exitosa",
             }),
           }
