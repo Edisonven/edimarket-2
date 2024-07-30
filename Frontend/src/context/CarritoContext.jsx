@@ -15,6 +15,7 @@ export function CartProvider({ children }) {
   const [loadingAddedToCart, setLoadingAddedToCart] = useState(false);
 
   const handleAddedToCart = async () => {
+    setLoading(true);
     try {
       if (userToken) {
         const response = await fetch(`${config.backendUrl}/carrito`, {

@@ -13,7 +13,6 @@ import { useContext, useRef, useEffect } from "react";
 import { UserContext } from "./context/UserContext.jsx";
 import { MiPerfil } from "./pages/miPerfil/MiPerfil.jsx";
 import { CreatePost } from "./pages/createPost/CreatePost.jsx";
-import { Cart } from "./pages/cart/Cart.jsx";
 import { Billing } from "./pages/billing/Billing";
 import { PublishedProduct } from "./pages/publishedProduct/PublishedProduct.jsx";
 import { Shipping } from "./pages/shipping/Shipping.jsx";
@@ -38,6 +37,7 @@ import { AllProducts } from "./pages/allProducts/AllProducts.jsx";
 import { MyValorations } from "./pages/myValorations/MyValorations.jsx";
 import { SendMyValoration } from "./pages/sendMyValoration/SendMyValoration.jsx";
 import { UpdateMyValoration } from "./pages/myValorations/UpdateMyValoration.jsx";
+import { FullCart } from "./components/fullCart/FullCart.jsx";
 
 function App() {
   const { userToken, logout } = useContext(UserContext);
@@ -64,7 +64,7 @@ function App() {
         <Routes>
           <Route
             path="/carro"
-            element={userToken ? <Cart /> : <Navigate to="/sign-in" />}
+            element={userToken ? <FullCart /> : <Navigate to="/sign-in" />}
           />
           <Route
             path="/billing"
