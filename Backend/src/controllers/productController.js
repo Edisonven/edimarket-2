@@ -113,56 +113,6 @@ const getProductosByCategoria = async (req, res) => {
   }
 };
 
-const añadirProductoCarrito = async (req, res) => {
-  try {
-    const producto = req.body;
-    const Authorization = req.header("Authorization");
-    const token = Authorization.split("Bearer ")[1];
-    jwt.verify(token, process.env.JWT_SECRET);
-    const { email, id } = jwt.decode(token);
-    await userModel.agregarCarrito(id, producto);
-    console.log(
-      `El usuario ${email} con el id ${id} ha agregado un producto al carrito`
-    );
-    res.status(201).json({ Mensaje: "Producto agregado al carrito" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const getCarrito = async (req, res) => {
-  try {
-    const Authorization = req.header("Authorization");
-    const token = Authorization.split("Bearer ")[1];
-    jwt.verify(token, process.env.JWT_SECRET);
-    const { email, id } = jwt.decode(token);
-    const carrito = await userModel.consultarCarrito(id);
-    console.log(`El usuario ${email} con el id ${id} ha consultado el carrito`);
-    res.json(carrito);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const deleteProductoCarrito = async (req, res) => {
-  try {
-    const { idProducto } = req.params;
-    const Authorization = req.header("Authorization");
-    const token = Authorization.split("Bearer ")[1];
-    jwt.verify(token, process.env.JWT_SECRET);
-    const { email, id } = jwt.decode(token);
-    await userModel.eliminarProducto(id, idProducto);
-    console.log(
-      `El usuario ${email} con el id ${id} ha eliminado un producto del carrito`
-    );
-    res.status(200).json({
-      message: "Producto eliminado del carrito",
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
 const ventaRealizada = async (req, res) => {
   try {
     const { idProducto, cantidad } = req.body;
@@ -477,10 +427,7 @@ export const productController = {
   getProductos,
   getProductoById,
   agregarProducto,
-  añadirProductoCarrito,
   getProductosByCategoria,
-  getCarrito,
-  deleteProductoCarrito,
   ventaRealizada,
   modifyProducto,
   getAllProducts,
