@@ -1,11 +1,10 @@
 .notfound__container {
   display: grid;
-  grid-template-areas: "header";
 }
 .notfound__header {
   padding: 10px 40px;
-  grid-area: header;
   width: 100%;
+  height: 70px;
   z-index: 1001;
   background: var(--verdeAgua);
 }
