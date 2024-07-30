@@ -10,7 +10,7 @@ export function EmptyCart() {
     navigate("/");
   };
   return (
-    <div className="emptyCart__container flex justify-center items-center flex-col mb-50 bg-gray-50 shadow-md rounded">
+    <div className="emptyCart__container flex justify-center items-center flex-col mb-50">
       <div className="emptyCart__body flex flex-col items-center h-[500px] justify-center gap-8">
         <div className="flex flex-col gap-3 items-center">
           <img
