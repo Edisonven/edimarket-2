@@ -5,13 +5,12 @@ body {
 }
 
 .app__container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   min-width: 375px;
   background-color: var(--backgroundHomeColor);
-  /*   padding-top: 20px; */
-  display: grid;
-  grid-template-rows: 1fr auto;
-  min-height: 100vh;
+  min-height: calc(100vh - 56px);
 }
 
 /* BASIC STYLES */

@@ -59,6 +59,10 @@ body::-webkit-scrollbar-thumb {
   border-radius: 60px;
 }
 
+#root {
+  min-height: 100vh;
+}
+
 .input__eye__icon {
   position: absolute;
   top: 11px;
