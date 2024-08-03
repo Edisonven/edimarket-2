@@ -25,7 +25,7 @@ export function Header() {
   ];
 
   return (
-    <header className="header__container">
+    <header className="header__container hidden md:block">
       <div className="slider__container">
         <ImageGallery
           showPlayButton={false}
