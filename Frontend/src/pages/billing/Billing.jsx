@@ -36,7 +36,7 @@ export function Billing() {
   );
 
   const totalPrecioDirectBuy =
-    (directBuy?.precio_oferta ? directBuy.precio_oferta : directBuy.precio) *
+    (directBuy?.precio_oferta ? directBuy.precio_oferta : directBuy?.precio) *
     directBuy?.cantidad;
 
   const generateSessionId = () => {
