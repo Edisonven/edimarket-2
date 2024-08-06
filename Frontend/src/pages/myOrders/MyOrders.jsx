@@ -5,9 +5,11 @@ import { UserContext } from "../../context/UserContext";
 import myOrders from "./myOrders.module.css";
 import delivery from "/imgs/aplication/delivery.png";
 import { ProductContext } from "../../context/ProductContext";
+import { OrdersPagination } from "./OrdersPagination";
 
 export function MyOrders() {
-  const { orders } = useContext(UserContext);
+  const { orders, page, setPage, limit, totalPage, total } =
+    useContext(UserContext);
   const { loading } = useContext(ProductContext);
 
   const formatDate = (dateString) => {
@@ -37,7 +39,7 @@ export function MyOrders() {
       )}
     >
       <h1 className="text-2xl font-semibold mb-5">Mis compras</h1>
-      <div className="orders_box bg-white shadow-sm rounded-md p-3">
+      <div className="orders_box bg-white shadow-sm rounded-md p-3 flex flex-col">
         {loading ? (
           <Loader />
         ) : (
@@ -85,6 +87,14 @@ export function MyOrders() {
             )}
           </div>
         )}
+        <OrdersPagination
+          limit={limit}
+          page={page}
+          totalPage={totalPage}
+          setPage={setPage}
+          total={total}
+          className="self-end mt-3"
+        />
       </div>
     </section>
   );

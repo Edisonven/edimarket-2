@@ -12,7 +12,7 @@ const getProductos = async (req, res) => {
       page,
       order_by
     );
-    const hateoas = await hateoasModel.prepHateoasProductos(
+    const hateoas = hateoasModel.prepHateoasProductos(
       productos.products,
       page,
       productos.productsAll

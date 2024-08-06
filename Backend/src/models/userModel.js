@@ -1,6 +1,7 @@
 import { object, string, number } from "zod";
 import bcrypt from "bcryptjs";
 import db from "../config/database.js";
+import format from "pg-format";
 
 const validarUsuario = object({
   nombre: string().min(3),
@@ -277,13 +278,24 @@ const consultarDirreccion = async (idUsuario) => {
   return domicilio;
 };
 
-const consultarVentasUsuario = async (idUsuario) => {
+const consultarVentasUsuario = async (idUsuario, limits, order_by, page) => {
   const values = [idUsuario];
-  const consulta =
-    "select * from ventas inner join productos on ventas.producto_id=productos.id inner join producto_categoria on productos.id=producto_categoria.producto_id inner join categorias on categorias.id=producto_categoria.categoria_id where ventas.comprador_id=$1";
-  const { rows: ventas } = await db.query(consulta, values);
-  console.log(ventas);
-  return ventas;
+  const [campo, ordenamiento] = order_by.split("_");
+  const offset = (page - 1) * limits;
+  const formatedQuery = format(
+    "SELECT ventas.*, productos.*, categorias.* FROM ventas INNER JOIN productos ON ventas.producto_id = productos.id INNER JOIN producto_categoria ON productos.id = producto_categoria.producto_id INNER JOIN categorias ON categorias.id = producto_categoria.categoria_id WHERE ventas.comprador_id = $1 ORDER BY %s %s LIMIT %s OFFSET %s",
+    campo,
+    ordenamiento,
+    limits,
+    offset
+  );
+
+  const consultaTotal = `SELECT COUNT(*) AS total FROM ventas WHERE ventas.comprador_id = $1`;
+
+  const { rows: ventas } = await db.query(formatedQuery, values);
+  const { rows: totalResult } = await db.query(consultaTotal, [idUsuario]);
+
+  return { ventas, totalResult };
 };
 
 const consultarVentasUsuarioParaValorar = async (idUsuario) => {

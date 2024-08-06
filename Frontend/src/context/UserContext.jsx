@@ -76,6 +76,12 @@ export function UserProvider({ children }) {
   const [questionsByUser, setQuestionsByUser] = useState([]);
   const [orders, setOrders] = useState([]);
   const [ordersToValorate, setOrdersToValorate] = useState([]);
+  const [prevPage, setPrevPage] = useState("");
+  const [nextPage, setNextPage] = useState("");
+  const [totalPage, setTotalPage] = useState("");
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
   const [AddAddressSuccess, setAddAddressSuccess] = useState({
     success: "",
     error: "",
@@ -169,7 +175,7 @@ export function UserProvider({ children }) {
       if (userToken) {
         const handleOrders = async () => {
           const response = await fetch(
-            `${config.backendUrl}/usuarios/usuario/ventas/?idUsuario=${user.id}`,
+            `${config.backendUrl}/usuarios/usuario/ventas/?idUsuario=${user.id}&page=${page}&limits=${limit}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -181,11 +187,14 @@ export function UserProvider({ children }) {
           if (!response.ok) {
             throw new Error("Error fetching orders");
           }
-          const data = await response.json();
+          const { results, total, anterior_pagina, siguiente_pagina, count } =
+            await response.json();
 
-          setOrders(data.ventas);
-
-          return data;
+          setOrders(results);
+          setTotal(count);
+          setTotalPage(total);
+          setPrevPage(anterior_pagina);
+          setNextPage(siguiente_pagina);
         };
 
         const handleOrdersToValorate = async () => {
@@ -224,7 +233,7 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     fetchOrders();
-  }, [userToken]);
+  }, [userToken, page]);
 
   const handleGetQuestionsByUser = async () => {
     setLoading(true);
@@ -518,6 +527,13 @@ export function UserProvider({ children }) {
         setOrdersToValorate,
         handleGetUserRegistered,
         formatedUser,
+        totalPage,
+        page,
+        setPage,
+        limit,
+        setLimit,
+        totalPage,
+        total,
       }}
     >
       {children}

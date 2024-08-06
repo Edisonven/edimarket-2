@@ -1,5 +1,6 @@
 import { userModel } from "../models/userModel.js";
 import { productModel } from "../models/productModel.js";
+import { hateoasModel } from "../models/hateoasModel.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
@@ -93,7 +94,7 @@ const loginUser = async (req, res) => {
 const ModifyUser = async (req, res) => {
   try {
     const usuario = req.body;
-    console.log(usuario)
+    console.log(usuario);
     const Authorization = req.header("Authorization");
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET);
@@ -400,35 +401,23 @@ const deleteProductoDelUsuario = async (req, res) => {
 
 const consultarVentas = async (req, res) => {
   try {
+    const { limits = 5, page = 1, order_by = "fecha_DESC" } = req.query;
     const Authorization = req.header("Authorization");
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET);
     const { email, id } = jwt.decode(token);
-    const ventas = await userModel.consultarVentasUsuario(id);
+    const { ventas, totalResult } = await userModel.consultarVentasUsuario(
+      id,
+      limits,
+      order_by,
+      page
+    );
+
+    const hateoas = hateoasModel.hateoasOrdersByUser(ventas, page, totalResult);
     console.log(
       `El usuario ${email} con el id ${id} ha consultado sus compras`
     );
-    res.json({
-      ventas: ventas.map((venta) => {
-        return {
-          id: venta.id,
-          comprador_id: venta.comprador_id,
-          producto_id: venta.producto_id,
-          nombre: venta.nombre,
-          descripcion: venta.descripcion,
-          imagen: venta.imagen,
-          nombre_categoria: venta.nombre_categoria,
-          cantidad: venta.cantidad,
-          valor_total: venta.valor_total,
-          fecha_venta: venta.fecha_venta.toLocaleString("es-ES", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            timeZone: "UTC",
-          }),
-        };
-      }),
-    });
+    res.json(hateoas);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
