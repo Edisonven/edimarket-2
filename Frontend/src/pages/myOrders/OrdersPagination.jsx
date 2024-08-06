@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 export function OrdersPagination({ className, page, setPage, total, limit }) {
   const totalPages = Math.ceil(total / limit);
-  const navigate = useNavigate();
 
   const handleNext = () => {
     if (page < totalPages) {
@@ -40,8 +39,8 @@ export function OrdersPagination({ className, page, setPage, total, limit }) {
           <div
             key={index}
             className={`page-item ${
-              page === index + 1 ? "bg-teal-300 ring-2 ring-teal-700" : ""
-            } cursor-pointer w-6 flex items-center justify-center rounded hover:bg-slate-200 transition duration-300`}
+              page === index + 1 ? "bg-teal-300 rounded-full" : ""
+            } cursor-pointer w-7 h-7 flex items-center justify-center rounded-full hover:bg-slate-200 transition duration-300`}
             onClick={() => setPage(index + 1)}
           >
             <div className="page-link" href="#">
