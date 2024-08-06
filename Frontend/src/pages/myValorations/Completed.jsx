@@ -2,20 +2,74 @@ import { GoStar } from "react-icons/go";
 import { GoStarFill } from "react-icons/go";
 import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
 import { BsFillHandThumbsUpFill } from "react-icons/bs";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../context/ProductContext";
 import { useNavigate } from "react-router-dom";
+import config from "../../config/config";
+import { UserContext } from "../../context/UserContext";
 
 export function Completed({ orders }) {
-  const { handleProductDetail } = useContext(ProductContext);
-  const valoradedProducts = orders.filter((order) => order.valorado === true);
+  const { handleProductDetail, setLoading } = useContext(ProductContext);
+  const { userToken } = useContext(UserContext);
+  const [valoradedProducts, setValoratedProducts] = useState([]);
+  const [likedValorations, setLikedValorations] = useState([]);
   const naviagate = useNavigate();
+
+  useEffect(() => {
+    const valoradedProducts = orders.filter((order) => order.valorado === true);
+    setValoratedProducts(valoradedProducts);
+  }, [orders]);
 
   const handleNavigateToEdit = (productId) => {
     if (productId) {
       naviagate(`/edit-my-valoration/${productId}`);
     }
   };
+
+  const handleGetLikesFromMyValorations = async () => {
+    setLoading(true);
+    try {
+      if (userToken) {
+        const getLikes = async (id) => {
+          const response = await fetch(
+            `${config.backendUrl}/venta/likes/${id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userToken}`,
+              },
+            }
+          );
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error de datos");
+          }
+          const data = await response.json();
+          return data;
+        };
+
+        const newData = [];
+        if (valoradedProducts) {
+          for (const valoration of valoradedProducts) {
+            const data = await getLikes(valoration.producto_id);
+            newData.push(data);
+          }
+        }
+
+        if (newData.length > 0) {
+          setLikedValorations(newData);
+        }
+      }
+    } catch (error) {
+      console.error(error.message || "Error al obtener likes de valoraciones");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+/*   useEffect(() => {
+    handleGetLikesFromMyValorations();
+  }, []); */
 
   return (
     <section className="flex flex-col gap-5">

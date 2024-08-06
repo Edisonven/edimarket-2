@@ -423,6 +423,23 @@ const getProductsInOfert = async (req, res) => {
   }
 };
 
+const getLikesFromMyCalifications = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    if (!productId) {
+      throw new Error("Parámetro no proporcionado");
+    }
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, process.env.JWT_SECRET);
+    const { id } = jwt.decode(token);
+    const likes = await productModel.likesFromMyCalifications(productId, id);
+    res.status(200).json(likes);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const productController = {
   getProductos,
   getProductoById,
@@ -443,4 +460,5 @@ export const productController = {
   getCalificationOfValorate,
   updateCalificationOfValorate,
   getProductsInOfert,
+  getLikesFromMyCalifications,
 };

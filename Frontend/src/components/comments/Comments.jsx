@@ -60,22 +60,19 @@ export function Comments() {
             cal.calificacion_id === valoration.id && cal.usuario_id === user?.id
         );
 
-        const response = await fetch(
-          `${config.backendUrl}/venta/calificar`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              calificacion: calificationFound.positiva
-                ? !calificationFound.positiva
-                : true,
-              calificationId: calificationFound?.id,
-            }),
-          }
-        );
+        const response = await fetch(`${config.backendUrl}/venta/calificar`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({
+            calificacion: calificationFound.positiva
+              ? !calificationFound.positiva
+              : true,
+            calificationId: calificationFound?.id,
+          }),
+        });
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -85,21 +82,18 @@ export function Comments() {
         handleGetCalificationsProduct();
         return data;
       } else {
-        const response = await fetch(
-          `${config.backendUrl}/venta/calificar`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              productId: parsedId,
-              calificacionId: valoration.id,
-              positiva: true,
-            }),
-          }
-        );
+        const response = await fetch(`${config.backendUrl}/venta/calificar`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({
+            productId: parsedId,
+            calificacionId: valoration.id,
+            positiva: true,
+          }),
+        });
 
         if (!response.ok) {
           const errorData = await response.json();

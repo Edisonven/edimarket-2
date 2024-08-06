@@ -10,5 +10,6 @@ router.put("/valorar", verificarToken, productController.actualizarProductoValor
 router.post("/calificar", verificarToken, productController.sendCalificationOfValorate);
 router.get("/calificar/:productId",  productController.getCalificationOfValorate);
 router.patch("/calificar", verificarToken, productController.updateCalificationOfValorate);
+router.get("/likes/:productId",verificarToken , productController.getLikesFromMyCalifications);
 
 export default router;

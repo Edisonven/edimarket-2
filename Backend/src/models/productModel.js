@@ -275,6 +275,14 @@ const productsInOfert = async () => {
   return products;
 };
 
+const likesFromMyCalifications = async (productId, id) => {
+  const values = [productId, id];
+  const query =
+    "SELECT calificar_valoraciones.*, valoraciones_producto.usuario_id AS calificador_id FROM calificar_valoraciones INNER JOIN valoraciones_producto ON calificar_valoraciones.calificacion_id = valoraciones_producto.id WHERE calificar_valoraciones.positiva = true AND valoraciones_producto.producto_id = $1 AND valoraciones_producto.usuario_id = $2";
+  const { rows: likes } = await db.query(query, values);
+  return likes;
+};
+
 export const productModel = {
   modificarProducto,
   venta,
@@ -297,4 +305,5 @@ export const productModel = {
   calificationOfValorateUpdated,
   productsInOfert,
   consultarProductos,
+  likesFromMyCalifications,
 };
