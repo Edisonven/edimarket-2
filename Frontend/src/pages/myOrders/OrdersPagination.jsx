@@ -3,7 +3,14 @@ import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-export function OrdersPagination({ className, page, setPage, total, limit }) {
+export function OrdersPagination({
+  className,
+  page,
+  setPage,
+  total,
+  limit,
+  setOrderBy,
+}) {
   const totalPages = Math.ceil(total / limit);
 
   const handleNext = () => {
@@ -20,6 +27,7 @@ export function OrdersPagination({ className, page, setPage, total, limit }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setOrderBy("fecha_venta-desc");
   }, [page]);
 
   return (

@@ -82,6 +82,7 @@ export function UserProvider({ children }) {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
+  const [order_by, setOrderBy] = useState("fecha_venta-desc");
   const [AddAddressSuccess, setAddAddressSuccess] = useState({
     success: "",
     error: "",
@@ -175,7 +176,7 @@ export function UserProvider({ children }) {
       if (userToken) {
         const handleOrders = async () => {
           const response = await fetch(
-            `${config.backendUrl}/usuarios/usuario/ventas/?idUsuario=${user.id}&page=${page}&limits=${limit}`,
+            `${config.backendUrl}/usuarios/usuario/ventas/?idUsuario=${user.id}&page=${page}&limits=${limit}&order_by=${order_by}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -534,6 +535,7 @@ export function UserProvider({ children }) {
         setLimit,
         totalPage,
         total,
+        setOrderBy,
       }}
     >
       {children}

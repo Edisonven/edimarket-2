@@ -8,7 +8,7 @@ import { ProductContext } from "../../context/ProductContext";
 import { OrdersPagination } from "./OrdersPagination";
 
 export function MyOrders() {
-  const { orders, page, setPage, limit, totalPage, total } =
+  const { orders, page, setPage, limit, totalPage, total, setOrderBy } =
     useContext(UserContext);
   const { loading } = useContext(ProductContext);
 
@@ -93,6 +93,7 @@ export function MyOrders() {
           totalPage={totalPage}
           setPage={setPage}
           total={total}
+          setOrderBy={setOrderBy}
           className="self-end mt-3"
         />
       </div>

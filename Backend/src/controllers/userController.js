@@ -401,7 +401,7 @@ const deleteProductoDelUsuario = async (req, res) => {
 
 const consultarVentas = async (req, res) => {
   try {
-    const { limits = 5, page = 1, order_by = "fecha_DESC" } = req.query;
+    const { limits = 5, page = 1, order_by = "fecha_venta-desc" } = req.query;
     const Authorization = req.header("Authorization");
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET);
@@ -425,6 +425,7 @@ const consultarVentas = async (req, res) => {
 
 const consultarVentasParaValorar = async (req, res) => {
   try {
+    const { limits = 5, page = 1, order_by = "fecha_DESC" } = req.query;
     const Authorization = req.header("Authorization");
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET);

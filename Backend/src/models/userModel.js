@@ -280,10 +280,10 @@ const consultarDirreccion = async (idUsuario) => {
 
 const consultarVentasUsuario = async (idUsuario, limits, order_by, page) => {
   const values = [idUsuario];
-  const [campo, ordenamiento] = order_by.split("_");
+  const [campo, ordenamiento] = order_by.split("-");
   const offset = (page - 1) * limits;
   const formatedQuery = format(
-    "SELECT ventas.*, productos.*, categorias.* FROM ventas INNER JOIN productos ON ventas.producto_id = productos.id INNER JOIN producto_categoria ON productos.id = producto_categoria.producto_id INNER JOIN categorias ON categorias.id = producto_categoria.categoria_id WHERE ventas.comprador_id = $1 ORDER BY %s %s LIMIT %s OFFSET %s",
+    "SELECT ventas.*, productos.*, categorias.* FROM ventas INNER JOIN productos ON ventas.producto_id = productos.id INNER JOIN producto_categoria ON productos.id = producto_categoria.producto_id INNER JOIN categorias ON categorias.id = producto_categoria.categoria_id WHERE ventas.comprador_id = $1 ORDER BY %I %s LIMIT %s OFFSET %s",
     campo,
     ordenamiento,
     limits,
@@ -291,7 +291,7 @@ const consultarVentasUsuario = async (idUsuario, limits, order_by, page) => {
   );
 
   const consultaTotal = `SELECT COUNT(*) AS total FROM ventas WHERE ventas.comprador_id = $1`;
-
+console.log(formatedQuery)
   const { rows: ventas } = await db.query(formatedQuery, values);
   const { rows: totalResult } = await db.query(consultaTotal, [idUsuario]);
 
