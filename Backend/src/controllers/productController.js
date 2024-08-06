@@ -353,7 +353,7 @@ const sendCalificationOfValorate = async (req, res) => {
     }
 
     const Authorization = req.header("Authorization");
-    const token = Authorization.split(" ")[1];
+    const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET);
     const { id } = jwt.decode(token);
     await productModel.calificationOfValorate(
@@ -389,7 +389,7 @@ const updateCalificationOfValorate = async (req, res) => {
     }
 
     const Authorization = req.header("Authorization");
-    const token = Authorization.split(" ")[1];
+    const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET);
     const { id } = jwt.decode(token);
     await productModel.calificationOfValorateUpdated(
