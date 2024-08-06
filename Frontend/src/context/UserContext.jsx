@@ -187,7 +187,7 @@ export function UserProvider({ children }) {
           if (!response.ok) {
             throw new Error("Error fetching orders");
           }
-          const { results, total, anterior_pagina, siguiente_pagina, count } =
+          const { results, anterior_pagina, siguiente_pagina, count } =
             await response.json();
 
           setOrders(results);

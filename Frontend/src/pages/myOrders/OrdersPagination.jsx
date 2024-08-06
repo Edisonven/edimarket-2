@@ -29,7 +29,7 @@ export function OrdersPagination({ className, page, setPage, total, limit }) {
           onClick={handlePrev}
           className={`page-item ${
             page === 1 ? "hidden" : ""
-          } flex items-center hover:bg-slate-200 py-1 px-2 rounded transition duration-300`}
+          } flex items-center hover:bg-slate-200 py-1 px-2 rounded transition duration-300 select-none`}
         >
           <IoIosArrowBack />
           Anterior
@@ -40,7 +40,7 @@ export function OrdersPagination({ className, page, setPage, total, limit }) {
             key={index}
             className={`page-item ${
               page === index + 1 ? "bg-teal-300 rounded-full" : ""
-            } cursor-pointer w-7 h-7 flex items-center justify-center rounded-full hover:bg-slate-200 transition duration-300`}
+            } cursor-pointer w-7 h-7 flex items-center justify-center rounded-full hover:bg-slate-200 transition duration-300 select-none`}
             onClick={() => setPage(index + 1)}
           >
             <div className="page-link" href="#">
@@ -53,7 +53,7 @@ export function OrdersPagination({ className, page, setPage, total, limit }) {
           onClick={handleNext}
           className={`page-item ${
             page === totalPages ? "disabled" : ""
-          } flex items-center hover:bg-slate-200 py-1 px-2 rounded transition duration-300`}
+          } flex items-center hover:bg-slate-200 py-1 px-2 rounded transition duration-300 select-none`}
         >
           Siguiente
           <IoIosArrowForward />
