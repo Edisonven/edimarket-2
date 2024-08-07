@@ -56,7 +56,7 @@ export function Pending() {
         Valora tus productos y ayuda a las demás personas
       </p>
       {loading ? (
-        <Loader></Loader>
+        <Loader />
       ) : (
         <div className="">
           {notValoradedProducts?.length > 0 ? (
