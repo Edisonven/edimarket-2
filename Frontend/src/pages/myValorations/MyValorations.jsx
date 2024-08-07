@@ -1,20 +1,16 @@
 import { useContext, useState } from "react";
 import "../myValorations/myValorations.css";
 import { UserContext } from "../../context/UserContext";
-import { ProductContext } from "../../context/ProductContext";
-import { Loader } from "../../components/loader/Loader";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
 import { Pending } from "./Pending.jsx";
 import { Completed } from "./Completed.jsx";
 
 export function MyValorations() {
   const { ordersToValorate } = useContext(UserContext);
-  const { loading } = useContext(ProductContext);
 
   return (
     <section className="myvalorations__container">
       <h1 className="text-2xl font-semibold mb-5">Mis valoraciones</h1>
-
       <div className="mb-4 flex items-center gap-6">
         <NavLink
           to="pending"
@@ -32,21 +28,17 @@ export function MyValorations() {
         </NavLink>
       </div>
       <div className="myvalorations__body bg-white shadow-sm rounded-md p-5">
-        {loading ? (
-          <Loader />
-        ) : (
-          <Routes>
-            <Route path="/" element={<Navigate to="pending" />} />
-            <Route
-              path="pending"
-              element={<Pending orders={ordersToValorate} />}
-            />
-            <Route
-              path="completed"
-              element={<Completed orders={ordersToValorate} />}
-            />
-          </Routes>
-        )}
+        <Routes>
+          <Route path="/" element={<Navigate to="pending" />} />
+          <Route
+            path="pending"
+            element={<Pending orders={ordersToValorate} />}
+          />
+          <Route
+            path="completed"
+            element={<Completed orders={ordersToValorate} />}
+          />
+        </Routes>
       </div>
     </section>
   );
