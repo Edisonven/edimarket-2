@@ -7,10 +7,19 @@ import { ProductContext } from "../../context/ProductContext";
 import { useNavigate } from "react-router-dom";
 import config from "../../config/config";
 import { UserContext } from "../../context/UserContext";
+import { CompletedPagination } from "./CompletedPagination";
 
 export function Completed({ orders }) {
   const { handleProductDetail, setLoading } = useContext(ProductContext);
-  const { userToken } = useContext(UserContext);
+  const {
+    userToken,
+    pageValorate,
+    setPageValorate,
+    totalPageValorate,
+    order_byValorate,
+    limitValorate,
+    setOrderByValorate,
+  } = useContext(UserContext);
   const [valoradedProducts, setValoratedProducts] = useState([]);
   const [likedValorations, setLikedValorations] = useState([]);
   const naviagate = useNavigate();
@@ -67,7 +76,7 @@ export function Completed({ orders }) {
     }
   };
 
-/*   useEffect(() => {
+  /*   useEffect(() => {
     handleGetLikesFromMyValorations();
   }, []); */
 
@@ -145,6 +154,15 @@ export function Completed({ orders }) {
             </p>
           </div>
         )}
+        <CompletedPagination
+          pageValorate={pageValorate}
+          setPageValorate={setPageValorate}
+          totalPageValorate={totalPageValorate}
+          order_byValorate={order_byValorate}
+          limitValorate={limitValorate}
+          setOrderByValorate={setOrderByValorate}
+          className="self-end mt-3"
+        />
       </div>
     </section>
   );

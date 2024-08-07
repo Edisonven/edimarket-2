@@ -291,20 +291,37 @@ const consultarVentasUsuario = async (idUsuario, limits, order_by, page) => {
   );
 
   const consultaTotal = `SELECT COUNT(*) AS total FROM ventas WHERE ventas.comprador_id = $1`;
-console.log(formatedQuery)
+
   const { rows: ventas } = await db.query(formatedQuery, values);
   const { rows: totalResult } = await db.query(consultaTotal, [idUsuario]);
 
   return { ventas, totalResult };
 };
 
-const consultarVentasUsuarioParaValorar = async (idUsuario) => {
+const consultarVentasUsuarioParaValorar = async (
+  idUsuario,
+  limits,
+  order_by,
+  page
+) => {
   const values = [idUsuario];
-  const consulta =
-    "SELECT orders_valorate.*, orders_valorate.id AS order_id, productos.*, producto_categoria.*, categorias.* FROM orders_valorate INNER JOIN productos ON orders_valorate.producto_id = productos.id INNER JOIN producto_categoria ON productos.id = producto_categoria.producto_id INNER JOIN categorias ON categorias.id = producto_categoria.categoria_id WHERE orders_valorate.comprador_id = $1";
-  const { rows: ventas } = await db.query(consulta, values);
-  console.log(ventas);
-  return ventas;
+  const [campo, ordenamiento] = order_by.split("-");
+  const offset = (page - 1) * limits;
+  const formatedQuery = format(
+    "SELECT orders_valorate.*, orders_valorate.id AS order_id, productos.*, producto_categoria.*, categorias.* FROM orders_valorate INNER JOIN productos ON orders_valorate.producto_id = productos.id INNER JOIN producto_categoria ON productos.id = producto_categoria.producto_id INNER JOIN categorias ON categorias.id = producto_categoria.categoria_id WHERE orders_valorate.comprador_id = $1 ORDER BY %I %s LIMIT %s OFFSET %s",
+    campo,
+    ordenamiento,
+    limits,
+    offset
+  );
+  console.log(formatedQuery);
+  const consultaTotal =
+    "SELECT COUNT(*) AS total FROM orders_valorate WHERE orders_valorate.comprador_id = $1";
+
+  const { rows: ventas } = await db.query(formatedQuery, values);
+  const { rows: totalResult } = await db.query(consultaTotal, [idUsuario]);
+
+  return { ventas, totalResult };
 };
 
 const pregunta = async (idProducto, idUsuario, pregunta) => {

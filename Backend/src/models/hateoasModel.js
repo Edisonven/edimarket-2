@@ -95,7 +95,7 @@ const hateoasOrdersByUser = (ventas, page, totalResult) => {
   const totalPerPage = results.length;
 
   const nextPage = (page) => {
-    if (page > 5) {
+    if (page < 5) {
       return page;
     } else {
       return page + 1;
@@ -121,8 +121,63 @@ const hateoasOrdersByUser = (ventas, page, totalResult) => {
   return HATEOAS;
 };
 
+const hateoasOrdersToValorateByUser = (ventas, page, totalResult) => {
+  page = parseInt(page);
+  const total = parseInt(totalResult[0].total);
+
+  const results = ventas.map((venta) => {
+    return {
+      calificacion: venta.calificacion,
+      orderValorate_id: venta.order_id,
+      venta_id: venta.id,
+      comprador_id: venta.comprador_id,
+      producto_id: venta.producto_id,
+      nombre: venta.nombre,
+      descripcion: venta.descripcion,
+      imagen: venta.imagen,
+      nombre_categoria: venta.nombre_categoria,
+      cantidad: venta.cantidad,
+      valor_total: venta.valor_total,
+      fecha_venta: venta.fecha_venta.toLocaleString("es-ES", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        timeZone: "UTC",
+      }),
+      valorado: venta.valorado,
+    };
+  });
+  const totalPerPage = results.length;
+  const prevPage = () => {
+    if (page > 1) {
+      return page - 1;
+    } else {
+      page;
+    }
+  };
+
+  const nextPage = () => {
+    if (page < 6) {
+      return page;
+    } else {
+      return page + 1;
+    }
+  };
+
+  const HATEOAS = {
+    total_por_pagina: totalPerPage,
+    count: total,
+    siguiente_pagina: `/orders?page=${nextPage(page)}`,
+    anterior_pagina: `/orders?page=${prevPage(page)}`,
+    results: results,
+  };
+
+  return HATEOAS;
+};
+
 export const hateoasModel = {
   prepHateoasProductos,
   prepHateoasCategorias,
   hateoasOrdersByUser,
+  hateoasOrdersToValorateByUser,
 };

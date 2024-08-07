@@ -83,6 +83,11 @@ export function UserProvider({ children }) {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [order_by, setOrderBy] = useState("fecha_venta-desc");
+  const [totalPageValorate, setTotalPageValorate] = useState("");
+  const [totalValorate, setTotalValorate] = useState(0);
+  const [pageValorate, setPageValorate] = useState(1);
+  const [limitValorate, setLimitValorate] = useState(6);
+  const [order_byValorate, setOrderByValorate] = useState("fecha_venta-desc");
   const [AddAddressSuccess, setAddAddressSuccess] = useState({
     success: "",
     error: "",
@@ -200,7 +205,7 @@ export function UserProvider({ children }) {
 
         const handleOrdersToValorate = async () => {
           const response = await fetch(
-            `${config.backendUrl}/usuarios/usuario/valorar/?idUsuario=${user.id}`,
+            `${config.backendUrl}/usuarios/usuario/valorar/?idUsuario=${user.id}&page=${pageValorate}&limits=${limitValorate}&order_by=${order_byValorate}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -212,11 +217,12 @@ export function UserProvider({ children }) {
           if (!response.ok) {
             throw new Error("Error fetching orders");
           }
-          const data = await response.json();
 
-          setOrdersToValorate(data.ventasParaValorar);
+          const { results, count } = await response.json();
 
-          return data;
+          setTotalValorate(total);
+          setTotalPageValorate(count);
+          setOrdersToValorate(results);
         };
 
         await handleOrders();
@@ -234,7 +240,7 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     fetchOrders();
-  }, [userToken, page]);
+  }, [userToken, page, pageValorate]);
 
   const handleGetQuestionsByUser = async () => {
     setLoading(true);
@@ -536,6 +542,13 @@ export function UserProvider({ children }) {
         totalPage,
         total,
         setOrderBy,
+        pageValorate,
+        setPageValorate,
+        totalPageValorate,
+        totalValorate,
+        order_byValorate,
+        setOrderByValorate,
+        limitValorate,
       }}
     >
       {children}
