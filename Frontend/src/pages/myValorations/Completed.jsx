@@ -13,24 +13,22 @@ import { Loader } from "../../components/loader/Loader.jsx";
 export function Completed() {
   const { handleProductDetail, setLoading, loading } =
     useContext(ProductContext);
-  const { userToken, user } = useContext(UserContext);
+  const { userToken, user, setOrdersToValorate } = useContext(UserContext);
   const [valoradedProducts, setValoratedProducts] = useState([]);
   const [likedValorations, setLikedValorations] = useState([]);
-  const [prevPage, setPrevPage] = useState("");
-  const [nextPage, setNextPage] = useState("");
   const [totalPage, setTotalPage] = useState("");
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(6);
   const [order_by, setOrderBy] = useState("fecha_venta-desc");
   const naviagate = useNavigate();
 
-  const handleOrdersToValorate = async () => {
+  const handleCompletedOrders = async () => {
     setLoading(true);
     try {
       if (userToken) {
         const response = await fetch(
-          `${config.backendUrl}/usuarios/usuario/valorar/?idUsuario=${user.id}&page=${page}&limits=${limit}&order_by=${order_by}`,
+          `${config.backendUrl}/usuarios/usuario/valorar/completed/?idUsuario=${user.id}&page=${page}&limits=${limit}&order_by=${order_by}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -46,6 +44,7 @@ export function Completed() {
         const { results, count } = await response.json();
         setTotal(count);
         setValoratedProducts(results);
+        setOrdersToValorate(results);
       }
     } catch (error) {
       console.error(error.message || "Error al obtener datos");
@@ -61,7 +60,7 @@ export function Completed() {
   };
 
   useEffect(() => {
-    handleOrdersToValorate();
+    handleCompletedOrders();
   }, [page]);
 
   const handleGetLikesFromMyValorations = async () => {
@@ -112,11 +111,11 @@ export function Completed() {
   return (
     <section className="flex flex-col gap-5">
       <p className="text-gray-400">¡Gracias por tu valoración!</p>
-      <div className="flex flex-col gap-5">
-        {valoradedProducts?.length > 0 ? (
-          loading ? (
-            <Loader />
-          ) : (
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col gap-5">
+          {valoradedProducts?.length > 0 ? (
             valoradedProducts?.map((order) => {
               return (
                 <div
@@ -178,25 +177,27 @@ export function Completed() {
                 </div>
               );
             })
-          )
-        ) : (
-          <div className="flex flex-col items-center justify-center h-full mt-6">
-            <h2 className="text-center">¡Estás al día con las valoraciones!</h2>
-            <p className="text-center">
-              Cuando hagas compras, podrás valorarlas acá.
-            </p>
-          </div>
-        )}
-        <CompletedPagination
-          page={page}
-          setPage={setPage}
-          total={total}
-          order_by={order_by}
-          limit={limit}
-          setOrderBy={setOrderBy}
-          className="self-end mt-3"
-        />
-      </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full mt-6">
+              <h2 className="text-center">
+                ¡Estás al día con las valoraciones!
+              </h2>
+              <p className="text-center">
+                Cuando hagas compras, podrás valorarlas acá.
+              </p>
+            </div>
+          )}
+          <CompletedPagination
+            page={page}
+            setPage={setPage}
+            total={total}
+            order_by={order_by}
+            limit={limit}
+            setOrderBy={setOrderBy}
+            className="self-end mt-3"
+          />
+        </div>
+      )}
     </section>
   );
 }

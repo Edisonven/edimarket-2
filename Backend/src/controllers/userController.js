@@ -423,7 +423,7 @@ const consultarVentas = async (req, res) => {
   }
 };
 
-const consultarVentasParaValorar = async (req, res) => {
+const getCompletedValorated = async (req, res) => {
   try {
     const { limits = 6, page = 1, order_by = "fecha_venta-desc" } = req.query;
     const Authorization = req.header("Authorization");
@@ -431,7 +431,7 @@ const consultarVentasParaValorar = async (req, res) => {
     jwt.verify(token, process.env.JWT_SECRET);
     const { email, id } = jwt.decode(token);
     const { ventas, totalResult } =
-      await userModel.consultarVentasUsuarioParaValorar(
+      await userModel.completedValorated(
         id,
         limits,
         order_by,
@@ -548,7 +548,7 @@ export const userController = {
   getPreguntas,
   modifyPreguntas,
   deletePreguntas,
-  consultarVentasParaValorar,
+  getCompletedValorated,
   verifyTokenByUser,
   getUserByTokenRegistered,
 };

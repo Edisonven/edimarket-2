@@ -298,7 +298,7 @@ const consultarVentasUsuario = async (idUsuario, limits, order_by, page) => {
   return { ventas, totalResult };
 };
 
-const consultarVentasUsuarioParaValorar = async (
+const completedValorated = async (
   idUsuario,
   limits,
   order_by,
@@ -308,7 +308,7 @@ const consultarVentasUsuarioParaValorar = async (
   const [campo, ordenamiento] = order_by.split("-");
   const offset = (page - 1) * limits;
   const formatedQuery = format(
-    "SELECT orders_valorate.*, orders_valorate.id AS order_id, productos.*, producto_categoria.*, categorias.* FROM orders_valorate INNER JOIN productos ON orders_valorate.producto_id = productos.id INNER JOIN producto_categoria ON productos.id = producto_categoria.producto_id INNER JOIN categorias ON categorias.id = producto_categoria.categoria_id WHERE orders_valorate.comprador_id = $1 ORDER BY %I %s LIMIT %s OFFSET %s",
+    "SELECT orders_valorate.*, orders_valorate.id AS order_id, productos.*, producto_categoria.*, categorias.* FROM orders_valorate INNER JOIN productos ON orders_valorate.producto_id = productos.id INNER JOIN producto_categoria ON productos.id = producto_categoria.producto_id INNER JOIN categorias ON categorias.id = producto_categoria.categoria_id WHERE orders_valorate.comprador_id = $1 AND orders_valorate.valorado = true ORDER BY %I %s LIMIT %s OFFSET %s",
     campo,
     ordenamiento,
     limits,
@@ -380,6 +380,6 @@ export const userModel = {
   getPreguntasByUser,
   modifyPreguntasByUser,
   deletePreguntasByUser,
-  consultarVentasUsuarioParaValorar,
+  completedValorated,
   userByTokenRegistered,
 };

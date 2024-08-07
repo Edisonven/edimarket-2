@@ -129,20 +129,17 @@ export function UpdateMyValoration() {
   const handleUpdateProductValorated = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `${config.backendUrl}/venta/valorar`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-          body: JSON.stringify({
-            orderId: productFindedById?.orderValorate_id,
-            score: currentScore,
-          }),
-        }
-      );
+      const response = await fetch(`${config.backendUrl}/venta/valorar`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({
+          orderId: productFindedById?.orderValorate_id,
+          score: currentScore,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
