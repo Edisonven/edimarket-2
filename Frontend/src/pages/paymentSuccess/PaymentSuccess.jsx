@@ -1,20 +1,22 @@
+import "../paymentSuccess/paymentSuccess.css";
 import { useNavigate } from "react-router-dom";
 import ediFeliz from "/imgs/aplication/edi-feliz.svg";
 import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
-import "../paymentSuccess/paymentSuccess.css";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Loader } from "../../components/loader/Loader";
 import ediTriste from "/imgs/aplication/edi-triste.png";
 import ghost from "/imgs/aplication/ghost.png";
 import { BillingContext } from "../../context/BillingContex";
+import config from "../../config/config";
 
 export function PaymentSuccess() {
   const navigate = useNavigate();
   const urlParams = new URLSearchParams(window.location.search);
   const { userToken } = useContext(UserContext);
   const tokenWs = urlParams.get("token_ws");
-  const { handleClick } = useContext(BillingContext);
+  const TBK_TOKEN = urlParams.get("TBK_TOKEN");
+  const {handleOrder } = useContext(BillingContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [canceled, setCanceled] = useState("");
@@ -44,7 +46,10 @@ export function PaymentSuccess() {
         if (data.status === "TRANSACTION FAILED") {
           setCanceled("Transacción cancelada");
         }
-        // handleClick()
+
+        if (data.status === "AUTHORIZED") {
+          handleOrder(data.data);
+        }
       } catch (error) {
         setError(error.message || "Error al confirmar la transacción");
       } finally {

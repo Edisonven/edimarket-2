@@ -8,9 +8,9 @@ import config from "../config/config";
 export const BillingContext = createContext();
 
 export function BillingProvider({ children }) {
-  const { cart } = useContext(CartContext);
+  const { cart, handleAddedToCart } = useContext(CartContext);
   const { directBuy, setDirectBuy } = useContext(ProductContext);
-  const { handleAddedToCart, fetchOrders, userToken } = useContext(UserContext);
+  const { fetchOrders, userToken } = useContext(UserContext);
   const { setIsLoading, navigate } = useContext(CheckoutContext);
 
   const [updateLastStock, setUpdateLastStock] = useState({
@@ -65,7 +65,7 @@ export function BillingProvider({ children }) {
               errorData.message || "Error al eliminar del carrito"
             );
           }
-          const data = await response.json();
+          await response.json();
         }
 
         handleAddedToCart();
@@ -75,23 +75,23 @@ export function BillingProvider({ children }) {
     }
   };
 
-  const handleOrder = async () => {
+  const handleOrder = async (data) => {
+    const order = data.buy_order;
+
     try {
-      const sendProduct = async (producto) => {
-        const response = await fetch(
-          `${config.backendUrl}/venta`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              idProducto: producto.producto_id,
-              cantidad: producto.cantidad,
-            }),
-          }
-        );
+      const sendProduct = async (producto, order) => {
+        const response = await fetch(`${config.backendUrl}/venta`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({
+            idProducto: producto.producto_id,
+            cantidad: producto.cantidad,
+            buy_order: order,
+          }),
+        });
 
         if (!response.ok) {
           throw new Error("Error en la solicitud");
@@ -101,21 +101,19 @@ export function BillingProvider({ children }) {
         return data;
       };
 
-      const sendSecondProduct = async (producto) => {
-        const response = await fetch(
-          `${config.backendUrl}/venta/valorar`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({
-              idProducto: producto.producto_id,
-              cantidad: producto.cantidad,
-            }),
-          }
-        );
+      const sendSecondProduct = async (producto, order) => {
+        const response = await fetch(`${config.backendUrl}/venta/valorar`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({
+            idProducto: producto.producto_id,
+            cantidad: producto.cantidad,
+            buy_order: order,
+          }),
+        });
 
         if (!response.ok) {
           throw new Error("Error en la segunda solicitud");
@@ -126,13 +124,13 @@ export function BillingProvider({ children }) {
       };
 
       for (const producto of cart) {
-        await sendProduct(producto);
-        await sendSecondProduct(producto);
+        await sendProduct(producto, order);
+        await sendSecondProduct(producto, order);
       }
 
       if (directBuy !== null) {
-        await sendProduct(directBuy);
-        await sendSecondProduct(directBuy);
+        await sendProduct(directBuy, order);
+        await sendSecondProduct(directBuy, order);
       }
 
       handleUpdateProductStock();
@@ -167,6 +165,7 @@ export function BillingProvider({ children }) {
           const errorData = await response.json();
           throw new Error(errorData.message || "Error al actualizar stock");
         }
+
         const data = await response.json();
         return data;
       };
@@ -206,21 +205,8 @@ export function BillingProvider({ children }) {
     }
   };
 
-  const handleButtonClickPayment = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      navigate("/compra-exitosa");
-    }, 1500);
-  };
-
-  const handleClick = () => {
-    handleButtonClickPayment();
-    handleOrder();
-  };
-
   return (
-    <BillingContext.Provider value={{ handleClick }}>
+    <BillingContext.Provider value={{ handleOrder }}>
       {children}
     </BillingContext.Provider>
   );

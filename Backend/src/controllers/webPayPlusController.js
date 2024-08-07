@@ -41,9 +41,9 @@ const confirmTransaction = async (req, res) => {
     }
 
     const response = await tx.commit(token_ws);
-    console.log(response);
+
     if (response.response_code === 0 && response.status === "AUTHORIZED") {
-      return res.json({ status: "AUTHORIZED" });
+      return res.json({ status: "AUTHORIZED", data: response });
     } else if (response.response_code === -1 && response.status === "FAILED") {
       return res.json({ status: "TRANSACTION FAILED" });
     } else {

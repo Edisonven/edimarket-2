@@ -115,12 +115,12 @@ const getProductosByCategoria = async (req, res) => {
 
 const ventaRealizada = async (req, res) => {
   try {
-    const { idProducto, cantidad } = req.body;
+    const { idProducto, cantidad, buy_order } = req.body;
     const Authorization = req.header("Authorization");
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET);
     const { email, id } = jwt.decode(token);
-    await productModel.venta(id, idProducto, cantidad);
+    await productModel.venta(id, idProducto, cantidad, buy_order);
     console.log(`El usuario ${email} ha realizado una compra`);
     res.status(200).json({ mensaje: "compra realizada" });
   } catch (error) {
@@ -130,12 +130,15 @@ const ventaRealizada = async (req, res) => {
 
 const valorarProducto = async (req, res) => {
   try {
-    const { idProducto, cantidad } = req.body;
+    const { idProducto, cantidad, buy_order } = req.body;
+    if (!idProducto || !cantidad || !buy_order) {
+      throw new Error("Uno de los parámetros no fue proporcionado");
+    }
     const Authorization = req.header("Authorization");
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET);
     const { id } = jwt.decode(token);
-    await productModel.valorate(id, idProducto, cantidad);
+    await productModel.valorate(id, idProducto, cantidad, buy_order);
     res.status(200).json({ mensaje: "compra realizada" });
   } catch (error) {
     res.status(500).json({ mensaje: error.message });

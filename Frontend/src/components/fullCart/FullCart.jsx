@@ -240,7 +240,9 @@ export function FullCart() {
                                         </div>
                                       ) : (
                                         <span className="font-medium text-xl">
-                                          {formatearPrecio(element?.precio)}
+                                          {formatearPrecio(
+                                            element?.precio * element.cantidad
+                                          )}
                                         </span>
                                       )}
                                     </div>
