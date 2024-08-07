@@ -430,14 +430,13 @@ const getCompletedValorated = async (req, res) => {
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, process.env.JWT_SECRET);
     const { email, id } = jwt.decode(token);
-    const { ventas, totalResult } =
-      await userModel.completedValorated(
-        id,
-        limits,
-        order_by,
-        page
-      );
-    const hateoas = hateoasModel.hateoasOrdersToValorateByUser(
+    const { ventas, totalResult } = await userModel.completedValorated(
+      id,
+      limits,
+      order_by,
+      page
+    );
+    const hateoas = hateoasModel.hateoasOrdersCompletedToValorateByUser(
       ventas,
       page,
       totalResult
@@ -448,6 +447,31 @@ const getCompletedValorated = async (req, res) => {
     res.json(hateoas);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+const getPendingValorated = async (req, res) => {
+  try {
+    const { limit = 6, page = 1, order_by = "fecha_venta-desc" } = req.query;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, process.env.JWT_SECRET);
+    const { id } = jwt.decode(token);
+    const { ventas, totalResult } = await userModel.pendingValorated(
+      id,
+      limit,
+      order_by,
+      page
+    );
+
+    const hateoas = hateoasModel.hateoasOrdersPendingToValorateByUser(
+      ventas,
+      page,
+      totalResult
+    );
+    res.json(hateoas);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -551,4 +575,5 @@ export const userController = {
   getCompletedValorated,
   verifyTokenByUser,
   getUserByTokenRegistered,
+  getPendingValorated,
 };

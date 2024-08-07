@@ -24,6 +24,7 @@ router.delete("/usuario/metodosPago/:idMetodoDePago",verificarToken,userControll
 router.delete("/usuario/domicilio/:idDomicilio",verificarToken,userController.deleteDomicilio);
 router.get("/usuario/ventas", verificarToken, userController.consultarVentas);
 router.get("/usuario/valorar/completed", verificarToken, userController.getCompletedValorated);
+router.get("/usuario/valorar/pending", verificarToken, userController.getPendingValorated);
 router.post("/preguntas", verificarToken, userController.preguntaRealizada);
 router.get("/preguntas/:id", verificarToken, userController.getPreguntas);
 router.put("/preguntas", verificarToken, userController.modifyPreguntas);

@@ -1,13 +1,9 @@
-import { useContext, useState } from "react";
 import "../myValorations/myValorations.css";
-import { UserContext } from "../../context/UserContext";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
 import { Pending } from "./Pending.jsx";
 import { Completed } from "./Completed.jsx";
 
 export function MyValorations() {
-  const { ordersToValorate } = useContext(UserContext);
-
   return (
     <section className="myvalorations__container">
       <h1 className="text-2xl font-semibold mb-5">Mis valoraciones</h1>
@@ -30,14 +26,8 @@ export function MyValorations() {
       <div className="myvalorations__body bg-white shadow-sm rounded-md p-5">
         <Routes>
           <Route path="/" element={<Navigate to="pending" />} />
-          <Route
-            path="pending"
-            element={<Pending orders={ordersToValorate} />}
-          />
-          <Route
-            path="completed"
-            element={<Completed orders={ordersToValorate} />}
-          />
+          <Route path="pending" element={<Pending />} />
+          <Route path="completed" element={<Completed />} />
         </Routes>
       </div>
     </section>
