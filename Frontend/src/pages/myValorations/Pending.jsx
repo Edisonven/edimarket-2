@@ -89,7 +89,7 @@ export function Pending() {
                         comprado el {order?.fecha_venta}
                       </p>
                     </div>
-                    <StarRating order={order} orderId={order?.id} />
+                    <StarRating order={order} />
                   </div>
                 </div>
               );

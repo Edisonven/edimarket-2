@@ -21,6 +21,7 @@ export function StarRating({ order, className }) {
         score: newScore,
       });
     }
+
     setTimeout(() => {
       if (location.pathname !== "/send-my-valoration") {
         navigate("/send-my-valoration");

@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
 import "../sendMyValoration/sendMyValoration.css";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../context/ProductContext";
 import { StarRating } from "../myValorations/StarRating";
 import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
@@ -24,20 +24,17 @@ export function SendMyValoration() {
 
   const handleUpdateProductValorated = async () => {
     try {
-      const response = await fetch(
-        `${config.backendUrl}/venta/valorar`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-          body: JSON.stringify({
-            orderId: productToRate.orderValorate_id,
-            score: productToRate.score,
-          }),
-        }
-      );
+      const response = await fetch(`${config.backendUrl}/venta/valorar`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({
+          orderId: productToRate.orderValorate_id,
+          score: productToRate.score,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -113,33 +110,17 @@ export function SendMyValoration() {
     }
   };
 
-  useEffect(() => {
-    const storedProduct = JSON.parse(localStorage.getItem("product"));
-    if (storedProduct) {
-      setProductToRate(storedProduct);
-    }
-  }, [setProductToRate]);
-
-  useEffect(() => {
-    setProductToRate({
-      ...productToRate,
-      score: score,
-    });
-  }, [score]);
-
-  useEffect(() => {
-    if (productToRate) {
-      localStorage.setItem(
-        "productToRate",
-        JSON.stringify({ ...productToRate, score })
-      );
-    } else {
-      localStorage.removeItem(
-        "productToRate",
-        JSON.stringify({ ...productToRate, score })
-      );
-    }
-  }, [productToRate, score]);
+  if (productToRate) {
+    localStorage.setItem(
+      "productToRate",
+      JSON.stringify({ ...productToRate, score })
+    );
+  } else {
+    localStorage.removeItem(
+      "productToRate",
+      JSON.stringify({ ...productToRate, score })
+    );
+  }
 
   return (
     <section className="sendmyvaloration__container">

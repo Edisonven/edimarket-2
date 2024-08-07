@@ -91,7 +91,6 @@ export function UserProvider({ children }) {
     setLoading,
     setDirectBuy,
     setServerError,
-    setProductToRate,
     setScore,
   } = useContext(ProductContext);
 
