@@ -5,35 +5,35 @@ import { useLocation } from "react-router-dom";
 
 export function CompletedPagination({
   className,
-  pageValorate,
-  setPageValorate,
-  totalPageValorate,
-  limitValorate,
-  setOrderByValorate,
+  page,
+  setPage,
+  total,
+  limit,
+  setOrderBy,
 }) {
-  const totalPages = Math.ceil(totalPageValorate / limitValorate);
+  const totalPages = Math.ceil(total / limit);
   const location = useLocation();
 
   const handleNext = () => {
-    if (pageValorate < totalPages) {
-      setPageValorate(pageValorate + 1);
+    if (page < totalPages) {
+      setPage(page + 1);
     }
   };
 
   const handlePrev = () => {
-    if (pageValorate > 1) {
-      setPageValorate(pageValorate - 1);
+    if (page > 1) {
+      setPage(page - 1);
     }
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setOrderByValorate("fecha_venta-desc");
-  }, [pageValorate]);
+    setOrderBy("fecha_venta-desc");
+  }, [page]);
 
   useEffect(() => {
     if (location.pathname !== "/my-valorations/completed") {
-      setPageValorate(1);
+      setPage(1);
     }
   }, [location.pathname]);
 
@@ -43,7 +43,7 @@ export function CompletedPagination({
         <button
           onClick={handlePrev}
           className={`page-item ${
-            pageValorate === 1 ? "hidden" : ""
+            page === 1 ? "hidden" : ""
           } flex items-center hover:bg-slate-200 py-1 px-2 rounded transition duration-300 select-none`}
         >
           <IoIosArrowBack />
@@ -54,9 +54,9 @@ export function CompletedPagination({
           <div
             key={index}
             className={`page-item ${
-              pageValorate === index + 1 ? "bg-teal-300 rounded-full" : ""
+              page === index + 1 ? "bg-teal-300 rounded-full" : ""
             } cursor-pointer w-7 h-7 flex items-center justify-center rounded-full hover:bg-slate-200 transition duration-300 select-none`}
-            onClick={() => setPageValorate(index + 1)}
+            onClick={() => setPage(index + 1)}
           >
             <div className="page-link" href="#">
               {index + 1}
@@ -67,7 +67,7 @@ export function CompletedPagination({
         <button
           onClick={handleNext}
           className={`page-item ${
-            pageValorate === totalPages ? "disabled" : ""
+            page === totalPages ? "disabled" : ""
           } flex items-center hover:bg-slate-200 py-1 px-2 rounded transition duration-300 select-none`}
         >
           Siguiente

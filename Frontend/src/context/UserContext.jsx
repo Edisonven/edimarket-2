@@ -83,11 +83,6 @@ export function UserProvider({ children }) {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [order_by, setOrderBy] = useState("fecha_venta-desc");
-  const [totalPageValorate, setTotalPageValorate] = useState("");
-  const [totalValorate, setTotalValorate] = useState(0);
-  const [pageValorate, setPageValorate] = useState(1);
-  const [limitValorate, setLimitValorate] = useState(6);
-  const [order_byValorate, setOrderByValorate] = useState("fecha_venta-desc");
   const [AddAddressSuccess, setAddAddressSuccess] = useState({
     success: "",
     error: "",
@@ -203,30 +198,7 @@ export function UserProvider({ children }) {
           setNextPage(siguiente_pagina);
         };
 
-        const handleOrdersToValorate = async () => {
-          const response = await fetch(
-            `${config.backendUrl}/usuarios/usuario/valorar/?idUsuario=${user.id}&page=${pageValorate}&limits=${limitValorate}&order_by=${order_byValorate}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${userToken}`,
-              },
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error("Error fetching orders");
-          }
-
-          const { results, count } = await response.json();
-
-          setTotalValorate(total);
-          setTotalPageValorate(count);
-          setOrdersToValorate(results);
-        };
-
         await handleOrders();
-        await handleOrdersToValorate();
       } else {
         return;
       }
@@ -240,7 +212,7 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     fetchOrders();
-  }, [userToken, page, pageValorate]);
+  }, [userToken, page]);
 
   const handleGetQuestionsByUser = async () => {
     setLoading(true);
@@ -407,13 +379,11 @@ export function UserProvider({ children }) {
     handleUserAddress();
   }, [userToken]);
 
-  // Resetear el estado si cambia la navegación (URL)
   useEffect(() => {
     setUserData(initialUserData);
     setInputFormError(initialFormError);
   }, [navigate]);
 
-  //Manejo de datos ingresados en inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData((prevUserData) => ({
@@ -423,7 +393,6 @@ export function UserProvider({ children }) {
     }));
   };
 
-  // Resetear los errores si userData cambia
   useEffect(() => {
     setInputFormError(initialFormError);
   }, [userData]);
@@ -542,13 +511,6 @@ export function UserProvider({ children }) {
         totalPage,
         total,
         setOrderBy,
-        pageValorate,
-        setPageValorate,
-        totalPageValorate,
-        totalValorate,
-        order_byValorate,
-        setOrderByValorate,
-        limitValorate,
       }}
     >
       {children}

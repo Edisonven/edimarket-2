@@ -9,31 +9,49 @@ import config from "../../config/config";
 import { UserContext } from "../../context/UserContext";
 import { CompletedPagination } from "./CompletedPagination";
 
-export function Completed({ orders }) {
+export function Completed() {
   const { handleProductDetail, setLoading } = useContext(ProductContext);
-  const {
-    userToken,
-    pageValorate,
-    setPageValorate,
-    totalPageValorate,
-    order_byValorate,
-    limitValorate,
-    setOrderByValorate,
-  } = useContext(UserContext);
+  const { userToken, user } = useContext(UserContext);
   const [valoradedProducts, setValoratedProducts] = useState([]);
   const [likedValorations, setLikedValorations] = useState([]);
+  const [prevPage, setPrevPage] = useState("");
+  const [nextPage, setNextPage] = useState("");
+  const [totalPage, setTotalPage] = useState("");
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+  const [order_by, setOrderBy] = useState("fecha_venta-desc");
   const naviagate = useNavigate();
 
-  useEffect(() => {
-    const valoradedProducts = orders.filter((order) => order.valorado === true);
-    setValoratedProducts(valoradedProducts);
-  }, [orders]);
+  const handleOrdersToValorate = async () => {
+    const response = await fetch(
+      `${config.backendUrl}/usuarios/usuario/valorar/?idUsuario=${user.id}&page=${page}&limits=${limit}&order_by=${order_by}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Error fetching orders");
+    }
+
+    const { results, count } = await response.json();
+    setTotal(count);
+    setValoratedProducts(results);
+  };
 
   const handleNavigateToEdit = (productId) => {
     if (productId) {
       naviagate(`/edit-my-valoration/${productId}`);
     }
   };
+
+  useEffect(() => {
+    handleOrdersToValorate();
+  }, [page]);
 
   const handleGetLikesFromMyValorations = async () => {
     setLoading(true);
@@ -155,12 +173,12 @@ export function Completed({ orders }) {
           </div>
         )}
         <CompletedPagination
-          pageValorate={pageValorate}
-          setPageValorate={setPageValorate}
-          totalPageValorate={totalPageValorate}
-          order_byValorate={order_byValorate}
-          limitValorate={limitValorate}
-          setOrderByValorate={setOrderByValorate}
+          page={page}
+          setPage={setPage}
+          total={total}
+          order_by={order_by}
+          limit={limit}
+          setOrderBy={setOrderBy}
           className="self-end mt-3"
         />
       </div>
