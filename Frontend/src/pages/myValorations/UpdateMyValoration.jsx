@@ -10,7 +10,8 @@ import { ProductContext } from "../../context/ProductContext";
 import config from "../../config/config";
 
 export function UpdateMyValoration() {
-  const { ordersToValorate, userToken, fetchOrders } = useContext(UserContext);
+  const { ordersToValorate, userToken, fetchOrders, user } =
+    useContext(UserContext);
   const { setLoading } = useContext(ProductContext);
   const [valoration, setValoration] = useState("");
   const { productId } = useParams();
@@ -48,11 +49,12 @@ export function UpdateMyValoration() {
         }
 
         const data = await response.json();
+
         setUserValorations(data?.valoraciones);
 
         if (data) {
           const valorationsFinded = data.valoraciones.find(
-            (valoracion) => valoracion.producto_id === parsedId
+            (valoracion) => valoracion.usuario_id === user?.id
           );
           setValoration(valorationsFinded.comentario);
         }

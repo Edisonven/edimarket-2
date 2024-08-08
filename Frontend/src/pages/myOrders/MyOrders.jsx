@@ -12,18 +12,6 @@ export function MyOrders() {
     useContext(UserContext);
   const { loading } = useContext(ProductContext);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-
-    const options = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-
-    return date.toLocaleDateString("es-ES", options).toUpperCase();
-  };
-
   const formatearPrecio = (precio) => {
     return new Intl.NumberFormat("es-CL", {
       style: "currency",
@@ -87,17 +75,15 @@ export function MyOrders() {
             )}
           </div>
         )}
-        {limit < 5 ? null : (
-          <OrdersPagination
-            limit={limit}
-            page={page}
-            totalPage={totalPage}
-            setPage={setPage}
-            total={total}
-            setOrderBy={setOrderBy}
-            className="self-end mt-3"
-          />
-        )}
+        <OrdersPagination
+          limit={limit}
+          page={page}
+          totalPage={totalPage}
+          setPage={setPage}
+          total={total}
+          setOrderBy={setOrderBy}
+          className="self-end mt-3"
+        />
       </div>
     </section>
   );
