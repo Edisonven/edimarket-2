@@ -18,7 +18,7 @@ export function MyOrders() {
       currency: "CLP",
     }).format(precio);
   };
-
+  console.log(orders);
   return (
     <section
       className={classNames(
@@ -46,9 +46,13 @@ export function MyOrders() {
                       <h2 className="pb-2 text-base sm:text-lg">
                         Número de órden: #{`${order?.buy_order.split("_")[1]}`}
                       </h2>
-                      <p className="text-sm mb-3">
-                        Fecha de compra: {order?.fecha_venta}
-                      </p>
+                      <div className="flex items-center mb-3 gap-3">
+                        <p className="text-sm ">
+                          Fecha de compra: {order?.fecha_venta}
+                        </p>
+                        <p className="text-sm">cantidad {order?.cantidad}</p>
+                      </div>
+
                       <p className="font-semibold">
                         {formatearPrecio(order?.valor_total)}
                       </p>
