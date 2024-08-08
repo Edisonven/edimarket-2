@@ -18,7 +18,7 @@ export function MyOrders() {
       currency: "CLP",
     }).format(precio);
   };
-  console.log(orders);
+
   return (
     <section
       className={classNames(
@@ -78,15 +78,17 @@ export function MyOrders() {
             )}
           </div>
         )}
-        <OrdersPagination
-          limit={limit}
-          page={page}
-          totalPage={totalPage}
-          setPage={setPage}
-          total={total}
-          setOrderBy={setOrderBy}
-          className="self-end mt-3"
-        />
+        {total < 6 ? null : (
+          <OrdersPagination
+            limit={limit}
+            page={page}
+            totalPage={totalPage}
+            setPage={setPage}
+            total={total}
+            setOrderBy={setOrderBy}
+            className="self-end mt-3"
+          />
+        )}
       </div>
     </section>
   );

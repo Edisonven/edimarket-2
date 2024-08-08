@@ -109,7 +109,7 @@ export function ProductProvider({ children }) {
     }));
 
     const productInCart = cart.find(
-      (cart) => cart.producto_id === directBuy.producto_id
+      (cart) => cart.producto_id === directBuy?.producto_id
     );
     if (productInCart) {
       navigate("/carro");
@@ -245,6 +245,12 @@ export function ProductProvider({ children }) {
       currency: "CLP",
     }).format(precio);
   };
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setDirectBuy(null);
+    }
+  }, [location.pathname]);
 
   return (
     <ProductContext.Provider

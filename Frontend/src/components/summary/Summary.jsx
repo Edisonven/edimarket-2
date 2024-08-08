@@ -39,21 +39,17 @@ export function Summary() {
           )}
         >
           <p className="font-semibold mr-2">Cantidad de productos:</p>
-          {cart.length > 0 ? (
-            <p>{totalProductos}</p>
-          ) : directBuy !== null ? (
+          {directBuy !== null ? (
             <p>{directBuy.cantidad}</p>
           ) : (
-            <p>0</p>
+            <p>{totalProductos}</p>
           )}
         </div>
         <div
           className={classNames("flex", "items-center", summary.summary__price)}
         >
           <p className="font-semibold mr-2">Total:</p>
-          {cart.length > 0 ? (
-            <p>{formatearPrecio(totalPrecio)}</p>
-          ) : directBuy !== null ? (
+          {directBuy !== null ? (
             <p>
               {formatearPrecio(
                 (directBuy.precio_oferta
@@ -62,7 +58,7 @@ export function Summary() {
               )}
             </p>
           ) : (
-            <p>0</p>
+            <p>{formatearPrecio(totalPrecio)}</p>
           )}
         </div>
       </div>

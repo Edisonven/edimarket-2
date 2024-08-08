@@ -120,7 +120,7 @@ export function BillingProvider({ children }) {
         return data;
       };
 
-      if (cart.length > 0) {
+      if (cart.length > 0 && directBuy === null) {
         for (const producto of cart) {
           await sendProduct(producto, transactionData);
           await sendSecondProduct(producto, transactionData);
@@ -211,7 +211,7 @@ export function BillingProvider({ children }) {
       handleOrder();
       setTransactionConfirmed(false);
     }
-  }, [cart]);
+  }, [cart, directBuy, updateLastStock, transactionData]);
 
   return (
     <BillingContext.Provider

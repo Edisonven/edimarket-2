@@ -27,7 +27,8 @@ export function FullCart() {
     loadingModalCart,
   } = useContext(CartContext);
   const { user, userToken } = useContext(UserContext);
-  const { loading, handleProductDetail } = useContext(ProductContext);
+  const { loading, handleProductDetail, setDirectBuy } =
+    useContext(ProductContext);
   const navigate = useNavigate();
   const [stockAlert, setStockAlert] = useState("");
 
@@ -112,6 +113,9 @@ export function FullCart() {
     }
   }, [cart]);
 
+  useEffect(() => {
+    setDirectBuy(null);
+  }, []);
   return (
     <div className="fullcart__container pt-10">
       <div>
