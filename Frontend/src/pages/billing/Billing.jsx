@@ -62,7 +62,7 @@ export function Billing() {
               buyOrder: generateUniqueBuyOrder(),
               sessionId: generateSessionId(),
               amount: parseInt(totalPrecio) || parseInt(totalPrecioDirectBuy),
-              returnUrl: "http://localhost:5173/compra-exitosa",
+              returnUrl: `${config.frontendUrl}/compra-exitosa`,
             }),
           }
         );
