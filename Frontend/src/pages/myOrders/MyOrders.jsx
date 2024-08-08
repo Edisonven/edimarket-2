@@ -44,8 +44,7 @@ export function MyOrders() {
                   >
                     <div>
                       <h2 className="pb-2 text-base sm:text-lg">
-                        Número de órden: #
-                        {`${order?.producto_id * 10 + order?.id}`}
+                        Número de órden: #{`${order?.buy_order.split("_")[1]}`}
                       </h2>
                       <p className="text-sm mb-3">
                         Fecha de compra: {order?.fecha_venta}

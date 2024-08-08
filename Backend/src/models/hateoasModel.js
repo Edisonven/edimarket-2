@@ -84,6 +84,7 @@ const hateoasOrdersByUser = (ventas, page, totalResult) => {
       nombre_categoria: venta.nombre_categoria,
       cantidad: venta.cantidad,
       valor_total: venta.valor_total,
+      buy_order: venta.buy_order,
       fecha_venta: venta.fecha_venta.toLocaleString("es-ES", {
         year: "numeric",
         month: "2-digit",
