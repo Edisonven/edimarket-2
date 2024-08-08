@@ -88,7 +88,7 @@ export function CartProvider({ children }) {
           }
           const data = response.json();
           openModalCart();
-          handleAddedToCart();
+          await handleAddedToCart();
           return data;
         } else {
           setProductAlert((prevState) => ({
@@ -145,7 +145,7 @@ export function CartProvider({ children }) {
           throw new Error(errorData.message || "Error de datos");
         }
         const data = response.json();
-        handleAddedToCart();
+        await handleAddedToCart();
         return data;
       }
     } catch (error) {

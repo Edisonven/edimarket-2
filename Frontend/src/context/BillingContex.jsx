@@ -2,7 +2,6 @@ import { createContext, useState, useEffect, useContext } from "react";
 import { CartContext } from "./CartContext";
 import { ProductContext } from "./ProductContext";
 import { UserContext } from "./UserContext";
-import { CheckoutContext } from "./CheckoutContext";
 import config from "../config/config";
 
 export const BillingContext = createContext();
@@ -11,8 +10,8 @@ export function BillingProvider({ children }) {
   const { cart, handleAddedToCart } = useContext(CartContext);
   const { directBuy, setDirectBuy } = useContext(ProductContext);
   const { fetchOrders, userToken } = useContext(UserContext);
-  const { setIsLoading, navigate } = useContext(CheckoutContext);
-
+  const [transactionConfirmed, setTransactionConfirmed] = useState(false);
+  const [transactionData, setTransactionData] = useState({});
   const [updateLastStock, setUpdateLastStock] = useState({
     cartValue: [],
     directBuyValue: 0,
@@ -68,17 +67,16 @@ export function BillingProvider({ children }) {
           await response.json();
         }
 
-        handleAddedToCart();
+        await handleAddedToCart();
       }
     } catch (error) {
       console.error("Error al eliminar del carrito:", error);
     }
   };
 
-  const handleOrder = async (data) => {
-    const order = data.buy_order;
+  const handleOrder = async () => {
     try {
-      const sendProduct = async (producto, order) => {
+      const sendProduct = async (producto, transactionData) => {
         const response = await fetch(`${config.backendUrl}/venta`, {
           method: "POST",
           headers: {
@@ -88,7 +86,7 @@ export function BillingProvider({ children }) {
           body: JSON.stringify({
             idProducto: producto.producto_id,
             cantidad: producto.cantidad,
-            buy_order: order,
+            buy_order: transactionData,
           }),
         });
 
@@ -124,21 +122,21 @@ export function BillingProvider({ children }) {
 
       if (cart.length > 0) {
         for (const producto of cart) {
-          await sendProduct(producto, order);
-          await sendSecondProduct(producto, order);
+          await sendProduct(producto, transactionData);
+          await sendSecondProduct(producto, transactionData);
         }
       }
 
       if (directBuy !== null) {
-        await sendProduct(directBuy, order);
-        await sendSecondProduct(directBuy, order);
+        await sendProduct(directBuy, transactionData);
+        await sendSecondProduct(directBuy, transactionData);
       }
 
-      handleUpdateProductStock();
-      fetchOrders();
+      await handleUpdateProductStock();
+      await fetchOrders();
       setDirectBuy(null);
-      handleDeleteUserProducts();
-      handleAddedToCart();
+      await handleDeleteUserProducts();
+      await handleAddedToCart();
     } catch (error) {
       console.error("Error al realizar la compra:", error);
     }
@@ -171,7 +169,9 @@ export function BillingProvider({ children }) {
         return data;
       };
 
-      await senDirectBuyStock();
+      if (updateLastStock.directBuyValue > 0) {
+        await senDirectBuyStock();
+      }
 
       const sendProductInCartStock = async (updateProductCart) => {
         const response = await fetch(
@@ -206,8 +206,22 @@ export function BillingProvider({ children }) {
     }
   };
 
+  useEffect(() => {
+    if (transactionConfirmed) {
+      handleOrder();
+      setTransactionConfirmed(false);
+    }
+  }, [cart]);
+
   return (
-    <BillingContext.Provider value={{ handleOrder }}>
+    <BillingContext.Provider
+      value={{
+        handleOrder,
+        transactionConfirmed,
+        setTransactionConfirmed,
+        setTransactionData,
+      }}
+    >
       {children}
     </BillingContext.Provider>
   );
