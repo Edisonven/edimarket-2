@@ -11,7 +11,7 @@ export function BillingProvider({ children }) {
   const { directBuy, setDirectBuy } = useContext(ProductContext);
   const { fetchOrders, userToken } = useContext(UserContext);
   const [transactionConfirmed, setTransactionConfirmed] = useState(false);
-  const [transactionData, setTransactionData] = useState({});
+  const [transactionData, setTransactionData] = useState("");
   const [updateLastStock, setUpdateLastStock] = useState({
     cartValue: [],
     directBuyValue: 0,
