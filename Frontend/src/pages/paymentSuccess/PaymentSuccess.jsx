@@ -9,6 +9,8 @@ import ediTriste from "/imgs/aplication/edi-triste.png";
 import ghost from "/imgs/aplication/ghost.png";
 import { BillingContext } from "../../context/BillingContex";
 import config from "../../config/config";
+import { CartContext } from "../../context/CartContext";
+import { ProductContext } from "../../context/ProductContext";
 
 export function PaymentSuccess() {
   const navigate = useNavigate();
@@ -16,10 +18,13 @@ export function PaymentSuccess() {
   const { userToken } = useContext(UserContext);
   const tokenWs = urlParams.get("token_ws");
   const TBK_TOKEN = urlParams.get("TBK_TOKEN");
-  const {handleOrder } = useContext(BillingContext);
+  const { handleOrder } = useContext(BillingContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [canceled, setCanceled] = useState("");
+  const { cart } = useContext(CartContext);
+  const { directBuy } = useContext(ProductContext);
+  const [transactionConfirmed, setTransactionConfirmed] = useState(false);
 
   const handleConfirmTransaction = async () => {
     if (tokenWs) {
@@ -62,7 +67,16 @@ export function PaymentSuccess() {
   };
 
   useEffect(() => {
-    handleConfirmTransaction();
+    if (cart.length > 0 && !transactionConfirmed) {
+      handleConfirmTransaction();
+      setTransactionConfirmed(true);
+    }
+  }, [cart, transactionConfirmed]);
+
+  useEffect(() => {
+    if (directBuy !== null) {
+      handleConfirmTransaction();
+    }
   }, []);
 
   const handleTryAgain = () => {

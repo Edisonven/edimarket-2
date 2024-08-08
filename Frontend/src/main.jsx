@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { ProductProvider } from "./context/ProductContext.jsx";
-import { CartProvider } from "./context/CarritoContext.jsx";
+import { CartProvider } from "./context/CartContext.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 import { CheckoutProvider } from "./context/CheckoutContext.jsx";
 import { BillingProvider } from "./context/BillingContex.jsx";

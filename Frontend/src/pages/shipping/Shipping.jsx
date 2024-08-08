@@ -8,7 +8,7 @@ import { Summary } from "../../components/summary/Summary";
 import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
 import { UserContext } from "../../context/UserContext";
 import { NoAddressAdded } from "../../components/noAddressAdded/NoAddressAdded";
-import { CartContext } from "../../context/CarritoContext";
+import { CartContext } from "../../context/CartContext";
 import { ProductContext } from "../../context/ProductContext";
 import { Loader } from "../../components/loader/Loader";
 

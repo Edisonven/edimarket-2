@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
 import "../overlayScreen/overlayScreen.css";
-import { CartContext } from "../../context/CarritoContext";
+import { CartContext } from "../../context/CartContext";
 
 export function OverlayScreen({ clicked }) {
   const { cartModal } = useContext(CartContext);

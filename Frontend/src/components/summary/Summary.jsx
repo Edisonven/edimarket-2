@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import summary from "./summary.module.css";
-import { CartContext } from "../../context/CarritoContext";
+import { CartContext } from "../../context/CartContext";
 import classNames from "classnames";
 import { ProductContext } from "../../context/ProductContext";
 

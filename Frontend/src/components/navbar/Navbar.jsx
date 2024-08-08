@@ -8,7 +8,7 @@ import { Perfil } from "../perfil/Perfil.jsx";
 import { SearchBar } from "../searchBar/SearchBar.jsx";
 import { ProductContext } from "../../context/ProductContext.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
-import { CartContext } from "../../context/CarritoContext.jsx";
+import { CartContext } from "../../context/CartContext.jsx";
 import { Categories } from "../categories/Categories.jsx";
 import { BurgerCategories } from "../burgerCategories/BurgerCategories.jsx";
 import { CiUser } from "react-icons/ci";

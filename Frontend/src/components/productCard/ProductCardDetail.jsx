@@ -4,7 +4,7 @@ import { UserContext } from "../../context/UserContext";
 import { IoHeartSharp } from "react-icons/io5";
 import { FavoritesContext } from "../../context/FavoritesContext";
 import { GeneralBtn } from "../generalBtn/GeneralBtn";
-import { CartContext } from "../../context/CarritoContext";
+import { CartContext } from "../../context/CartContext";
 import visa from "/imgs/aplication/visa.png";
 import masterCard from "/imgs/aplication/mastercard.png";
 import cash from "/imgs/aplication/cash.png";

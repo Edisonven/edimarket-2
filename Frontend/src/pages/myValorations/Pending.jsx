@@ -51,14 +51,14 @@ export function Pending() {
   }, [page]);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="">
       <p className="text-gray-400">
         Valora tus productos y ayuda a las demás personas
       </p>
       {loading ? (
         <Loader />
       ) : (
-        <div className="">
+        <div className="flex flex-col gap-5">
           {notValoradedProducts?.length > 0 ? (
             notValoradedProducts?.map((order) => {
               return (

@@ -1,7 +1,7 @@
 import "../fullCart/fullCart.css";
 import summary from "../../components/summary/summary.module.css";
 import { useContext, useEffect, useState } from "react";
-import { CartContext } from "../../context/CarritoContext";
+import { CartContext } from "../../context/CartContext.jsx";
 import { UserContext } from "../../context/UserContext";
 import cartStyle from "../../components/fullCart/cart.module.css";
 import { Summary } from "../summary/Summary";

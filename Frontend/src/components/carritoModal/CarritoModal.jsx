@@ -1,6 +1,6 @@
 import "../carritoModal/carritoModal.css";
 import { useContext, useEffect } from "react";
-import { CartContext } from "../../context/CarritoContext";
+import { CartContext } from "../../context/CartContext";
 import { IoCloseOutline } from "react-icons/io5";
 import { GeneralBtn } from "../generalBtn/GeneralBtn";
 import { useNavigate } from "react-router-dom";

@@ -7,7 +7,7 @@ import { Summary } from "../../components/summary/Summary";
 import { GeneralBtn } from "../../components/generalBtn/GeneralBtn";
 import { ThreeDots } from "react-loader-spinner";
 import { CheckoutContext } from "../../context/CheckoutContext";
-import { CartContext } from "../../context/CarritoContext";
+import { CartContext } from "../../context/CartContext";
 import { UserContext } from "../../context/UserContext";
 import { NoPaymentMethodsAdded } from "../../components/noPaymentMethodsAdded/NoPaymentMethodsAdded";
 import { ProductContext } from "../../context/ProductContext";

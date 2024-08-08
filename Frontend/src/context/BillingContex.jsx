@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { CartContext } from "./CarritoContext";
+import { CartContext } from "./CartContext";
 import { ProductContext } from "./ProductContext";
 import { UserContext } from "./UserContext";
 import { CheckoutContext } from "./CheckoutContext";
@@ -77,7 +77,6 @@ export function BillingProvider({ children }) {
 
   const handleOrder = async (data) => {
     const order = data.buy_order;
-
     try {
       const sendProduct = async (producto, order) => {
         const response = await fetch(`${config.backendUrl}/venta`, {
@@ -123,9 +122,11 @@ export function BillingProvider({ children }) {
         return data;
       };
 
-      for (const producto of cart) {
-        await sendProduct(producto, order);
-        await sendSecondProduct(producto, order);
+      if (cart.length > 0) {
+        for (const producto of cart) {
+          await sendProduct(producto, order);
+          await sendSecondProduct(producto, order);
+        }
       }
 
       if (directBuy !== null) {

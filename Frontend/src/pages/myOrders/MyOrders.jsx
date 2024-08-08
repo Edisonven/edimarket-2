@@ -87,15 +87,17 @@ export function MyOrders() {
             )}
           </div>
         )}
-        <OrdersPagination
-          limit={limit}
-          page={page}
-          totalPage={totalPage}
-          setPage={setPage}
-          total={total}
-          setOrderBy={setOrderBy}
-          className="self-end mt-3"
-        />
+        {limit < 5 ? null : (
+          <OrdersPagination
+            limit={limit}
+            page={page}
+            totalPage={totalPage}
+            setPage={setPage}
+            total={total}
+            setOrderBy={setOrderBy}
+            className="self-end mt-3"
+          />
+        )}
       </div>
     </section>
   );

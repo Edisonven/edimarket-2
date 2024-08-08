@@ -4,7 +4,7 @@ import "../productDetail/productDetail.css";
 import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../context/ProductContext";
 import { ProductCard } from "../../components/productCard/ProductCard";
-import { CartContext } from "../../context/CarritoContext";
+import { CartContext } from "../../context/CartContext";
 import { CartAlert } from "../../components/cartAlert/CartAlert";
 import { useRef } from 'react';
 import { GeneralBtn } from '../../components/generalBtn/GeneralBtn';
