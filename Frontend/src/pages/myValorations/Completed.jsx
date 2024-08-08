@@ -188,15 +188,17 @@ export function Completed() {
               </p>
             </div>
           )}
-          <CompletedPagination
-            page={page}
-            setPage={setPage}
-            total={total}
-            order_by={order_by}
-            limit={limit}
-            setOrderBy={setOrderBy}
-            className="self-end mt-3"
-          />
+          {total < 7 ? null : (
+            <CompletedPagination
+              page={page}
+              setPage={setPage}
+              total={total}
+              order_by={order_by}
+              limit={limit}
+              setOrderBy={setOrderBy}
+              className="self-end mt-3"
+            />
+          )}
         </div>
       )}
     </section>

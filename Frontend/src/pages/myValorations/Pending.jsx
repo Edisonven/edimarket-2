@@ -5,6 +5,7 @@ import { ProductContext } from "../../context/ProductContext";
 import { UserContext } from "../../context/UserContext";
 import config from "../../config/config";
 import { Loader } from "../../components/loader/Loader";
+import { PendingPagination } from "./PendingPagination";
 
 export function Pending() {
   const [totalPage, setTotalPage] = useState("");
@@ -107,6 +108,15 @@ export function Pending() {
               </p>
             </div>
           )}
+          <PendingPagination
+            page={page}
+            setPage={setPage}
+            total={total}
+            order_by={order_by}
+            limit={limit}
+            setOrderBy={setOrderBy}
+            className="self-end mt-3"
+          />
         </div>
       )}
     </div>
