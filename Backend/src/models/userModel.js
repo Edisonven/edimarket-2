@@ -311,7 +311,7 @@ const completedValorated = async (idUsuario, limits, order_by, page) => {
   );
   console.log(formatedQuery);
   const consultaTotal =
-    "SELECT COUNT(*) AS total FROM orders_valorate WHERE orders_valorate.comprador_id = $1";
+    "SELECT COUNT(*) AS total FROM orders_valorate WHERE orders_valorate.comprador_id = $1 AND orders_valorate.valorado = true";
 
   const { rows: ventas } = await db.query(formatedQuery, values);
   const { rows: totalResult } = await db.query(consultaTotal, [idUsuario]);
@@ -332,7 +332,7 @@ const pendingValorated = async (idUsuario, limits, order_by, page) => {
   );
   console.log(formatedQuery);
   const consultaTotal =
-    "SELECT COUNT(*) AS total FROM orders_valorate WHERE orders_valorate.comprador_id = $1";
+    "SELECT COUNT(*) AS total FROM orders_valorate WHERE orders_valorate.comprador_id = $1 AND orders_valorate.valorado = false";
 
   const { rows: ventas } = await db.query(formatedQuery, values);
   const { rows: totalResult } = await db.query(consultaTotal, [idUsuario]);

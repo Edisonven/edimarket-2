@@ -42,6 +42,7 @@ export function Completed() {
         }
 
         const { results, count } = await response.json();
+
         setTotal(count);
         setValoratedProducts(results);
         setOrdersToValorate(results);
