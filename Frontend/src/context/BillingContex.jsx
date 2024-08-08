@@ -16,6 +16,7 @@ export function BillingProvider({ children }) {
     cartValue: [],
     directBuyValue: 0,
   });
+  const [isCartReady, setIsCartReady] = useState(false);
 
   useEffect(() => {
     const updatedCart = cart.map((product) => ({
@@ -39,6 +40,27 @@ export function BillingProvider({ children }) {
       }));
     }
   }, [directBuy]);
+
+  useEffect(() => {
+    if (transactionConfirmed) {
+      if (
+        updateLastStock.cartValue.length > 0 ||
+        updateLastStock.directBuyValue > 0
+      ) {
+        setIsCartReady(true);
+      } else {
+        setIsCartReady(false);
+      }
+    }
+  }, [transactionConfirmed, updateLastStock]);
+
+  useEffect(() => {
+    if (isCartReady && transactionConfirmed) {
+      handleOrder();
+      setTransactionConfirmed(false);
+      setIsCartReady(false);
+    }
+  }, [isCartReady, transactionConfirmed]);
 
   const handleDeleteUserProducts = async (usuario_id) => {
     try {
@@ -120,7 +142,7 @@ export function BillingProvider({ children }) {
         return data;
       };
 
-      if (cart.length > 0 && directBuy === null) {
+      if (directBuy === null) {
         for (const producto of cart) {
           await sendProduct(producto, transactionData);
           await sendSecondProduct(producto, transactionData);
@@ -205,13 +227,6 @@ export function BillingProvider({ children }) {
       throw error;
     }
   };
-
-  useEffect(() => {
-    if (transactionConfirmed) {
-      handleOrder();
-      setTransactionConfirmed(false);
-    }
-  }, [cart, directBuy, updateLastStock, transactionData]);
 
   return (
     <BillingContext.Provider
