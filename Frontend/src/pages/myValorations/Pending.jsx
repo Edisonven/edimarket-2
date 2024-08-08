@@ -108,15 +108,17 @@ export function Pending() {
               </p>
             </div>
           )}
-          <PendingPagination
-            page={page}
-            setPage={setPage}
-            total={total}
-            order_by={order_by}
-            limit={limit}
-            setOrderBy={setOrderBy}
-            className="self-end mt-3"
-          />
+          {total < 7 ? null : (
+            <PendingPagination
+              page={page}
+              setPage={setPage}
+              total={total}
+              order_by={order_by}
+              limit={limit}
+              setOrderBy={setOrderBy}
+              className="self-end mt-3"
+            />
+          )}
         </div>
       )}
     </div>
