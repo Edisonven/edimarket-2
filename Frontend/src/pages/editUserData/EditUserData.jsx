@@ -141,114 +141,120 @@ export function EditUserData() {
       nombre: user?.nombre,
     }));
 
-    inputRefs.nombre.current.focus();
+    if (userData.nombre) {
+      inputRefs?.nombre?.current.focus();
+    }
   }, [user]);
 
   useEffect(() => {
     handleGetUserRegistered();
-  }, []);
+  }, [user]);
 
   return (
     <section className="edituserdata__container ">
       <h1 className="text-2xl font-semibold mb-5">Edita y guarda tus datos</h1>
       <div className="edituserdata__body bg-white shadow-sm  rounded-md">
-        <form
-          onSubmit={handleSubmitEditData}
-          className="edituserdata__form border rounded-md py-5 px-3 flex flex-col gap-5 my-8"
-        >
-          <div className="user__input__container">
-            <label className="font-semibold" htmlFor="nombre">
-              Nombre y apellido
-            </label>
-            <input
-              ref={inputRefs.nombre}
-              value={userData.nombre}
-              onChange={handleChange}
-              className={`data__input ${
-                inputFormError.errorNombre
-                  ? "focus: outline-2 outline outline-red-600"
-                  : "focus: outline-2 outline-green-300"
-              }`}
-              name="nombre"
-              type="text"
-            />
-            {inputFormError.errorNombre && (
-              <p className="text-red-600 font-semibold text-sm ml-7">
-                {inputFormError.errorNombre}
-              </p>
-            )}
-          </div>
-          <div className="user__input__container">
-            <label className="font-semibold" htmlFor="contraseña">
-              Contraseña
-            </label>
-            <input
-              ref={inputRefs.contraseña}
-              value={userData.contraseña}
-              onChange={handleChange}
-              className={`data__input ${
-                inputFormError.errorContraseña
-                  ? "focus: outline-2 outline outline-red-600"
-                  : "focus: outline-2 outline-green-300"
-              }`}
-              name="contraseña"
-              type={userDataIcon ? "text" : "password"}
-            />
-            {inputFormError.errorContraseña && (
-              <p className="text-red-600 font-semibold text-sm ml-7">
-                {inputFormError.errorContraseña}
-              </p>
-            )}
-            {userDataIcon ? (
-              <HiEye
-                onClick={handleUserDataIcon}
-                className="input__eye__icon__user"
+        {userData.nombre === "" ? (
+          <Loader />
+        ) : (
+          <form
+            onSubmit={handleSubmitEditData}
+            className="edituserdata__form border rounded-md py-5 px-3 flex flex-col gap-5 my-8"
+          >
+            <div className="user__input__container">
+              <label className="font-semibold" htmlFor="nombre">
+                Nombre y apellido
+              </label>
+              <input
+                ref={inputRefs.nombre}
+                value={userData.nombre}
+                onChange={handleChange}
+                className={`data__input ${
+                  inputFormError.errorNombre
+                    ? "focus: outline-2 outline outline-red-600"
+                    : "focus: outline-2 outline-green-300"
+                }`}
+                name="nombre"
+                type="text"
               />
-            ) : (
-              <HiEyeOff
-                onClick={handleUserDataIcon}
-                className="input__eye__icon__user"
+              {inputFormError.errorNombre && (
+                <p className="text-red-600 font-semibold text-sm ml-7">
+                  {inputFormError.errorNombre}
+                </p>
+              )}
+            </div>
+            <div className="user__input__container">
+              <label className="font-semibold" htmlFor="contraseña">
+                Contraseña
+              </label>
+              <input
+                ref={inputRefs.contraseña}
+                value={userData.contraseña}
+                onChange={handleChange}
+                className={`data__input ${
+                  inputFormError.errorContraseña
+                    ? "focus: outline-2 outline outline-red-600"
+                    : "focus: outline-2 outline-green-300"
+                }`}
+                name="contraseña"
+                type={userDataIcon ? "text" : "password"}
               />
-            )}
-          </div>
-          <div className="user__input__container">
-            <label className="font-semibold" htmlFor="confirmContraseña">
-              Confirma tu contraseña
-            </label>
-            <input
-              ref={inputRefs.confirmContraseña}
-              name="confirmContraseña"
-              onChange={handleChange}
-              value={userData.confirmContraseña}
-              className={`data__input ${
-                inputFormError.errorConfirmContraseña
-                  ? "focus: outline-2 outline outline-red-600"
-                  : "focus: outline-2 outline-green-300"
-              }`}
-              type={userDataIcon ? "text" : "password"}
-            />
-            {inputFormError.errorConfirmContraseña && (
-              <p className="text-red-600 font-semibold text-sm ml-7">
-                {inputFormError.errorConfirmContraseña}
-              </p>
-            )}
+              {inputFormError.errorContraseña && (
+                <p className="text-red-600 font-semibold text-sm ml-7">
+                  {inputFormError.errorContraseña}
+                </p>
+              )}
+              {userDataIcon ? (
+                <HiEye
+                  onClick={handleUserDataIcon}
+                  className="input__eye__icon__user"
+                />
+              ) : (
+                <HiEyeOff
+                  onClick={handleUserDataIcon}
+                  className="input__eye__icon__user"
+                />
+              )}
+            </div>
+            <div className="user__input__container">
+              <label className="font-semibold" htmlFor="confirmContraseña">
+                Confirma tu contraseña
+              </label>
+              <input
+                ref={inputRefs.confirmContraseña}
+                name="confirmContraseña"
+                onChange={handleChange}
+                value={userData.confirmContraseña}
+                className={`data__input ${
+                  inputFormError.errorConfirmContraseña
+                    ? "focus: outline-2 outline outline-red-600"
+                    : "focus: outline-2 outline-green-300"
+                }`}
+                type={userDataIcon ? "text" : "password"}
+              />
+              {inputFormError.errorConfirmContraseña && (
+                <p className="text-red-600 font-semibold text-sm ml-7">
+                  {inputFormError.errorConfirmContraseña}
+                </p>
+              )}
 
-            {userDataIcon ? (
-              <HiEye
-                onClick={handleUserDataIcon}
-                className="input__eye__icon__user"
-              />
-            ) : (
-              <HiEyeOff
-                onClick={handleUserDataIcon}
-                className="input__eye__icon__user"
-              />
-            )}
-          </div>
-          <GeneralBtn className="text-center self-center" type="secondary">
-            Guardar
-          </GeneralBtn>
-        </form>
+              {userDataIcon ? (
+                <HiEye
+                  onClick={handleUserDataIcon}
+                  className="input__eye__icon__user"
+                />
+              ) : (
+                <HiEyeOff
+                  onClick={handleUserDataIcon}
+                  className="input__eye__icon__user"
+                />
+              )}
+            </div>
+            <GeneralBtn className="text-center self-center" type="secondary">
+              Guardar
+            </GeneralBtn>
+          </form>
+        )}
         {editSuccess.success && (
           <CartAlert>
             <p className="card__perfil__alert shadow-md rounded-md bg-green-600">
