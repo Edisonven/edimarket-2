@@ -86,17 +86,17 @@ export function Completed() {
           return data;
         };
 
-        const newData = [];
-        if (valoradedProducts) {
-          for (const valoration of valoradedProducts) {
-            const data = await getLikes(valoration.producto_id);
-            newData.push(data);
-          }
-        }
+        const likesData = await Promise.all(
+          valoradedProducts.map(async (valoration) => {
+            const likesArray = await getLikes(valoration.producto_id);
+            return {
+              producto_id: valoration.producto_id,
+              likesCount: likesArray.length,
+            };
+          })
+        );
 
-        if (newData.length > 0) {
-          setLikedValorations(newData);
-        }
+        setLikedValorations(likesData);
       }
     } catch (error) {
       console.error(error.message || "Error al obtener likes de valoraciones");
@@ -163,7 +163,12 @@ export function Completed() {
                     </div>
                     <div className="flex gap-1">
                       <BsFillHandThumbsUpFill className="text-[24px] text-gray-400" />
-                      <span>0</span>
+                      <span>
+                        {likedValorations.find(
+                          (likeData) =>
+                            likeData.producto_id === order?.producto_id
+                        )?.likesCount || 0}
+                      </span>
                     </div>
                   </div>
                   <div className="w-full flex items-center justify-end mt-5 sm:mt-0">
