@@ -87,12 +87,8 @@ export function UserProvider({ children }) {
     success: "",
     error: "",
   });
-  const {
-    setLoading,
-    setDirectBuy,
-    setServerError,
-    setScore,
-  } = useContext(ProductContext);
+  const { setLoading, setDirectBuy, setServerError, setScore } =
+    useContext(ProductContext);
 
   const inputRefs = {
     nombre: useRef(null),
@@ -502,7 +498,6 @@ export function UserProvider({ children }) {
         setOrdersToValorate,
         handleGetUserRegistered,
         formatedUser,
-        totalPage,
         page,
         setPage,
         limit,

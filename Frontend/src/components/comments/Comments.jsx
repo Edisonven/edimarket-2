@@ -110,6 +110,29 @@ export function Comments() {
     }
   };
 
+  const valorationsFiltered = userValorations.reduce((acc, curr) => {
+    const { fecha, usuario_id } = curr;
+
+    const existingValorate = acc.find(
+      (element) => element.usuario_id === usuario_id
+    );
+
+    if (existingValorate) {
+      const currentFecha = new Date(fecha);
+      const existingFecha = new Date(existingValorate.fecha);
+
+      if (currentFecha > existingFecha) {
+        acc = acc.map((element) =>
+          element.usuario_id === usuario_id ? curr : element
+        );
+      }
+    } else {
+      acc.push(curr);
+    }
+
+    return acc;
+  }, []);
+
   return (
     <section className="comments__container">
       <h1 className="text-2xl mt-5">Valoraciones</h1>
@@ -125,7 +148,7 @@ export function Comments() {
               <Loader className="scale-[0.6] h-full" />
             ) : (
               <div className="opiniones__body flex flex-col">
-                {userValorations.map((valoration) => (
+                {valorationsFiltered.map((valoration) => (
                   <div key={valoration.id} className="">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-4 w-full ">
