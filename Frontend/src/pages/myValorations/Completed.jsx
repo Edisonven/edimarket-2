@@ -105,9 +105,9 @@ export function Completed() {
     }
   };
 
-  /*   useEffect(() => {
+  useEffect(() => {
     handleGetLikesFromMyValorations();
-  }, []); */
+  }, [valoradedProducts]);
 
   return (
     <section className="flex flex-col gap-5">
