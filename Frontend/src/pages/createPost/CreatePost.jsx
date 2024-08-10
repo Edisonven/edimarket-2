@@ -142,7 +142,7 @@ export function CreatePost() {
       }));
     } else {
       try {
-        const res = await handleCreatePost(
+        await handleCreatePost(
           userData.titulo,
           userData.descripcion,
           userData.estado,
